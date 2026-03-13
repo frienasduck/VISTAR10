@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VISTAR10 — Ch 2 · Question Bank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;--mint:#00CEC9;--mint2:#007a77;--peach:#FDAE9A;
+      --text:#1A1A2E;--muted:#6B6B8A;--card:rgba(255,255,255,.85);--cb:rgba(0,206,201,.15);
+      --sh:0 6px 32px rgba(0,206,201,.09);--shh:0 14px 48px rgba(0,206,201,.16);
+      --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,4vw,6%);
+      --green:#00B894;--red:#E17055;--orange:#e5a100;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--mint);border-radius:99px;}
+
+    /* BLOBS */
+    .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.16;animation:drift 22s ease-in-out infinite alternate;}
+    .b1{width:clamp(180px,36vw,420px);height:clamp(180px,36vw,420px);background:#00CEC9;top:-8%;left:-5%;}
+    .b2{width:clamp(120px,24vw,280px);height:clamp(120px,24vw,280px);background:#A29BFE;bottom:10%;right:-4%;animation-delay:-9s;}
+    .b3{width:clamp(100px,18vw,220px);height:clamp(100px,18vw,220px);background:#FDAE9A;top:45%;left:5%;animation-delay:-16s;}
+    @keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(18px,-26px);}}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+    nav.scrolled{background:rgba(245,244,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,206,201,.12);box-shadow:0 4px 24px rgba(0,206,201,.07);}
+    .logo{font-family:var(--fh);font-size:clamp(1rem,2vw,1.3rem);font-weight:800;color:var(--mint2);display:flex;align-items:center;gap:7px;}
+    .logo-icon{width:25px;height:25px;background:linear-gradient(135deg,var(--mint),var(--violet));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .nav-back{background:rgba(0,206,201,.10);color:var(--mint2);font-size:.82rem;font-weight:600;padding:7px 16px;border-radius:50px;border:1.5px solid rgba(0,206,201,.25);cursor:pointer;transition:all .25s;white-space:nowrap;}
+    .nav-back:hover{background:var(--mint);color:#fff;}
+
+    /* HERO */
+    .hero{position:relative;z-index:1;padding:clamp(88px,12vh,116px) var(--px) clamp(20px,3vh,32px);}
+    .bc{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--muted);margin-bottom:14px;flex-wrap:wrap;}
+    .bc a{color:var(--mint2);font-weight:500;}
+    .bc a:hover{text-decoration:underline;}
+    .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(0,206,201,.10);border:1px solid rgba(0,206,201,.22);border-radius:50px;padding:5px 14px;font-size:.68rem;font-weight:600;color:var(--mint2);margin-bottom:14px;letter-spacing:.4px;}
+    .hero h1{font-family:var(--fh);font-size:clamp(1.7rem,4.5vw,3.1rem);font-weight:800;line-height:1.12;margin-bottom:12px;}
+    .hero h1 span{color:var(--mint);}
+    .hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+    .hm{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:50px;padding:4px 12px;font-size:.70rem;font-weight:500;color:var(--muted);}
+    .hm .dot{width:6px;height:6px;border-radius:50%;}
+    .stats-row{display:flex;gap:12px;flex-wrap:wrap;}
+    .stat-chip{background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:12px;padding:10px 16px;text-align:center;backdrop-filter:blur(8px);}
+    .stat-n{font-family:var(--fh);font-size:1.2rem;font-weight:800;color:var(--mint2);}
+    .stat-l{font-size:.64rem;color:var(--muted);margin-top:1px;}
+
+    /* FILTER BAR */
+    .filter-bar{position:sticky;top:56px;z-index:150;background:rgba(245,244,255,.93);backdrop-filter:blur(18px);border-bottom:1px solid rgba(0,206,201,.10);padding:10px var(--px);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .fb-label{font-size:.70rem;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;}
+    .ftag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1.5px solid rgba(0,206,201,.16);border-radius:50px;padding:6px 14px;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .22s;white-space:nowrap;}
+    .ftag:hover{border-color:var(--fc,var(--mint));color:var(--fc,var(--mint2));}
+    .ftag.on{background:var(--fc,var(--mint));border-color:var(--fc,var(--mint));color:#fff;}
+    .q-count-badge{margin-left:auto;font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap;}
+
+    /* MAIN */
+    .main{position:relative;z-index:1;padding:clamp(20px,3vw,32px) var(--px) clamp(48px,7vw,72px);}
+
+    /* SECTION HEADING */
+    .sec-head{margin:clamp(28px,4vw,44px) 0 clamp(14px,2vw,20px);}
+    .sec-head:first-child{margin-top:0;}
+    .sec-label{display:inline-flex;align-items:center;gap:8px;background:rgba(0,206,201,.09);border:1px solid rgba(0,206,201,.18);border-radius:50px;padding:5px 14px;font-size:.68rem;font-weight:700;color:var(--mint2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+    .sec-title{font-family:var(--fh);font-size:clamp(1.05rem,1.8vw,1.3rem);font-weight:800;color:var(--text);margin-bottom:4px;}
+    .sec-sub{font-size:clamp(.76rem,.9vw,.82rem);color:var(--muted);font-weight:300;}
+
+    /* QUESTION CARD */
+    .q-list{display:flex;flex-direction:column;gap:clamp(12px,1.8vw,16px);}
+    .qcard{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .3s,border-color .3s;}
+    .qcard:hover{box-shadow:var(--shh);}
+    .qcard.hidden{display:none;}
+
+    /* QUESTION TOP */
+    .qt{display:flex;align-items:flex-start;gap:14px;padding:clamp(16px,2.5vw,22px) clamp(16px,2.5vw,22px) clamp(14px,2vw,18px);cursor:pointer;user-select:none;}
+    .q-num-badge{flex-shrink:0;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:.72rem;font-weight:800;color:#fff;}
+    .q-body{flex:1;min-width:0;}
+    .q-tags{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:7px;}
+    .qtag{font-size:.60rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;}
+    .q-text{font-size:clamp(.88rem,1.1vw,.97rem);font-weight:500;color:var(--text);line-height:1.65;}
+    .q-eq{background:rgba(0,206,201,.05);border:1px solid rgba(0,206,201,.14);border-radius:9px;padding:9px 13px;font-family:'Courier New',monospace;font-size:clamp(.76rem,.9vw,.84rem);color:var(--text);margin-top:9px;line-height:1.55;}
+    .q-opts{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
+    .qopt{font-size:clamp(.80rem,.98vw,.88rem);color:var(--muted);padding:3px 0;display:flex;gap:7px;}
+    .qopt-key{font-weight:700;color:var(--mint2);min-width:16px;}
+    .q-toggle{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(0,206,201,.09);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--mint2);transition:transform .3s,background .25s;margin-top:2px;}
+    .qcard.open .q-toggle{transform:rotate(180deg);background:rgba(0,206,201,.18);}
+
+    /* ANSWER */
+    .qa{border-top:1px solid rgba(0,206,201,.12);padding:clamp(14px,2vw,18px) clamp(16px,2.5vw,22px);background:rgba(0,184,148,.04);display:none;}
+    .qcard.open .qa{display:block;}
+    .qa-head{display:flex;align-items:center;gap:7px;font-family:var(--fh);font-size:.78rem;font-weight:700;color:var(--green);margin-bottom:9px;}
+    .qa-text{font-size:clamp(.82rem,.98vw,.90rem);color:var(--text);line-height:1.7;font-weight:400;}
+    .qa-eq{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.18);border-radius:9px;padding:9px 13px;font-family:'Courier New',monospace;font-size:clamp(.74rem,.88vw,.82rem);color:var(--text);margin:8px 0;line-height:1.55;}
+    .qa-tip{margin-top:10px;padding:9px 13px;background:rgba(229,161,0,.08);border-left:3px solid var(--orange);border-radius:0 9px 9px 0;font-size:.78rem;color:#7a5c00;line-height:1.6;}
+    .qa-tip strong{font-weight:700;}
+
+    /* MCQ correct highlight */
+    .qopt.correct-opt .qopt-key{color:var(--green);}
+    .qopt.correct-opt{color:var(--text);font-weight:500;}
+    .qopt.correct-opt::after{content:' ✓';color:var(--green);font-weight:700;font-size:.70rem;}
+
+    /* CASE BASED */
+    .case-passage{background:rgba(0,206,201,.05);border:1px solid rgba(0,206,201,.16);border-radius:13px;padding:clamp(14px,2vw,20px);margin-bottom:14px;font-size:clamp(.82rem,.98vw,.90rem);color:var(--text);line-height:1.75;}
+    .case-passage strong{font-weight:600;}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+    .reveal.vis{opacity:1;transform:translateY(0);}
+
+    /* FOOTER */
+    footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(0,206,201,.10);padding:clamp(22px,3.5vw,36px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:20px;}
+    .flogo{font-family:var(--fh);font-size:1.05rem;font-weight:800;color:var(--mint2);}
+    .ftg{font-size:.72rem;color:var(--muted);margin-top:2px;}
+    .flinks{display:flex;gap:18px;list-style:none;}
+    .flinks a{font-size:.78rem;color:var(--muted);}
+    .flinks a:hover{color:var(--mint2);}
+    .fcopy{font-size:.70rem;color:var(--muted);}
+    .fcopy span{color:var(--mint2);}
+
+    /* RESPONSIVE */
+    @media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}.stats-row{gap:8px;}}
+    @media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+  </style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <a href="ch2.html" class="nav-back">← Ch 2 Overview</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bc"><a href="vistar10.html">Home</a><span>›</span><a href="subjects.html">Subjects</a><span>›</span><a href="subjects.html">Science</a><span>›</span><a href="ch2.html">Chapter 2</a><span>›</span><span>Question Bank</span></div>
+  <div class="hero-badge">🧪 &nbsp; Chemistry · Chapter 2 · Question Bank</div>
+  <h1><span>Previous Year &</span><br/>Practice Questions</h1>
+  <div class="hero-meta">
+    <div class="hm"><div class="dot" style="background:#00CEC9"></div>CBSE 2013–2024</div>
+    <div class="hm"><div class="dot" style="background:#6C5CE7"></div>All Question Types</div>
+    <div class="hm"><div class="dot" style="background:#FDAE9A"></div>Answers Hidden · Click to Reveal</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-chip"><div class="stat-n" id="totalCount">110</div><div class="stat-l">Total Questions</div></div>
+    <div class="stat-chip"><div class="stat-n">20</div><div class="stat-l">MCQ</div></div>
+    <div class="stat-chip"><div class="stat-n">22</div><div class="stat-l">VSA (1 mark)</div></div>
+    <div class="stat-chip"><div class="stat-n">24</div><div class="stat-l">SA I (2 marks)</div></div>
+    <div class="stat-chip"><div class="stat-n">24</div><div class="stat-l">SA II (3 marks)</div></div>
+    <div class="stat-chip"><div class="stat-n">10</div><div class="stat-l">LA (5 marks)</div></div>
+    <div class="stat-chip"><div class="stat-n">10</div><div class="stat-l">Case Based</div></div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="fb-label">Filter:</span>
+  <div class="ftag ftag-all on" style="--fc:#00CEC9" onclick="filterQ('all',this)">All</div>
+  <div class="ftag" style="--fc:#6C5CE7" onclick="filterQ('mcq',this)">MCQ</div>
+  <div class="ftag" style="--fc:#00A8A8" onclick="filterQ('vsa',this)">VSA · 1 Mark</div>
+  <div class="ftag" style="--fc:#e17055" onclick="filterQ('sa1',this)">SA I · 2 Marks</div>
+  <div class="ftag" style="--fc:#e5a100" onclick="filterQ('sa2',this)">SA II · 3 Marks</div>
+  <div class="ftag" style="--fc:#6C5CE7" onclick="filterQ('la',this)">LA · 5 Marks</div>
+  <div class="ftag" style="--fc:#00B894" onclick="filterQ('case',this)">Case Based</div>
+  <span class="q-count-badge" id="visCount">Showing 110 questions</span>
+</div>
+
+<div class="main" id="mainContent">
+
+<!-- ════════════════════ MCQ ════════════════════ -->
+<div class="sec-head reveal" data-type="mcq">
+  <div class="sec-label">🎯 MCQ · 1 Mark Each</div>
+  <div class="sec-title">Multiple Choice Questions</div>
+  <div class="sec-sub">From CBSE Board Exams 2013–2024. Choose the most appropriate answer.</div>
+</div>
+<div class="q-list" id="mcq-list">
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">1</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">Which of the following is a strong acid?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Acetic acid (CH₃COOH)</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Carbonic acid (H₂CO₃)</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Hydrochloric acid (HCl)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Formic acid (HCOOH)</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">HCl is a strong acid — it completely ionises in water to give H⁺ ions. Acetic, formic, and carbonic acids are weak acids that only partially ionise.</div><div class="qa-tip"><strong>Board Tip:</strong> Strong acids → HCl, H₂SO₄, HNO₃. Weak acids → CH₃COOH, H₂CO₃, H₃PO₄.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">2</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">The pH of a solution is 3. What is the nature of the solution?</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Strongly acidic</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Weakly acidic</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Neutral</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Basic</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">pH scale: 0–6 = acidic, 7 = neutral, 8–14 = basic. pH 3 is strongly acidic (lower pH = stronger acid). pH 5–6 would be weakly acidic.</div><div class="qa-tip"><strong>Board Tip:</strong> pH &lt; 7 → acidic. pH = 7 → neutral. pH &gt; 7 → basic/alkaline. Always state this in 1-mark answers.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">3</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">What is the colour of litmus in a neutral solution?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Red</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Blue</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Purple (violet)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Colourless</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Litmus is purple/violet in neutral solutions. It turns red in acid and blue in base. This is its natural colour at pH 7.</div><div class="qa-tip"><strong>Board Tip:</strong> Red litmus → turns blue in base. Blue litmus → turns red in acid. Neutral = purple (original colour).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">4</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">Which gas is produced when dilute H₂SO₄ reacts with sodium carbonate?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> SO₂</div>
+          <div class="qopt"><span class="qopt-key">B.</span> H₂</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> CO₂</div>
+          <div class="qopt"><span class="qopt-key">D.</span> O₂</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Na₂CO₃ + H₂SO₄ → Na₂SO₄ + H₂O + CO₂↑. Acid + carbonate/bicarbonate always gives CO₂ gas which turns lime water milky.</div><div class="qa-tip"><strong>Board Tip:</strong> Acid + carbonate → salt + water + CO₂ (brisk effervescence). This is a standard CBSE question — memorise the equation.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">5</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Baking soda is the common name of:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Na₂CO₃·10H₂O</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> NaHCO₃</div>
+          <div class="qopt"><span class="qopt-key">C.</span> NaCl</div>
+          <div class="qopt"><span class="qopt-key">D.</span> NaOH</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">NaHCO₃ = Sodium hydrogen carbonate = Baking soda. Na₂CO₃·10H₂O = Washing soda. NaCl = Common salt. NaOH = Caustic soda.</div><div class="qa-tip"><strong>Board Tip:</strong> Know all 4 salt names, formulas, and common names — this is a high-frequency MCQ topic.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">6</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">What happens to the pH of an acid solution when it is diluted with water?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Decreases</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Increases</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Remains the same</div>
+          <div class="qopt"><span class="qopt-key">D.</span> First decreases then increases</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Diluting an acid reduces H⁺ ion concentration, so pH increases (moves toward 7 but never exceeds 7 for an acid). Diluting a base decreases pH (moves toward 7).</div><div class="qa-tip"><strong>Board Tip:</strong> Dilution always moves pH toward 7. Acid → pH increases. Base → pH decreases.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">7</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">During the preparation of chlor-alkali process (electrolysis of brine), which gas is produced at the anode?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Hydrogen</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Chlorine</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Oxygen</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Sodium</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">In chlor-alkali process: Cl₂ gas at anode (+), H₂ gas at cathode (−), NaOH solution formed near cathode. 2NaCl(aq) + 2H₂O(l) → 2NaOH(aq) + Cl₂(g) + H₂(g)</div><div class="qa-tip"><strong>Board Tip:</strong> Remember: Anode = Cl₂, Cathode = H₂. "A before C in alphabet" = Anode (Cl), Cathode (H).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">8</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">The formula of Plaster of Paris is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> CaSO₄·2H₂O</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> CaSO₄·½H₂O</div>
+          <div class="qopt"><span class="qopt-key">C.</span> CaSO₄</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Ca(OH)₂</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Plaster of Paris = CaSO₄·½H₂O (calcium sulphate hemihydrate). Gypsum = CaSO₄·2H₂O. Anhydrous CaSO₄ = dead burnt plaster (no longer sets). Ca(OH)₂ = slaked lime.</div><div class="qa-tip"><strong>Board Tip:</strong> POP formula is always asked. The ½H₂O is crucial — writing 1H₂O or 2H₂O will lose marks.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">9</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">A milkman adds a small amount of baking soda to fresh milk. Why does this milk take a longer time to set into curd?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> NaHCO₃ kills the bacteria</div>
+          <div class="qopt"><span class="qopt-key">B.</span> It makes the milk more acidic</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> It makes the milk slightly alkaline, preventing souring</div>
+          <div class="qopt"><span class="qopt-key">D.</span> It reacts with fat in milk</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Milk turns sour (acidic) during curd formation. Adding NaHCO₃ (baking soda) makes it slightly alkaline, which delays the acidification process, thus preserving the milk longer before souring.</div><div class="qa-tip"><strong>Board Tip:</strong> Real-life pH application — commonly asked as MCQ or VSA. Milk pH ≈ 6.8; souring decreases pH.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">10</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div>
+        <div class="q-text">The substance produced along with NaOH when electricity is passed through brine is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Na and O₂</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Cl₂ only</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Cl₂ and H₂</div>
+          <div class="qopt"><span class="qopt-key">D.</span> NaCl and H₂</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Electrolysis of brine (NaCl solution) produces NaOH + Cl₂ (at anode) + H₂ (at cathode). All three are important industrial chemicals — this is the chlor-alkali process.</div><div class="qa-tip"><strong>Board Tip:</strong> "Chlor" = chlorine; "alkali" = NaOH. All three products and their uses are commonly asked in SA II or LA questions.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">11</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">Which acid is present in ant's sting?</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Formic acid (methanoic acid)</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Acetic acid</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Lactic acid</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Tartaric acid</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">Formic acid (HCOOH / methanoic acid) is present in ant stings and causes the burning sensation. The remedy is a base like baking soda (NaHCO₃) applied to the sting.</div><div class="qa-tip"><strong>Board Tip:</strong> Natural acids list is commonly tested: ant sting = formic acid; vinegar = acetic acid; curd = lactic acid; tamarind = tartaric acid.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">12</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">Washing soda has the formula:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> NaHCO₃</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Na₂CO₃·10H₂O</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Na₂CO₃</div>
+          <div class="qopt"><span class="qopt-key">D.</span> NaOH</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Washing soda = Sodium carbonate decahydrate = Na₂CO₃·10H₂O. Anhydrous Na₂CO₃ is soda ash (industrial). Na₂CO₃·10H₂O is used in glass/soap making and removing permanent hardness of water.</div><div class="qa-tip"><strong>Board Tip:</strong> "10H₂O" is key — without it you're describing soda ash, not washing soda. Write the full formula in exams.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">13</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">A solution turns blue litmus red. Its pH is most likely:</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> 4</div>
+          <div class="qopt"><span class="qopt-key">B.</span> 7</div>
+          <div class="qopt"><span class="qopt-key">C.</span> 9</div>
+          <div class="qopt"><span class="qopt-key">D.</span> 11</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">Turning blue litmus red indicates an acidic solution (pH &lt; 7). Among the choices, only pH 4 is acidic. pH 7 = neutral, pH 9 and 11 = basic (would turn red litmus blue).</div><div class="qa-tip"><strong>Board Tip:</strong> Always check if blue litmus turns red (acid) or red litmus turns blue (base) — don't confuse the direction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">14</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Which of the following is an example of a salt formed by a weak acid and strong base?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> NaCl</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Na₂CO₃</div>
+          <div class="qopt"><span class="qopt-key">C.</span> NH₄Cl</div>
+          <div class="qopt"><span class="qopt-key">D.</span> NH₄NO₃</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Na₂CO₃ is formed from H₂CO₃ (weak acid) + NaOH (strong base) → basic salt. NaCl = strong acid + strong base (neutral). NH₄Cl = strong acid + weak base (acidic).</div><div class="qa-tip"><strong>Board Tip:</strong> Nature of salt: SA+SB = neutral; WA+SB = basic; SA+WB = acidic. This rule is very important.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">15</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">What is the bleaching agent present in bleaching powder?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> CaCl₂</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Ca(OH)₂</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Available chlorine (Cl₂ released from CaOCl₂)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> CaCO₃</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Bleaching powder (CaOCl₂) bleaches due to available chlorine. When CaOCl₂ reacts with CO₂ or dilute acid, it releases Cl₂ which is the actual bleaching agent — it oxidises coloured matter.</div><div class="qa-tip"><strong>Board Tip:</strong> Bleaching powder formula = CaOCl₂ (calcium oxychloride). It releases Cl₂ on treatment with dilute acids — mention this in SA answers.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">16</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">The colour of phenolphthalein indicator in a basic solution is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Red</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Yellow</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Pink</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Colourless</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Phenolphthalein: colourless in acid/neutral, pink in base. Methyl orange: red in acid, yellow in base/neutral. These two are the main synthetic indicators for board exams.</div><div class="qa-tip"><strong>Board Tip:</strong> Phenolphthalein in acid = colourless (easy to forget — many students write red). Pink ONLY in base.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">17</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">When zinc reacts with NaOH, the gas evolved is:</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Hydrogen (H₂)</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Oxygen (O₂)</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Nitrogen (N₂)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Chlorine (Cl₂)</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">Zn + 2NaOH → Na₂ZnO₂ + H₂↑. Zinc is amphoteric — it reacts with both acids and bases to release H₂. The product Na₂ZnO₂ is sodium zincate.</div><div class="qa-tip"><strong>Board Tip:</strong> Amphoteric metals: Zn and Al react with both acids and bases. Learn both equations for Zn and Al with NaOH.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">18</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">The water of crystallisation in gypsum (CaSO₄·2H₂O) is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> 0.5</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> 2</div>
+          <div class="qopt"><span class="qopt-key">C.</span> 5</div>
+          <div class="qopt"><span class="qopt-key">D.</span> 10</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Gypsum = CaSO₄·2H₂O → 2 water molecules. Plaster of Paris = CaSO₄·½H₂O → 0.5 water molecules. Washing soda = Na₂CO₃·10H₂O → 10 water molecules. Blue vitriol = CuSO₄·5H₂O → 5 water molecules.</div><div class="qa-tip"><strong>Board Tip:</strong> Water of crystallisation for all 4 salts is very frequently asked. Memorise: Gypsum=2, POP=½, Washing soda=10, Blue vitriol=5.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">19</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2013</span></div>
+        <div class="q-text">Which of the following is a universal indicator?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Litmus</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Phenolphthalein</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Methyl orange</div>
+          <div class="qopt correct-opt"><span class="qopt-key">D.</span> pH paper (mixture of indicators)</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: D</div><div class="qa-text">A universal indicator is a mixture of several indicators that gives different colours across the pH scale (0–14). It can give approximate pH values, unlike single indicators that only show acid/base. pH paper contains a universal indicator.</div><div class="qa-tip"><strong>Board Tip:</strong> Universal indicator is important because it gives EXACT pH, not just acid/base nature. Litmus, phenolphthalein, methyl orange are single indicators.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">20</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">On heating blue vitriol (CuSO₄·5H₂O), it becomes:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Remains blue</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> White (anhydrous CuSO₄)</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Black (CuO)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Green</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">On heating, CuSO₄·5H₂O loses its water of crystallisation and becomes anhydrous CuSO₄ which is white/off-white. Adding water back turns it blue again — this is a test for water.</div><div class="qa-tip"><strong>Board Tip:</strong> CuSO₄·5H₂O → heat → CuSO₄ (white) + 5H₂O. Reverse: CuSO₄ + H₂O → CuSO₄·5H₂O (blue). Great reversibility example for exams.</div></div>
+  </div>
+
+</div><!-- end mcq-list -->
+
+<!-- ════════════════════ VSA ════════════════════ -->
+<div class="sec-head reveal" data-type="vsa">
+  <div class="sec-label">✏️ VSA · 1 Mark Each</div>
+  <div class="sec-title">Very Short Answer Questions</div>
+  <div class="sec-sub">1-mark questions from CBSE 2013–2024. Write precise, one-line answers.</div>
+</div>
+<div class="q-list" id="vsa-list">
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">21</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">What is the pH of a neutral solution?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">The pH of a neutral solution is 7.</div><div class="qa-tip"><strong>Board Tip:</strong> Write exactly "pH = 7" — don't just say neutral. The question might also ask for pH of pure water, which is also 7 at 25°C.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">22</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Name the gas produced when an acid reacts with a metal carbonate.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Carbon dioxide (CO₂) gas is produced. It turns lime water milky: Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O.</div><div class="qa-tip"><strong>Board Tip:</strong> Always mention the test — "turns lime water milky" — to complete a 1-mark answer about CO₂.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">23</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">What happens when dry HCl gas is passed over dry litmus paper?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Dry HCl gas does NOT change the colour of dry litmus paper. HCl produces H⁺ ions only in the presence of water; without water, it cannot act as an acid.</div><div class="qa-tip"><strong>Board Tip:</strong> This is a key NCERT concept — acids produce H⁺ ions only in aqueous solution. Dry HCl + dry litmus = no change. Very frequently asked VSA.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">24</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">Name the indicator that gives pink colour in basic solution and is colourless in acidic solution.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Phenolphthalein. It is colourless in acid/neutral and pink in basic solution.</div><div class="qa-tip"><strong>Board Tip:</strong> Phenolphthalein colours: acid = colourless, base = pink. Methyl orange colours: acid = red, base/neutral = yellow.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">25</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">What is the common name of CaOCl₂?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Bleaching powder. Its chemical name is calcium oxychloride.</div><div class="qa-tip"><strong>Board Tip:</strong> Give both — common name (bleaching powder) AND chemical name (calcium oxychloride) for full marks in 1-mark answers.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">26</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">How is an alkali different from a base?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">All alkalis are bases, but not all bases are alkalis. An alkali is a base that is soluble in water. Example: NaOH is both a base and an alkali; Cu(OH)₂ is a base but not an alkali (insoluble in water).</div><div class="qa-tip"><strong>Board Tip:</strong> Base = produces OH⁻; Alkali = base soluble in water. Classic 1-mark distinction question — often repeated.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">27</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">What is the chemical name of baking soda?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Sodium hydrogen carbonate (NaHCO₃). Also called sodium bicarbonate.</div><div class="qa-tip"><strong>Board Tip:</strong> NCERT uses "sodium hydrogen carbonate" — prefer this over "sodium bicarbonate" in board answers.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">28</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">Name the scale used to measure the strength of acids and bases.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">pH scale. It ranges from 0 to 14, where 0 is most acidic, 7 is neutral, and 14 is most basic.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">29</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div>
+        <div class="q-text">What is the colour of anhydrous copper sulphate?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">White (or off-white). When water is added to anhydrous CuSO₄, it turns blue (forms CuSO₄·5H₂O). This is used as a test for the presence of water.</div><div class="qa-tip"><strong>Board Tip:</strong> White CuSO₄ + water → blue CuSO₄·5H₂O. This is a classic experiment — understand it for case-based Qs too.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">30</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">What is efflorescence?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Efflorescence is the loss of water of crystallisation by a hydrated salt when exposed to air at room temperature. Example: Na₂CO₃·10H₂O (washing soda) loses 9 water molecules to form Na₂CO₃·H₂O (soda monohydrate) on exposure to dry air.</div><div class="qa-tip"><strong>Board Tip:</strong> Efflorescence = lose water. Deliquescence = absorb water. Don't confuse the two.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">31</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">Why is acidity caused in the stomach treated with antacids like milk of magnesia?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">The stomach produces excess HCl which causes acidity (pH too low). Milk of magnesia [Mg(OH)₂] is a mild base that neutralises the excess acid, raising the pH to a comfortable level.</div><div class="qa-tip"><strong>Board Tip:</strong> Neutralisation in daily life — stomach acid (HCl) + antacid [Mg(OH)₂] → MgCl₂ + H₂O. Always mention neutralisation as the reaction type.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">32</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Name the products formed in the chlor-alkali process.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Three products: (i) Chlorine gas (Cl₂) at anode, (ii) Hydrogen gas (H₂) at cathode, (iii) Sodium hydroxide (NaOH) solution near cathode.</div><div class="qa-tip"><strong>Board Tip:</strong> Write all three products. If the question is 1-mark, name all three briefly. If 2-marks, add where each is formed (anode/cathode).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">33</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">What is the role of NaHCO₃ in baking powder?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">NaHCO₃ on heating or reacting with tartaric acid (in baking powder) releases CO₂ gas, which makes the dough rise and become soft and spongy.</div><div class="qa-tip"><strong>Board Tip:</strong> 2NaHCO₃ → heat → Na₂CO₃ + H₂O + CO₂↑. The CO₂ makes bread/cake fluffy. Also, tartaric acid neutralises Na₂CO₃ to prevent soapy/bitter taste.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">34</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">Name an acid present in curd.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Lactic acid (CH₃CHOHCOOH). It is produced by bacterial fermentation of lactose in milk during curd formation, lowering the pH.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">35</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">What is a neutralisation reaction? Give one example.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A neutralisation reaction is a reaction between an acid and a base to form salt and water. Example: HCl + NaOH → NaCl + H₂O. Heat is also released (exothermic).</div><div class="qa-tip"><strong>Board Tip:</strong> Definition + equation + mention that it's exothermic = full marks even for 2-mark questions on this topic.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">36</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">Name the acid present in vinegar.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Acetic acid (ethanoic acid / CH₃COOH). Vinegar contains 5–8% acetic acid in water.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">37</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">What type of oxides are formed when non-metals burn in oxygen?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Non-metallic oxides are acidic in nature. They dissolve in water to form acids. Example: SO₂ + H₂O → H₂SO₃ (sulphurous acid); CO₂ + H₂O → H₂CO₃ (carbonic acid).</div><div class="qa-tip"><strong>Board Tip:</strong> Metal oxides = basic; Non-metal oxides = acidic. This is a NCERT concept tested in VSA, MCQ, and SA I both.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">38</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">What happens when Plaster of Paris is mixed with water?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Plaster of Paris sets into a hard solid mass. It absorbs water to form gypsum (CaSO₄·2H₂O): CaSO₄·½H₂O + 1½H₂O → CaSO₄·2H₂O. The mass also slightly expands during setting.</div><div class="qa-tip"><strong>Board Tip:</strong> POP → water → Gypsum (reverse of making POP). This expansion property makes it useful for casts in medicine.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">39</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div>
+        <div class="q-text">What is the chemical formula of common salt?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">NaCl (Sodium chloride). It is formed by the neutralisation of HCl (strong acid) and NaOH (strong base), so it forms a neutral salt (pH = 7).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">40</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">State one use of hydrogen gas produced during the chlor-alkali process.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Hydrogen gas is used as a fuel (in fuel cells and rockets) / in the manufacture of ammonia (Haber process) / in the hydrogenation of vegetable oils to make vanaspati ghee.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">41</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">What is water of crystallisation?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Water of crystallisation is the fixed number of water molecules present in a crystalline salt. It is chemically combined and gives the salt its shape and colour. Example: CuSO₄·5H₂O has 5 water molecules of crystallisation.</div><div class="qa-tip"><strong>Board Tip:</strong> Key phrase: "fixed number, chemically combined". Don't say "mixed with" — the water is part of the crystal structure.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">42</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#006b6b">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2013</span></div>
+        <div class="q-text">Why do acids not show acidic behaviour in the absence of water?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Acids produce H⁺ (hydrogen) ions only when dissolved in water. In the absence of water (dry state), no ionisation occurs, so no H⁺ ions are produced and the substance cannot show acidic properties.</div><div class="qa-tip"><strong>Board Tip:</strong> This is the NCERT experiment with dry HCl and dry litmus — a very frequently tested 1-mark concept. Always write "H⁺ ions are produced only in water".</div></div>
+  </div>
+
+</div><!-- end vsa-list -->
+
+<!-- ════════════════════ SA I ════════════════════ -->
+<div class="sec-head reveal" data-type="sa1">
+  <div class="sec-label">📝 SA I · 2 Marks Each</div>
+  <div class="sec-title">Short Answer Type I Questions</div>
+  <div class="sec-sub">2-mark questions from CBSE 2013–2024. Write 3–5 lines per answer.</div>
+</div>
+<div class="q-list" id="sa1-list">
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">43</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">Write the chemical equation for the reaction of dilute HCl with (i) zinc, and (ii) sodium hydroxide.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Acid + Metal → Salt + Hydrogen gas:
+        <div class="qa-eq">Zn(s) + 2HCl(aq) → ZnCl₂(aq) + H₂(g)↑</div>
+        (ii) Acid + Base (Neutralisation) → Salt + Water:
+        <div class="qa-eq">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</div>
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Always include state symbols (s, l, g, aq) and ↑/↓ where applicable — each missing state symbol may cost marks.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">44</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">How is baking soda different from washing soda? Give one use of each.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Baking soda (NaHCO₃) vs Washing soda (Na₂CO₃·10H₂O):
+        <br>• Baking soda is mildly alkaline; washing soda is strongly alkaline.
+        <br>• Baking soda has 0 water of crystallisation; washing soda has 10.
+        <br><br>Use of baking soda: Used in baking as a leavening agent (releases CO₂ making dough fluffy); also used as an antacid.
+        <br>Use of washing soda: Used in glass/soap/paper industry; removes permanent hardness of water.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Comparison questions need a clear table-like structure — list at least 2 differences and 1 use each for full 2 marks.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">45</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">What is an olfactory indicator? Give one example.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">An olfactory indicator is a substance whose smell (odour) changes in acidic or basic conditions. Unlike colour indicators, these are detected by smell.
+        <br><br>Example: Onion — its smell disappears in a basic solution (NaOH). Vanilla essence — its sweet smell disappears in basic solution. Clove oil — its smell persists in acid but disappears in base.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This is an NCERT Activity — very commonly asked as a 2-mark SA. Name any one example with its behaviour in acid/base.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">46</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">Write the reaction that occurs when gypsum is heated at 100°C to form Plaster of Paris. What happens when water is added to Plaster of Paris?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Gypsum → Plaster of Paris:
+        <div class="qa-eq">CaSO₄·2H₂O →(100°C)→ CaSO₄·½H₂O + 1½H₂O</div>
+        When water is added to POP, it rehydrates and sets into hard gypsum again:
+        <div class="qa-eq">CaSO₄·½H₂O + 1½H₂O → CaSO₄·2H₂O (hard solid)</div>
+        The mixture also expands slightly during setting.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Both reactions are important. Note: POP is made at 100°C; at higher temperatures, dead burnt plaster forms which cannot set.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">47</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">A student prepares a solution of an unknown compound and tests it with litmus. The solution turns red litmus blue. (i) What is the nature of the compound? (ii) What is the approximate pH range?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) The compound is basic (alkaline) in nature. Bases turn red litmus blue.
+        <br>(ii) The pH is greater than 7 (approximately 8–14). Stronger bases have pH closer to 14.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> "Turns red litmus blue" = basic = pH &gt; 7. "Turns blue litmus red" = acidic = pH &lt; 7. Always connect the litmus result to pH range.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">48</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">What is the action of zinc on (i) dilute sulphuric acid and (ii) sodium hydroxide solution? Write equations.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Zinc + Dilute H₂SO₄ → Hydrogen gas (displacement reaction):
+        <div class="qa-eq">Zn(s) + H₂SO₄(aq) → ZnSO₄(aq) + H₂(g)↑</div>
+        (ii) Zinc + NaOH → Sodium zincate + Hydrogen gas (amphoteric nature):
+        <div class="qa-eq">Zn(s) + 2NaOH(aq) → Na₂ZnO₂(aq) + H₂(g)↑</div>
+        Zinc is amphoteric — it reacts with both acids and bases to release H₂.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Amphoteric = reacts with both acid and base. Products: acid reaction → zinc salt; base reaction → zincate salt. Both release H₂.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">49</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">Explain why: (i) Concentrated H₂SO₄ should be added to water and not water to acid. (ii) Acid rain damages marble statues.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Diluting concentrated H₂SO₄ is highly exothermic. If water is added to acid, the intense heat causes the water to boil suddenly, splashing the concentrated acid dangerously. Adding acid to water gradually, while stirring, distributes heat safely.
+        <br><br>(ii) Marble = CaCO₃. Acid rain contains H₂SO₄ and HNO₃ (pH &lt; 5.6). These react with marble:
+        <div class="qa-eq">CaCO₃ + H₂SO₄ → CaSO₄ + H₂O + CO₂↑</div>
+        This dissolves the marble surface, damaging statues and buildings.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Part (ii) uses the acid + carbonate reaction. Acid rain pH &lt; 5.6 — this pH value is frequently asked in MCQ too.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">50</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">Write the equation for the reaction between NaOH and HCl. What type of reaction is this? What is formed?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        <div class="qa-eq">NaOH(aq) + HCl(aq) → NaCl(aq) + H₂O(l) + Heat</div>
+        This is a neutralisation reaction (acid + base → salt + water). It is also exothermic — heat is released. Products: sodium chloride (NaCl = common salt) and water.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">51</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">How do metallic oxides differ from non-metallic oxides in terms of their acidic/basic nature? Give one example of each.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Metallic oxides are basic in nature. They react with acids to form salt and water. Example: CaO (calcium oxide) + H₂O → Ca(OH)₂ (base).
+        <br><br>Non-metallic oxides are acidic in nature. They react with water to form acids, and with bases to form salt and water. Example: CO₂ + H₂O → H₂CO₃ (carbonic acid).
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This distinction is a key NCERT concept. Note that some metal oxides (like ZnO, Al₂O₃) are amphoteric — they act as both acid and base.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">52</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div>
+        <div class="q-text">A bee sting injects formic acid into the skin. What first aid would you suggest and why?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">Apply a mild base like baking soda (NaHCO₃) solution to the sting area. The base neutralises the formic acid (HCOOH) injected by the bee, reducing the pain and burning sensation. This is a neutralisation reaction (acid + base → salt + water).</div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Real-life neutralisation — bee sting (formic acid) → treat with base (NaHCO₃). Wasp sting (alkaline) → treat with acid (vinegar). Often tested as a pair MCQ or SA.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">53</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">State two uses each of (i) Chlorine gas and (ii) NaOH produced in the chlor-alkali process.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Uses of Cl₂: (a) Used as a disinfectant — purifies drinking water by killing bacteria. (b) Used in manufacturing PVC, CFCs, and pesticides. (c) Used in bleaching powder production.
+        <br><br>(ii) Uses of NaOH: (a) Used in making soap and detergents. (b) Used in paper-making industry. (c) Used in the manufacture of artificial fibres like rayon. (d) Used as drain cleaners.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">54</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">Why is tooth decay related to pH? How can tooth decay be prevented?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Bacteria in the mouth break down food particles and produce acids. When pH in the mouth falls below 5.5, the acids start corroding the enamel (calcium phosphate) of teeth, leading to tooth decay.
+        <br><br>Prevention: (i) Use toothpastes containing mild bases (fluorides) — they neutralise the acid. (ii) Rinse mouth after eating. (iii) Avoid sugary foods that feed acid-producing bacteria.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Critical pH for tooth decay = 5.5. Always mention this specific value in tooth decay answers.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">55</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">On what basis are salts classified as acidic, basic, and neutral? Give one example of each.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Salts are classified based on the strength of the acid and base that formed them:
+        <br>• Neutral salt: Formed by strong acid + strong base. pH ≈ 7. Example: NaCl (HCl + NaOH).
+        <br>• Acidic salt: Formed by strong acid + weak base. pH &lt; 7. Example: NH₄Cl (HCl + NH₄OH).
+        <br>• Basic salt: Formed by weak acid + strong base. pH &gt; 7. Example: Na₂CO₃ (H₂CO₃ + NaOH).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">56</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Why do HCl, HNO₃ and other acids show acidic properties in aqueous solution while glucose solution does not?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        HCl, HNO₃ etc. ionise in aqueous solution to produce H⁺ (H₃O⁺) ions, which are responsible for acidic properties:
+        <div class="qa-eq">HCl(aq) → H⁺(aq) + Cl⁻(aq)</div>
+        Glucose (C₆H₁₂O₆) dissolves in water but does not ionise — it does not release H⁺ ions. Hence, despite having many O-H bonds, glucose solution does not show acidic properties. Acidic nature = presence of H⁺ ions, not just O-H bonds.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This is a classic NCERT concept. Key: acids dissociate to give H⁺ ions; glucose does not. Often tested as a "why" question.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">57</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">What is the effect of adding acid or base to the pH of soil? How does a farmer correct acidic soil?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Effect on soil: Adding acid lowers the pH of soil; adding base raises the pH. Most crops grow best at a pH around 7 (neutral to slightly acidic).
+        <br><br>Correcting acidic soil: A farmer adds quicklime (CaO) or slaked lime [Ca(OH)₂] or chalk (CaCO₃) to neutralise the excess acid in acidic soil and raise its pH. This process is called liming.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Acidic soil → add base (lime). Alkaline soil → add organic matter/acidic fertilisers. "Liming" is the NCERT term for correcting acidic soil.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">58</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">What are the common properties of acids? List any four.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Properties of acids:
+        <br>(i) Sour in taste (e.g., lemon juice, tamarind).
+        <br>(ii) Turn blue litmus red.
+        <br>(iii) Conduct electricity in aqueous solution (due to ions).
+        <br>(iv) React with metals to produce hydrogen gas.
+        <br>(v) pH less than 7.
+        <br>(vi) React with bases to form salt and water (neutralisation).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">59</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">What is a salt family? Give one example with two members of the same family.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        A salt family consists of salts that have the same positive ion (cation) or the same negative ion (anion) in common.
+        <br><br>Example — Sodium salt family (same cation Na⁺): NaCl (sodium chloride) and NaOH (sodium hydroxide) and Na₂SO₄ (sodium sulphate).
+        <br>Example — Chloride salt family (same anion Cl⁻): NaCl, KCl, CaCl₂.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">60</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">Write the reaction for the formation of bleaching powder from slaked lime. State two uses of bleaching powder.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        <div class="qa-eq">Ca(OH)₂ + Cl₂ → CaOCl₂ + H₂O</div>
+        Uses of bleaching powder (CaOCl₂):
+        <br>(i) Used to bleach cotton, linen, and wood pulp in textile and paper industries.
+        <br>(ii) Used as a disinfectant to clean water in swimming pools and to sterilise drinking water.
+        <br>(iii) Used as an oxidising agent in chemical industries.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Memorise the equation. The reaction is Ca(OH)₂ + Cl₂ → CaOCl₂ + H₂O — note it's "slaked lime + chlorine gas → bleaching powder".</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">61</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">What do you observe when (i) CO₂ is passed through lime water for a short time, and (ii) excess CO₂ is passed through lime water?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Short time — lime water turns milky (white precipitate of CaCO₃ forms):
+        <div class="qa-eq">Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O</div>
+        (ii) Excess CO₂ — the milky white colour disappears (precipitate dissolves) because CaCO₃ reacts with excess CO₂ to form soluble Ca(HCO₃)₂:
+        <div class="qa-eq">CaCO₃ + H₂O + CO₂ → Ca(HCO₃)₂ (soluble, colourless)</div>
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This 2-step observation with lime water is very commonly asked. Write both equations clearly.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">62</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">Name the type of reaction between an acid and a metal oxide. Write the equation for the reaction between HCl and copper(II) oxide.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        The reaction between an acid and a metal oxide is a neutralisation reaction (acid + base → salt + water — metal oxides are basic in nature).
+        <div class="qa-eq">CuO(s) + 2HCl(aq) → CuCl₂(aq) + H₂O(l)</div>
+        The black copper oxide dissolves and a blue-green solution of copper chloride is formed — observation: black solid disappears, blue-green solution forms.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Always write the colour change observation: CuO (black) → CuCl₂ solution (blue-green). This is a common 2-mark observation question.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">63</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div>
+        <div class="q-text">Give the IUPAC name and formula of (i) washing soda and (ii) baking soda.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Washing soda: IUPAC/chemical name = Sodium carbonate decahydrate. Formula = Na₂CO₃·10H₂O.
+        <br>(ii) Baking soda: IUPAC/chemical name = Sodium hydrogen carbonate (or sodium bicarbonate). Formula = NaHCO₃.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">64</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2013</span></div>
+        <div class="q-text">What is the difference between a strong acid and a weak acid? Give one example of each.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Strong acid: Completely ionises in water to produce a large number of H⁺ ions. Highly corrosive. Example: HCl → H⁺ + Cl⁻ (complete dissociation).
+        <br><br>Weak acid: Partially ionises in water to produce fewer H⁺ ions. Less corrosive. Example: CH₃COOH ⇌ CH₃COO⁻ + H⁺ (partial, reversible dissociation).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">65</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">Name the gas produced when dilute H₂SO₄ reacts with iron. How would you test for this gas?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Hydrogen (H₂) gas is produced:
+        <div class="qa-eq">Fe(s) + H₂SO₄(aq) → FeSO₄(aq) + H₂(g)↑</div>
+        Test: Bring a burning splint near the mouth of the test tube. Hydrogen burns with a 'pop' sound. (This confirms H₂ gas.)
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> "Pop sound" = hydrogen. "Turns lime water milky" = CO₂. "Relights glowing splint" = O₂. Know all three gas tests.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">66</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a33d1c">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">Why is sodium hydroxide (NaOH) called an alkali? Why is ammonia solution also called an alkali?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        NaOH is called an alkali because it is a base that is soluble in water. It produces OH⁻ ions in solution: NaOH → Na⁺ + OH⁻.
+        <br><br>Ammonia solution (NH₃ + H₂O → NH₄OH) is also an alkali because it is soluble in water and forms OH⁻ ions in solution (though it is a weak alkali — partial dissociation).
+        <br><br>Definition of alkali: Base + Soluble in water = Alkali.
+      </div>
+    </div>
+  </div>
+
+</div><!-- end sa1-list -->
+
+<!-- ════════════════════ SA II ════════════════════ -->
+<div class="sec-head reveal" data-type="sa2">
+  <div class="sec-label">📄 SA II · 3 Marks Each</div>
+  <div class="sec-title">Short Answer Type II Questions</div>
+  <div class="sec-sub">3-mark questions from CBSE 2013–2024. Write 6–8 lines per answer with equations.</div>
+</div>
+<div class="q-list" id="sa2-list">
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">67</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">What is the chlor-alkali process? Write the chemical equation involved. Name the products and state two uses of each product.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Chlor-alkali process: Electrolysis of brine (concentrated NaCl solution) to produce useful industrial chemicals.
+        <div class="qa-eq">2NaCl(aq) + 2H₂O(l) → 2NaOH(aq) + Cl₂(g)↑ + H₂(g)↑</div>
+        Products and uses:
+        <br><b>Chlorine (Cl₂)</b>: (i) Disinfecting drinking water/swimming pools. (ii) Manufacturing PVC, bleaching powder, and pesticides.
+        <br><b>Hydrogen (H₂)</b>: (i) Fuel (hydrogen fuel cells, rockets). (ii) Manufacture of ammonia (Haber process) and vegetable ghee.
+        <br><b>NaOH</b>: (i) Making soap, detergents, and paper. (ii) Manufacturing artificial silk (rayon) and as a de-greasing agent.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This is one of the most important 3-mark questions — always appears in boards. Memorise the equation and at least 2 uses of each of the 3 products.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">68</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">Describe how you can prove that acids are electrolytes and conduct electricity. What is the role of water in this process?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Experiment: Set up a circuit with a battery, bulb, and two electrodes. Dip the electrodes in (i) dry HCl gas, (ii) HCl dissolved in toluene (non-aqueous), and (iii) HCl dissolved in water (aqueous).
+        <br><br>Observation: Bulb glows only in aqueous HCl solution.
+        <br><br>Conclusion: Acids conduct electricity only in aqueous solution. This proves they are electrolytes.
+        <br><br>Role of water: Water enables ionisation of the acid. HCl molecules dissociate in water to produce H⁺ and Cl⁻ ions, which carry charge and conduct electricity.
+        <div class="qa-eq">HCl(g) + H₂O → H₃O⁺(aq) + Cl⁻(aq)</div>
+        Without water, no ionisation occurs — no ions — no conductivity.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This is the classic NCERT activity. Key conclusion: Acids ionise only in water. Without water = no H⁺ ions = no conductivity = not acidic.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">69</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Write all the important reactions of dilute acids (with metals, metal carbonates, metal hydrogen carbonates, metal oxides, and bases). Give one equation for each.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Acid + Metal → Salt + Hydrogen:
+        <div class="qa-eq">Zn + H₂SO₄ → ZnSO₄ + H₂↑</div>
+        (ii) Acid + Metal carbonate → Salt + Water + CO₂:
+        <div class="qa-eq">Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑</div>
+        (iii) Acid + Metal hydrogen carbonate → Salt + Water + CO₂:
+        <div class="qa-eq">NaHCO₃ + HCl → NaCl + H₂O + CO₂↑</div>
+        (iv) Acid + Metal oxide → Salt + Water:
+        <div class="qa-eq">CuO + 2HCl → CuCl₂ + H₂O</div>
+        (v) Acid + Base (Neutralisation) → Salt + Water:
+        <div class="qa-eq">NaOH + HCl → NaCl + H₂O</div>
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> All 5 reactions are NCERT standard. For a 3-mark question, write at least 3 reactions with equations. For 5-marks, write all 5.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">70</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">Explain water of crystallisation with the help of two examples. How can you show that copper sulphate crystals contain water of crystallisation?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Water of crystallisation: A fixed number of water molecules chemically combined in the crystal structure of a salt, giving it definite shape and often colour.
+        <br><br>Examples:
+        <br>• Blue vitriol: CuSO₄·5H₂O (5 water molecules; blue crystals)
+        <br>• Washing soda: Na₂CO₃·10H₂O (10 water molecules; colourless crystals)
+        <br><br>Experiment to show CuSO₄ contains water:
+        <br>Heat blue CuSO₄·5H₂O crystals gently. The crystals turn white (anhydrous CuSO₄) and water droplets collect on cool parts of the tube.
+        <div class="qa-eq">CuSO₄·5H₂O →(heat)→ CuSO₄ + 5H₂O</div>
+        Add a few drops of water to white CuSO₄ — it turns blue again, proving the water was part of the crystal.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">71</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">Give reasons for the following: (a) Farmers neutralise the effect of acid rain on soil. (b) Factory effluents are neutralised before releasing into water bodies. (c) We feel pain and burning when an ant stings us.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Acid rain (pH &lt; 5.6) increases the acidity of soil, lowering its pH below the optimal range for crops. Farmers add quicklime/slaked lime to neutralise the acid, restoring proper pH for plant growth.
+        <br><br>(b) Factory effluents often contain acidic or basic waste. Releasing them directly into rivers/lakes changes water pH, harming aquatic life. Neutralisation (using lime for acidic waste, CO₂/acid for alkaline waste) brings pH to safe levels before release.
+        <br><br>(c) Ants inject formic acid (HCOOH) through their sting. This acidic substance reacts with tissue and causes irritation, pain, and burning sensation. Applying a mild base (NaHCO₃) neutralises the acid and provides relief.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">72</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">Describe the preparation of NaHCO₃ from NaCl (Solvay process overview). Write the equation. State two uses of NaHCO₃.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        NaHCO₃ is prepared by passing CO₂ into ammoniated brine (saturated NaCl + NH₃) — this is part of the Solvay process:
+        <div class="qa-eq">NaCl + H₂O + CO₂ + NH₃ → NH₄Cl + NaHCO₃↓</div>
+        NaHCO₃ precipitates (less soluble), is filtered, and dried.
+        <br><br>Uses of NaHCO₃:
+        <br>(i) Used in baking powder — releases CO₂ on heating, making bread/cake fluffy.
+        <br>(ii) Used as an antacid to relieve acidity (excess HCl in stomach): NaHCO₃ + HCl → NaCl + H₂O + CO₂.
+        <br>(iii) Used in soda-acid fire extinguishers.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">73</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">How does the pH affect our daily life? Explain with three examples.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        pH affects many aspects of daily life:
+        <br><br>(i) <b>Digestion:</b> Stomach produces HCl (pH ≈ 2) to aid digestion. If excess HCl is produced, it causes acidity. Antacids (NaHCO₃, Mg(OH)₂) neutralise it and raise pH.
+        <br><br>(ii) <b>Tooth decay:</b> Bacteria produce acid from food (pH drops below 5.5). At this pH, enamel (calcium phosphate) corrodes, causing decay. Toothpaste (mildly basic) neutralises the acid.
+        <br><br>(iii) <b>Agriculture:</b> Crops need specific soil pH (6–7). Acid rain or excessive fertilisers alter soil pH, reducing crop yield. Liming (adding CaO or Ca(OH)₂) corrects acidic soil.
+        <br><br>(iv) <b>Bee/wasp stings:</b> Bee sting injects formic acid; wasp injects alkali. Applying base/acid respectively neutralises pain.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">74</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">Identify A, B, C, D in: HCl + NaOH → A + B. Na₂CO₃ + 2HCl → 2C + B + D↑. CuO + H₂SO₄ → E + B.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        A = NaCl (sodium chloride — salt formed)<br>
+        B = H₂O (water — common product in all)<br>
+        C = NaCl (sodium chloride — from sodium carbonate + HCl)<br>
+        D = CO₂ (carbon dioxide gas — from carbonate reacting with acid)<br>
+        E = CuSO₄ (copper sulphate — from copper oxide + sulphuric acid)
+        <br><br>Full equations:
+        <div class="qa-eq">HCl + NaOH → NaCl + H₂O</div>
+        <div class="qa-eq">Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑</div>
+        <div class="qa-eq">CuO + H₂SO₄ → CuSO₄ + H₂O</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">75</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">(a) Why does an aqueous solution of an acid conduct electricity? (b) Why does dry HCl gas not change the colour of dry litmus? (c) What common property do all acids have when dissolved in water?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Acids in aqueous solution ionise to produce H⁺ (H₃O⁺) and corresponding negative ions. These free-moving ions are responsible for conducting electricity.
+        <br><br>(b) Dry HCl gas does not ionise without water — no H⁺ ions are produced in the absence of water. Since acidic properties (including colour change of litmus) require H⁺ ions, dry HCl cannot change dry litmus.
+        <br><br>(c) All acids produce H⁺ (hydrogen) ions when dissolved in water. This is the common property responsible for all acidic behaviour (sour taste, turns blue litmus red, reacts with metals, etc.).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">76</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div>
+        <div class="q-text">What are the properties and uses of Plaster of Paris? How is it obtained from gypsum?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Preparation from gypsum: Gypsum (CaSO₄·2H₂O) is heated at 100°C to lose 1.5 water molecules:
+        <div class="qa-eq">CaSO₄·2H₂O →(100°C)→ CaSO₄·½H₂O + 1½H₂O</div>
+        Properties:
+        <br>• White powder; sets hard when mixed with water.
+        <br>• Slightly expands on setting (fills moulds perfectly).
+        <br>• Should be stored in moisture-proof containers (absorbs water and becomes useless).
+        <br><br>Uses:
+        <br>(i) Used by doctors to make casts for broken bones (plaster casts).
+        <br>(ii) Used in making toys, decorative items, and plaster walls.
+        <br>(iii) Used in fire-proofing and smooth surfacing in construction.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">77</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">With the help of examples, explain the meaning of: (i) strong base vs weak base, (ii) an amphoteric oxide.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Strong base: Completely dissociates in water to produce a large number of OH⁻ ions. Example: NaOH → Na⁺ + OH⁻ (complete). pH close to 14.
+        <br>Weak base: Partially dissociates in water. Example: NH₄OH ⇌ NH₄⁺ + OH⁻ (partial). pH ≈ 9–11.
+        <br><br>(ii) Amphoteric oxide: A metal oxide that reacts with both acids and bases to form salt and water. Example: ZnO.
+        <div class="qa-eq">ZnO + H₂SO₄ → ZnSO₄ + H₂O (acts as base)</div>
+        <div class="qa-eq">ZnO + 2NaOH → Na₂ZnO₂ + H₂O (acts as acid)</div>
+        Al₂O₃ is another example of an amphoteric oxide.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">78</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">How is the pH scale important for organisms? Explain with reference to the human body and aquatic organisms.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        pH is vital for life processes:
+        <br><br><b>Human body:</b>
+        <br>• Blood pH = 7.4 (slightly basic). If pH drops below 7.0 (acidosis) or rises above 7.8 (alkalosis), enzymes denature and body functions fail — can be fatal.
+        <br>• Stomach maintains pH ≈ 2 for digestion. Mouth should have pH &gt; 5.5 to protect teeth.
+        <br>• Enzymes work optimally only within a narrow pH range.
+        <br><br><b>Aquatic organisms:</b>
+        <br>• Fish and aquatic organisms survive only within pH 7–8.
+        <br>• Acid rain lowers river/lake pH. Below pH 6, many species cannot survive.
+        <br>• Acid mine drainage and industrial effluents can make water highly acidic, destroying aquatic ecosystems.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">79</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">Explain why baking powder is preferred over baking soda for making cakes. What would happen if only baking soda were used?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Baking soda (NaHCO₃) alone on heating forms Na₂CO₃ (sodium carbonate) which is strongly alkaline and gives the cake a bitter, soapy taste.
+        <div class="qa-eq">2NaHCO₃ →(heat)→ Na₂CO₃ + H₂O + CO₂↑</div>
+        Baking powder = NaHCO₃ + tartaric acid + starch. The tartaric acid neutralises the Na₂CO₃ formed, preventing the bitter taste. CO₂ is still released (making cake fluffy) but no bitter residue remains.
+        <div class="qa-eq">Na₂CO₃ + 2COOH·CHOH·COOH → (sodium tartrate) + H₂O + CO₂↑</div>
+        Therefore, baking powder gives fluffy AND good-tasting cake; baking soda alone would make it bitter and soapy.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This is a very frequently asked 3-mark question. Key point: baking soda leaves alkaline Na₂CO₃; baking powder = NaHCO₃ + tartaric acid prevents this.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">80</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">What happens when: (i) dilute H₂SO₄ is added to sodium carbonate, (ii) HCl is added to calcium carbonate, (iii) HNO₃ is added to sodium bicarbonate? Write equations.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Salt + CO₂ + water (brisk effervescence):
+        <div class="qa-eq">Na₂CO₃ + H₂SO₄ → Na₂SO₄ + H₂O + CO₂↑</div>
+        (ii) Salt + CO₂ + water (brisk effervescence, white CaCO₃ solid dissolves):
+        <div class="qa-eq">CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑</div>
+        (iii) Salt + CO₂ + water (effervescence):
+        <div class="qa-eq">NaHCO₃ + HNO₃ → NaNO₃ + H₂O + CO₂↑</div>
+        In all cases: CO₂ gas turns lime water milky.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">81</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">Explain any three differences between acids and bases using properties, indicators and reactions.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        <table style="font-size:.82rem;border-collapse:collapse;width:100%">
+          <tr style="background:rgba(0,206,201,.08)"><th style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Property</th><th style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Acid</th><th style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Base</th></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Taste</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Sour</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Bitter, soapy</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Litmus</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Turns blue → red</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Turns red → blue</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">pH</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">&lt; 7</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">&gt; 7</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Ions in water</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">H⁺ ions</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">OH⁻ ions</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Reaction with metals</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Releases H₂ gas</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.15)">Only amphoteric metals release H₂</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">82</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">What is the Solvay process used for? Write the key reactions involved in producing NaHCO₃ and Na₂CO₃ from NaCl.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Solvay process: Used to manufacture Na₂CO₃ (soda ash/washing soda) and NaHCO₃ (baking soda) industrially from NaCl, NH₃, CO₂, and water.
+        <br><br>Step 1 — NaHCO₃ formation:
+        <div class="qa-eq">NaCl + NH₃ + CO₂ + H₂O → NaHCO₃↓ + NH₄Cl</div>
+        NaHCO₃ precipitates out (less soluble) and is filtered.
+        <br><br>Step 2 — Na₂CO₃ formation (calcination of NaHCO₃):
+        <div class="qa-eq">2NaHCO₃ →(heat)→ Na₂CO₃ + H₂O + CO₂↑</div>
+        The CO₂ produced is recycled back into the process.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">83</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">An experiment is set up to show that the acidic nature of HCl requires water. Describe the experiment, observations, and conclusions.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Experiment (NCERT Activity): Set up two beakers. Beaker A: dry blue litmus paper + dry HCl gas. Beaker B: moist blue litmus paper + HCl gas. Also test: HCl dissolved in dry toluene (non-polar, non-aqueous) vs HCl in water with conductivity apparatus.
+        <br><br>Observations:
+        <br>• Dry litmus in dry HCl — no colour change.
+        <br>• Moist litmus in HCl — turns red.
+        <br>• HCl in toluene — bulb does not glow (no conductivity).
+        <br>• HCl in water — bulb glows (conducts electricity).
+        <br><br>Conclusion: HCl shows acidic properties (colour change, conductivity) only in the presence of water. Water enables ionisation: HCl + H₂O → H₃O⁺ + Cl⁻. H⁺ ions are responsible for acidic nature.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">84</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">What is meant by the term 'corrosive nature of acids'? Why should concentrated H₂SO₄ be handled with care? What safety precaution should be taken while diluting it?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Corrosive nature: Strong acids like H₂SO₄ and HCl damage living tissue, metals, and other materials by reacting chemically with them, often destroying cellular structure.
+        <br><br>Why H₂SO₄ must be handled carefully: Concentrated H₂SO₄ is extremely corrosive, hygroscopic (absorbs water), and causes severe chemical burns on skin. Mixing it with water is highly exothermic — can cause splashing and burns.
+        <br><br>Safety precaution for dilution: Always add concentrated H₂SO₄ to water (not water to acid) slowly while stirring. The heat generated is safely dissipated in the large volume of water. Adding water to acid may cause violent boiling and acid splashing.
+        <br><br>Memory tip: "Do as you oughta — add acid to wata" (not the other way round).
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> The dilution precaution (acid to water, not water to acid) is a guaranteed 1-mark in many papers. State the reason (exothermic) every time.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">85</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">List the properties of bases. Give four properties with examples or equations.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Properties of bases:
+        <br>(i) Bitter taste and soapy feel. Example: NaOH solution.
+        <br>(ii) Turn red litmus blue. Example: NaOH turns red litmus blue.
+        <br>(iii) React with acids to form salt and water (neutralisation): NaOH + HCl → NaCl + H₂O.
+        <br>(iv) Conduct electricity in solution (due to OH⁻ ions).
+        <br>(v) React with certain metals (amphoteric metals like Zn and Al) to release H₂: Zn + 2NaOH → Na₂ZnO₂ + H₂↑.
+        <br>(vi) pH greater than 7.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">86</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2013</span></div>
+        <div class="q-text">What are natural indicators? Name three natural indicators. Describe how to prepare a turmeric indicator and state its colour change in acid and base.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Natural indicators: Substances extracted from natural sources that change colour in acidic or basic conditions. Unlike synthetic indicators, they are plant-based.
+        <br><br>Examples: (i) Litmus (from lichen) (ii) Turmeric (from turmeric root/Curcuma longa) (iii) Red cabbage juice (iv) China rose petals (Hibiscus)
+        <br><br>Preparation of turmeric indicator: Dissolve turmeric powder in a small amount of alcohol or water to extract the yellow pigment (curcumin). Filter the solution.
+        <br><br>Colour change:
+        <br>• In acid: Yellow (no change from natural colour)
+        <br>• In base: Red/brownish-red (curcumin turns red/pink in alkali)
+        <br>• In neutral: Yellow
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Turmeric is a common NCERT example. Key observation: turns red-brown in base (not blue!). China rose → turns magenta in acid, green in base.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">87</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">Give reasons: (a) NaHCO₃ is used in antacids. (b) Na₂CO₃·10H₂O is used to remove permanent hardness of water. (c) CaOCl₂ is used to disinfect swimming pools.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Stomach produces excess HCl causing acidity. NaHCO₃ is a mild, non-corrosive base that neutralises the excess HCl: NaHCO₃ + HCl → NaCl + H₂O + CO₂↑. It doesn't raise pH too much, making it safe.
+        <br><br>(b) Na₂CO₃ reacts with soluble calcium and magnesium salts (which cause permanent hardness) to form insoluble precipitates that can be filtered off:
+        <div class="qa-eq">CaCl₂ + Na₂CO₃ → CaCO₃↓ + 2NaCl</div>
+        This removes Ca²⁺/Mg²⁺ ions, softening the water.
+        <br><br>(c) CaOCl₂ (bleaching powder) releases Cl₂ gas when it reacts with CO₂ or water. Cl₂ is a powerful disinfectant that kills bacteria, algae, and other microorganisms in pool water.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">88</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">What is the significance of pH in everyday life? Explain with respect to (i) human digestion, (ii) plant growth, (iii) self-defence in animals.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) Human digestion: Stomach maintains pH ≈ 1.5–2 using HCl for protein digestion and killing bacteria. Excessive HCl causes acidity (pH too low); antacids raise pH. Saliva (pH 6.8–7) digests starch; blood maintains pH 7.4 precisely.
+        <br><br>(ii) Plant growth: Plants grow best in soil with pH 6–7. If soil is too acidic (acid rain, excessive fertiliser), crop yield drops. Farmers add lime to raise pH. Some plants like tea prefer slightly acidic soil (pH 4–6).
+        <br><br>(iii) Animal defence: Some insects use acids/bases for defence. Bees inject formic acid; wasps inject alkaline substance. Some plants and animals release acidic or alkaline secretions to deter predators. Stinging nettles inject methanoic acid causing burning sensation.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">89</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">What happens when sodium hydroxide reacts with (i) dilute HCl, (ii) aluminium metal, (iii) CO₂ gas? Write equations.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (i) NaOH + HCl (Neutralisation — salt + water):
+        <div class="qa-eq">NaOH(aq) + HCl(aq) → NaCl(aq) + H₂O(l)</div>
+        (ii) NaOH + Al (Amphoteric metal — sodium aluminate + H₂):
+        <div class="qa-eq">2Al(s) + 2NaOH(aq) + 2H₂O → 2NaAlO₂(aq) + 3H₂(g)↑</div>
+        (iii) NaOH + CO₂ (Base reacts with non-metallic oxide — sodium carbonate):
+        <div class="qa-eq">2NaOH(aq) + CO₂(g) → Na₂CO₃(aq) + H₂O(l)</div>
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> The NaOH + CO₂ reaction is the reverse of lime water test (Ca(OH)₂ + CO₂). For NaOH + Al, the product sodium aluminate (NaAlO₂) formula must be written correctly.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">90</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Two solutions A (pH = 2) and B (pH = 11) are given. Which is acidic? Which is basic? What would happen if equal volumes of A and B are mixed? What would the pH of the resulting solution be (approximate)?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        Solution A (pH = 2): Acidic (pH &lt; 7, strongly acidic).
+        <br>Solution B (pH = 11): Basic (pH &gt; 7, strongly basic).
+        <br><br>On mixing equal volumes: A neutralises B (or partially neutralises, depending on actual concentrations). The resulting mixture will be less acidic and less basic than the original solutions.
+        <br><br>Approximate pH: If both are of similar concentration, the resulting pH would be near 7 (neutral or slightly acidic/basic depending on actual molarity). The pH 2 acid has [H⁺] = 0.01 M and pH 11 base has [OH⁻] = 0.001 M — after mixing, excess H⁺ gives pH ≈ 2.3–3 (still slightly acidic since the acid was 10× stronger).
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> For board level, just state: "the solution approaches neutrality, pH moves toward 7". You don't need to calculate exact pH — state the trend.</div>
+    </div>
+  </div>
+
+</div><!-- end sa2-list -->
+
+<!-- ════════════════════ LA ════════════════════ -->
+<div class="sec-head reveal" data-type="la">
+  <div class="sec-label">📜 Long Answer · 5 Marks Each</div>
+  <div class="sec-title">Long Answer Questions</div>
+  <div class="sec-sub">5-mark questions from CBSE 2013–2024. Write complete, structured answers.</div>
+</div>
+<div class="q-list" id="la-list">
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">91</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">(a) State four reactions of dilute acids with different types of substances. Give balanced equations for each. (b) What is the common ion released by all acids in water? (c) Why is the reaction of acid with metal oxide called a neutralisation reaction?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Four reactions of dilute acids:
+        <br><br>(i) Acid + Metal → Salt + Hydrogen:
+        <div class="qa-eq">Zn + H₂SO₄ → ZnSO₄ + H₂↑</div>
+        (ii) Acid + Metal carbonate → Salt + Water + CO₂:
+        <div class="qa-eq">CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑</div>
+        (iii) Acid + Metal hydrogen carbonate → Salt + Water + CO₂:
+        <div class="qa-eq">NaHCO₃ + HCl → NaCl + H₂O + CO₂↑</div>
+        (iv) Acid + Metal oxide → Salt + Water:
+        <div class="qa-eq">CuO + 2HCl → CuCl₂ + H₂O</div>
+        (v) Acid + Base (Neutralisation):
+        <div class="qa-eq">NaOH + HCl → NaCl + H₂O</div>
+        <br>(b) All acids release H⁺ (hydrogen ion / proton) in aqueous solution. It exists as hydronium ion H₃O⁺ in solution.
+        <br><br>(c) Metal oxides are basic in nature (they react with acids to neutralise them). In the reaction of acid + metal oxide → salt + water, the H⁺ ions of the acid and the OH⁻ nature of the metal oxide neutralise each other — hence it is called neutralisation. Both H⁺ and oxide ions together form water.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">92</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">(a) What is the chlor-alkali process? Write the balanced equation. (b) What are the uses of the three products? (c) Why are the products of this process important industrially?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Chlor-alkali process: The industrial electrolysis of concentrated brine (NaCl solution) to produce three important chemicals.
+        <div class="qa-eq">2NaCl(aq) + 2H₂O(l) →(electrolysis)→ 2NaOH(aq) + Cl₂(g)↑ + H₂(g)↑</div>
+        Cl₂ is produced at the anode (+); H₂ is produced at the cathode (−); NaOH accumulates in solution near the cathode.
+        <br><br>(b) Uses:
+        <br><b>NaOH:</b> Soap/detergent making; paper industry; rayon manufacture; de-greasing; as a laboratory reagent.
+        <br><b>Cl₂:</b> Water purification; manufacture of PVC, chlorofluorocarbons, pesticides; bleaching powder production; disinfectants.
+        <br><b>H₂:</b> Fuel (hydrogen energy); manufacturing margarine/vanaspati (hydrogenation); Haber process (ammonia); rocket fuel.
+        <br><br>(c) Industrial importance: These three products — NaOH (alkali industry), Cl₂ (chemical industry), H₂ (fuel/chemical industry) — are the raw materials for hundreds of industrial processes. The chlor-alkali process is one of the most economically significant electrochemical processes globally.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">93</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">(a) Define water of crystallisation. (b) Describe an experiment to show that blue vitriol contains water of crystallisation. (c) Name three salts with their water of crystallisation. (d) What happens to washing soda when left in open air?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Water of crystallisation: The fixed number of water molecules that are chemically combined within a crystalline salt's structure. They give the salt its definite geometric shape and often a characteristic colour. Example: CuSO₄·5H₂O.
+        <br><br>(b) Experiment with blue vitriol:
+        <br>Step 1: Take blue CuSO₄·5H₂O crystals in a dry test tube and heat gently.
+        <br>Observation 1: Crystals turn white/pale (anhydrous CuSO₄); water droplets appear on cool walls of test tube.
+        <div class="qa-eq">CuSO₄·5H₂O →(heat)→ CuSO₄ (white) + 5H₂O</div>
+        Step 2: Cool the white powder. Add a few drops of water.
+        <br>Observation 2: White CuSO₄ turns blue again (reforms hydrated salt).
+        <br>Conclusion: The blue colour and crystal structure of CuSO₄ is due to its water of crystallisation.
+        <br><br>(c) Three salts with water of crystallisation:
+        <br>• Gypsum: CaSO₄·2H₂O (2 molecules)
+        <br>• Washing soda: Na₂CO₃·10H₂O (10 molecules)
+        <br>• Blue vitriol: CuSO₄·5H₂O (5 molecules)
+        <br>• Plaster of Paris: CaSO₄·½H₂O (½ molecule)
+        <br><br>(d) Washing soda in open air: Na₂CO₃·10H₂O undergoes efflorescence — it loses 9 out of 10 water molecules to the atmosphere, forming Na₂CO₃·H₂O (monohydrate). The surface becomes white/powdery.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">94</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">(a) What is meant by the strength of an acid/base? How is it different from concentration? (b) Draw and explain the pH scale. (c) Give 4 examples of how pH affects living organisms and daily life.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Strength: A strong acid/base completely ionises in water (e.g., HCl, NaOH). A weak acid/base partially ionises (e.g., CH₃COOH, NH₃). Strength depends on the degree of ionisation.
+        <br>Concentration: Amount of acid/base dissolved per unit volume of solution. A concentrated weak acid is still a weak acid. Don't confuse "concentrated" with "strong" — they are different properties.
+        <br><br>(b) pH Scale: Runs from 0–14. pH measures H⁺ ion concentration. pH = –log[H⁺].
+        <br>• pH 0–6 → Acidic (lower = more acidic)
+        <br>• pH 7 → Neutral (pure water)
+        <br>• pH 8–14 → Basic (higher = more basic)
+        <br>Universal indicator gives different colours: red (0–2), orange (3–4), yellow (5–6), green (7), blue (8–10), violet (11–14).
+        <br><br>(c) pH in daily life:
+        <br>1. Digestion: Stomach pH ≈ 2 for HCl digestion; antacids raise pH.
+        <br>2. Tooth decay: pH below 5.5 corrodes enamel.
+        <br>3. Agriculture: Soil pH 6–7 for most crops; lime added to acidic soil.
+        <br>4. Aquatic organisms: Fish survive only at pH 7–8; acid rain destroys aquatic life.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">95</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">Write a note on important salts — NaOH, NaHCO₃, Na₂CO₃ and bleaching powder. For each, state: source/preparation, chemical name, formula, and uses.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        <b>1. NaOH (Caustic Soda / Sodium Hydroxide)</b>
+        <br>Preparation: Chlor-alkali process (electrolysis of brine).
+        <br>Uses: Soap, paper, rayon, de-greasing, PVC.
+        <br><br><b>2. NaHCO₃ (Baking Soda / Sodium Hydrogen Carbonate)</b>
+        <br>Preparation: Solvay process (NaCl + NH₃ + CO₂ + H₂O).
+        <br>Uses: Baking (leavening agent), antacid, fire extinguisher, soda water.
+        <br><br><b>3. Na₂CO₃·10H₂O (Washing Soda / Sodium Carbonate Decahydrate)</b>
+        <br>Preparation: By heating NaHCO₃ (from Solvay) and recrystallisation.
+        <div class="qa-eq">2NaHCO₃ → Na₂CO₃ + H₂O + CO₂; Na₂CO₃ + 10H₂O → Na₂CO₃·10H₂O</div>
+        Uses: Glass/soap/paper industry; removing hardness of water; laundry.
+        <br><br><b>4. CaOCl₂ (Bleaching Powder / Calcium Oxychloride)</b>
+        <br>Preparation: Ca(OH)₂ + Cl₂ → CaOCl₂ + H₂O
+        <br>Uses: Bleaching cotton/linen/wood pulp; disinfecting water; oxidising agent.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">96</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">Distinguish between acids and bases on the basis of: (i) effect on litmus, (ii) taste, (iii) ions produced in water, (iv) reaction with each other, (v) pH value. Give examples.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        <table style="font-size:.80rem;border-collapse:collapse;width:100%">
+          <tr style="background:rgba(0,206,201,.10);font-weight:700"><td style="padding:6px 8px;border:1px solid rgba(0,206,201,.2)">Property</td><td style="padding:6px 8px;border:1px solid rgba(0,206,201,.2)">Acid</td><td style="padding:6px 8px;border:1px solid rgba(0,206,201,.2)">Base</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">(i) Litmus</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Turns blue litmus red</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Turns red litmus blue</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">(ii) Taste</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Sour (eg: lemon)</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Bitter, soapy (eg: NaOH)</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">(iii) Ions</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Releases H⁺ ions</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Releases OH⁻ ions</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">(iv) With each other</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Acid + base → salt + water (neutralisation)</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Same: base + acid → salt + water</td></tr>
+          <tr><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">(v) pH</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Less than 7 (0–6)</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.12)">Greater than 7 (8–14)</td></tr>
+        </table>
+        <br>Examples: Acid — HCl (hydrochloric acid), H₂SO₄, CH₃COOH. Base — NaOH, Mg(OH)₂, Ca(OH)₂.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">97</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">(a) With diagrams and equations, explain the preparation of Plaster of Paris from gypsum. (b) Describe its properties and explain why it is used in making casts for fractured bones. (c) State one precaution for its storage.</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Preparation:
+        <br>Gypsum (CaSO₄·2H₂O) is heated to about 100°C:
+        <div class="qa-eq">CaSO₄·2H₂O →(100°C)→ CaSO₄·½H₂O + 1½H₂O</div>
+        This produces Plaster of Paris (POP) = calcium sulphate hemihydrate.
+        Note: If heated beyond 120°C, all water is lost → dead burnt plaster → cannot set at all.
+        <br><br>(b) Properties and use in bone casts:
+        <br>• POP is a white powder that sets hard when mixed with water (forms gypsum):
+        <div class="qa-eq">CaSO₄·½H₂O + 1½H₂O → CaSO₄·2H₂O (hard solid)</div>
+        • It slightly expands on setting — ensures the cast perfectly fits the contours of the broken bone.
+        • Sets quickly (in 5–15 minutes), is lightweight and rigid.
+        • Immobilises fractured bones in the correct position for healing.
+        <br><br>(c) Storage precaution: Store in moisture-proof (airtight) containers. POP absorbs moisture from air and reacts with it, forming gypsum prematurely, making it useless for setting later.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">98</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div>
+        <div class="q-text">(a) What are indicators? Classify them with examples. (b) Describe the colours of litmus, phenolphthalein, and methyl orange in acid, base, and neutral solutions. (c) What is a universal indicator?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Indicators: Substances that change colour in acidic or basic conditions, used to identify the nature of a solution.
+        <br>Classification:
+        <br>• Natural indicators: Derived from natural sources. Examples: Litmus (from lichen), turmeric, red cabbage, China rose petals.
+        <br>• Synthetic indicators: Man-made. Examples: Phenolphthalein, methyl orange.
+        <br>• Olfactory indicators: Detected by smell. Examples: Vanilla essence, onion, clove oil.
+        <br><br>(b) Indicator colour table:
+        <table style="font-size:.80rem;border-collapse:collapse;width:100%">
+          <tr style="background:rgba(0,206,201,.10);font-weight:700"><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Indicator</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Acid</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Neutral</td><td style="padding:5px 8px;border:1px solid rgba(0,206,201,.2)">Base</td></tr>
+          <tr><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Litmus</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Red</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Purple</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Blue</td></tr>
+          <tr><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Phenolphthalein</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Colourless</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Colourless</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Pink</td></tr>
+          <tr><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Methyl orange</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Red</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Yellow</td><td style="padding:4px 8px;border:1px solid rgba(0,206,201,.12)">Yellow</td></tr>
+        </table>
+        <br>(c) Universal indicator: A mixture of several indicators that gives a range of colours across the entire pH scale (0–14), allowing estimation of approximate pH. Available as a solution or as pH paper. Unlike single indicators, it doesn't just show acid/base — it gives the actual pH value from colour comparison.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">99</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div>
+        <div class="q-text">(a) What are salts? How are they formed? (b) Give one example each of acidic, basic, and neutral salt. (c) Explain why the pH of NaCl solution is 7 while Na₂CO₃ has pH > 7. (d) What is common salt and how is it obtained?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Salts: Ionic compounds formed by the neutralisation of an acid and a base. The cation comes from the base; anion from the acid.
+        General: Acid + Base → Salt + Water.
+        <br><br>(b) Examples:
+        <br>• Acidic salt (strong acid + weak base): NH₄Cl — NH₃ is weak base, HCl is strong acid. pH &lt; 7.
+        <br>• Basic salt (weak acid + strong base): Na₂CO₃ — H₂CO₃ is weak acid, NaOH is strong base. pH &gt; 7.
+        <br>• Neutral salt (strong acid + strong base): NaCl — HCl + NaOH. pH = 7.
+        <br><br>(c) NaCl (strong acid HCl + strong base NaOH) → both completely ionise, no hydrolysis, pure neutral. pH = 7.
+        Na₂CO₃ (weak acid H₂CO₃ + strong base NaOH) → CO₃²⁻ ion hydrolyses in water: CO₃²⁻ + H₂O → HCO₃⁻ + OH⁻. Excess OH⁻ ions make solution alkaline. pH &gt; 7.
+        <br><br>(d) Common salt = NaCl. Obtained: (i) By evaporation of sea water (solar evaporation in salt pans). (ii) By mining rock salt deposits. Used in food, making other sodium compounds (baking soda, washing soda, NaOH).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">100</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">(a) Describe a NCERT activity to show that acids react with metals to produce hydrogen gas. Include: apparatus, procedure, observations, equation, and test for H₂. (b) Will the same reaction occur with copper? Why?</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answer</div>
+      <div class="qa-text">
+        (a) Activity: Reaction of dilute H₂SO₄ with zinc granules.
+        <br><br>Apparatus: Test tube with delivery tube, zinc granules, dilute H₂SO₄, burning splint.
+        <br><br>Procedure: Add zinc granules to a test tube. Add dilute H₂SO₄. Observe and collect the gas evolved by downward displacement of water or at delivery tube end.
+        <br><br>Observation: Brisk effervescence observed. Gas is colourless and odourless. A burning splint brought near the mouth of the test tube burns with a 'pop' sound.
+        <br><br>Equation:
+        <div class="qa-eq">Zn(s) + H₂SO₄(aq) → ZnSO₄(aq) + H₂(g)↑</div>
+        Test for H₂: The gas burns with a characteristic 'pop' sound — this is the standard test for hydrogen gas.
+        <br><br>(b) Copper will NOT react with dilute H₂SO₄. Copper is below hydrogen in the electrochemical/reactivity series (Zn > Fe > H > Cu). Only metals above hydrogen in the series can displace H₂ from dilute acids. Since Cu is less reactive than H, it cannot displace H from H₂SO₄.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> Always include the 'pop sound' test. The reason copper doesn't react (below hydrogen in reactivity series) is a must-write for 5-mark answers.</div>
+    </div>
+  </div>
+
+</div><!-- end la-list -->
+
+<!-- ════════════════════ CASE BASED ════════════════════ -->
+<div class="sec-head reveal" data-type="case">
+  <div class="sec-label">🗂 Case Based · 4 Marks Each</div>
+  <div class="sec-title">Case Based Questions</div>
+  <div class="sec-sub">Passage-based questions from CBSE 2018–2024. Read the passage carefully before answering.</div>
+</div>
+<div class="q-list" id="case-list">
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">101</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Ravi, a Class 10 student, performed an experiment in the chemistry lab. He took four test tubes containing HCl solution, NaOH solution, lemon juice, and baking soda solution. He tested each with litmus paper, pH paper, and methyl orange. He noted that HCl solution had pH ≈ 2, NaOH had pH ≈ 13, lemon juice had pH ≈ 3, and baking soda had pH ≈ 9.</div>
+        <div class="q-text">(i) Which solutions are acidic? Which are basic? (1)<br>(ii) What colour does methyl orange show in HCl solution and in NaOH solution? (1)<br>(iii) Which solution would turn blue litmus red? (1)<br>(iv) If Ravi adds NaOH drop by drop to the HCl solution, what happens to the pH? Draw a rough pH curve. (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Acidic (pH &lt; 7): HCl (pH 2) and lemon juice (pH 3). Basic (pH &gt; 7): NaOH (pH 13) and baking soda (pH 9).
+        <br><br>(ii) Methyl orange in HCl → Red. Methyl orange in NaOH → Yellow.
+        <br><br>(iii) HCl solution and lemon juice would turn blue litmus red (both are acidic, pH &lt; 7).
+        <br><br>(iv) As NaOH is added to HCl: pH gradually rises from 2 toward 7 (neutralisation point), then beyond 7 to high pH as NaOH becomes excess. pH curve: starts low (acidic), rises steeply through 7 at equivalence point, then levels off at high pH.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> The pH curve during neutralisation is a new CBSE pattern question. Know that pH starts low (acid) and rises to 7 at neutralisation, then goes above 7 (excess base).</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">102</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="case-passage"><strong>Passage:</strong> A chemistry teacher conducted an electrolysis experiment using concentrated NaCl (brine) solution. She connected two electrodes to a battery. Gas X was collected at the electrode connected to the positive terminal. Gas Y was collected at the negative electrode. The solution near the negative electrode was tested with red litmus and it turned blue. She told the students this process is used to make important industrial chemicals from common salt.</div>
+        <div class="q-text">(i) Name gases X and Y. (1)<br>(ii) What substance formed near the negative electrode? How does red litmus confirm it? (1)<br>(iii) Write the balanced equation for this process. (1)<br>(iv) Name one use each of gases X and Y. (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Gas X (at positive/anode) = Chlorine (Cl₂). Gas Y (at negative/cathode) = Hydrogen (H₂).
+        <br><br>(ii) NaOH (sodium hydroxide) is formed near the cathode. Being a strong base (OH⁻ ions), it turns red litmus blue.
+        <br><br>(iii) Balanced equation:
+        <div class="qa-eq">2NaCl(aq) + 2H₂O(l) → 2NaOH(aq) + Cl₂(g)↑ + H₂(g)↑</div>
+        (iv) Use of Cl₂: Water purification / manufacture of bleaching powder. Use of H₂: Manufacture of ammonia / used as fuel.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">103</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="case-passage"><strong>Passage:</strong> A student tested four solutions (P, Q, R, S) with various indicators. Solution P turned blue litmus red and gave red colour with methyl orange. Solution Q turned red litmus blue and gave pink colour with phenolphthalein. Solution R showed no change with either litmus and gave yellow with methyl orange. Solution S turned blue litmus red and gave yellow with methyl orange (only slightly acidic).</div>
+        <div class="q-text">(i) Identify the nature (acid/base/neutral) of P, Q, R, S. (1)<br>(ii) Which solution likely has the highest pH? Lowest pH? (1)<br>(iii) Why does phenolphthalein turn pink only in Q? (1)<br>(iv) If solution P is mixed with Q, predict what happens. Write a general equation. (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) P: Acidic (blue litmus → red; methyl orange → red). Q: Basic (red litmus → blue; phenolphthalein → pink). R: Neutral (no litmus change; methyl orange → yellow). S: Weakly acidic (blue litmus → red but methyl orange yellow, suggesting mild acid).
+        <br><br>(ii) Highest pH = Q (basic). Lowest pH = P (strongly acidic, methyl orange red).
+        <br><br>(iii) Phenolphthalein turns pink only in basic solution (when OH⁻ ions are present). It is colourless in acid and neutral conditions. Only Q is basic, so only Q gives pink colour.
+        <br><br>(iv) Mixing P (acid) and Q (base) → Neutralisation reaction. pH moves toward 7. General equation: Acid + Base → Salt + Water (exothermic).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">104</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="case-passage"><strong>Passage:</strong> During a field visit, students noticed that a lake near an industrial area had very few fish and plants. The water appeared slightly greenish and had an unpleasant smell. On testing with pH paper, the water showed pH ≈ 4.5. A biology teacher explained that this lake is being affected by acid rain from a nearby factory's emissions (SO₂ and NO₂). The school decided to help by adding a suitable substance to restore the lake's health.</div>
+        <div class="q-text">(i) What is acid rain? How is it formed from SO₂ and NO₂? (1)<br>(ii) Why are aquatic organisms dying in this lake? (1)<br>(iii) What substance should be added to restore the lake? Write the neutralisation reaction. (1)<br>(iv) What preventive measures can the factory take to reduce acid rain? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Acid rain: Rainwater with pH less than 5.6, caused by dissolution of SO₂ and NO₂ in rain water to form sulphuric acid and nitric acid respectively.
+        <div class="qa-eq">SO₂ + H₂O → H₂SO₃ (sulphurous acid); 2NO₂ + H₂O → HNO₂ + HNO₃</div>
+        <br>(ii) Most aquatic organisms (fish, plants) survive only at pH 7–8. At pH 4.5, the water is highly acidic, which disrupts enzyme function, damages gills, and destroys food chains — causing mass death.
+        <br><br>(iii) Add lime (Ca(OH)₂ or CaO) to neutralise the acid:
+        <div class="qa-eq">Ca(OH)₂ + H₂SO₄ → CaSO₄ + 2H₂O</div>
+        This raises pH back to neutral, restoring conditions for aquatic life.
+        <br><br>(iv) Prevention: Use scrubbers in factory chimneys to remove SO₂. Use catalytic converters to reduce NO₂. Switch to cleaner fuels. Treat industrial emissions before release.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">105</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Priya's mother was making a cake. She mixed flour, eggs, sugar, and baking powder. After baking, the cake came out light and fluffy. Priya's chemistry teacher explained that the same substance (baking soda) was in baking powder but baking powder works better. She also mentioned that if someone has a bee sting, applying the paste of the same compound can relieve pain.</div>
+        <div class="q-text">(i) Name the chemical in baking powder that makes cake fluffy. Write the reaction that occurs when it is heated. (1)<br>(ii) Why is baking powder used instead of baking soda alone? (1)<br>(iii) Why does baking soda (NaHCO₃) relieve bee sting pain? (1)<br>(iv) What happens if excess baking soda is added to the cake mix? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) NaHCO₃ (sodium hydrogen carbonate / baking soda) in baking powder makes the cake fluffy. On heating:
+        <div class="qa-eq">2NaHCO₃ →(heat)→ Na₂CO₃ + H₂O + CO₂↑</div>
+        CO₂ gas released makes the dough light and spongy.
+        <br><br>(ii) Baking soda alone forms Na₂CO₃ on heating which is alkaline (bitter taste). Baking powder = NaHCO₃ + tartaric acid. The tartaric acid neutralises Na₂CO₃ formed, preventing bitterness. CO₂ is still released for fluffiness but no bitter residue.
+        <br><br>(iii) Bee sting injects formic acid (HCOOH). NaHCO₃ is mildly basic. It neutralises the acid: HCOOH + NaHCO₃ → HCOONa + H₂O + CO₂↑. This relieves the burning/pain.
+        <br><br>(iv) If excess NaHCO₃ is added without enough acid (tartaric acid) in baking powder, more Na₂CO₃ is formed. This gives the cake a soapy/bitter taste. Also, too much CO₂ released quickly may cause the cake to rise unevenly and then collapse.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">106</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="case-passage"><strong>Passage:</strong> A chemistry student Ananya performed an experiment to test the acidic nature of HCl. She set up three test setups — Setup 1: dry HCl gas + dry blue litmus paper; Setup 2: HCl gas passed through water + dry blue litmus paper; Setup 3: HCl dissolved in water (HCl solution) connected to a conductivity circuit. She observed that only Setup 2 and 3 showed acid properties. She concluded that water plays a crucial role in the acidic behaviour of HCl.</div>
+        <div class="q-text">(i) What did Ananya observe in Setup 1? Why? (1)<br>(ii) What happened in Setup 2? Write the ionisation equation. (1)<br>(iii) In Setup 3, what happens in the conductivity circuit and why? (1)<br>(iv) What conclusion can be drawn about the role of water in acids? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) In Setup 1: Dry blue litmus paper shows NO colour change. Dry HCl gas in absence of water does not ionise — no H⁺ ions are produced — cannot exhibit acidic properties.
+        <br><br>(ii) In Setup 2: Blue litmus turns red. HCl dissolved in water:
+        <div class="qa-eq">HCl(g) + H₂O(l) → H₃O⁺(aq) + Cl⁻(aq)</div>
+        H⁺ (hydronium) ions produced → acid behaviour → litmus turns red.
+        <br><br>(iii) In Setup 3: The bulb glows — HCl solution conducts electricity. The H⁺ and Cl⁻ ions (produced by ionisation in water) act as charge carriers and conduct the current.
+        <br><br>(iv) Conclusion: Water is essential for acids to show acidic properties. Acids produce H⁺ ions (hydronium ions H₃O⁺) only when dissolved in water. Without water, no ionisation → no H⁺ ions → no acidic behaviour. The acidic property is due to H⁺ ions, not the HCl molecule itself.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">107</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Suresh visited a cave famous for stalactites and stalagmites. His guide explained these formations take thousands of years to form. Water containing dissolved CO₂ seeps through limestone (CaCO₃) cracks, dissolving it slowly to form soluble calcium bicarbonate. As water drips into the cave and CO₂ escapes, CaCO₃ re-deposits, slowly forming the beautiful rock formations. Meanwhile, Suresh noticed his aluminium water bottle had small dents — the guide said aluminium is special because it reacts with both acids and bases.</div>
+        <div class="q-text">(i) Write the reaction by which limestone dissolves in CO₂-water. (1)<br>(ii) Write the reaction by which CaCO₃ re-deposits in the cave. (1)<br>(iii) What property of aluminium allows it to react with both acids and bases? Write one equation for each. (1)<br>(iv) Why is the reaction of acid with limestone geologically important? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Limestone dissolving in CO₂-water:
+        <div class="qa-eq">CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂ (soluble calcium bicarbonate)</div>
+        <br>(ii) CaCO₃ re-depositing in cave (reverse reaction as CO₂ escapes):
+        <div class="qa-eq">Ca(HCO₃)₂ → CaCO₃↓ + CO₂↑ + H₂O</div>
+        This slow deposition over thousands of years forms stalactites (hanging) and stalagmites (rising).
+        <br><br>(iii) Aluminium is an amphoteric metal — it reacts with both acids and bases.
+        <br>With acid: Al + 3HCl → AlCl₃ + 3/2 H₂↑
+        <br>With base: 2Al + 2NaOH + 2H₂O → 2NaAlO₂ + 3H₂↑
+        <br><br>(iv) The dissolution of limestone by carbonic acid (CO₂ in rainwater) is the geological process responsible for forming caves, karst landscapes, sinkholes, and stalagmite formations. It is also responsible for the weathering of limestone buildings and monuments exposed to CO₂-rich atmosphere.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">108</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="case-passage"><strong>Passage:</strong> A farmer in a hilly region noticed poor crop yield despite regular irrigation. On getting the soil tested, the report showed soil pH = 4.5. A scientist suggested three treatments: (A) Add powdered limestone (CaCO₃). (B) Add slaked lime Ca(OH)₂. (C) Add wood ash (which is basic). The farmer wanted to understand why pH matters for crops and how to fix it.</div>
+        <div class="q-text">(i) Is the soil acidic or basic? What may have caused this? (1)<br>(ii) Which treatment would be most effective and fastest? Why? (1)<br>(iii) Write the reaction of slaked lime with the excess acid (represented as H₂SO₄). (1)<br>(iv) What is the ideal soil pH for most crops and why? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Acidic (pH 4.5 &lt; 7). Causes: Acid rain; excessive use of chemical fertilisers (which release H⁺ on decomposition); leaching of nutrients leaving acid residues; industrial pollution.
+        <br><br>(ii) Treatment B (Slaked lime, Ca(OH)₂) is fastest. Ca(OH)₂ dissolves readily and reacts immediately with acid in soil. CaCO₃ (A) reacts slower; wood ash (C) is less concentrated. Ca(OH)₂ is commonly used for quick liming.
+        <br><br>(iii) Slaked lime + sulphuric acid:
+        <div class="qa-eq">Ca(OH)₂ + H₂SO₄ → CaSO₄ + 2H₂O</div>
+        This neutralises the acid, raising soil pH.
+        <br><br>(iv) Ideal soil pH for most crops: 6–7 (slightly acidic to neutral). At this pH, soil microorganisms are most active (nitrification, decomposition of organic matter); essential nutrients like N, P, K, Ca are most available to plant roots; enzyme activity is optimal. Too acidic or too basic reduces nutrient availability and harms soil microbiota.
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">109</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Three crystals A, B, C are given in the lab. Crystal A is blue and turns white on heating, with water droplets forming. Crystal B is colourless and forms a powdery white substance on long exposure to dry air. Crystal C is white and becomes hard when water is added, expanding slightly. All three involve water of crystallisation. The teacher tells students that understanding these materials has important industrial applications.</div>
+        <div class="q-text">(i) Identify crystals A, B, C with their chemical names and formulas. (1)<br>(ii) What is efflorescence? Which crystal shows it and why? (1)<br>(iii) Crystal C is used in hospitals. What is this use and why is C suitable for it? (1)<br>(iv) Write the equation for heating crystal A. What is the name of the product? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Crystal A: Blue vitriol = Copper sulphate pentahydrate (CuSO₄·5H₂O) — blue, turns white on heating.
+        <br>Crystal B: Washing soda = Sodium carbonate decahydrate (Na₂CO₃·10H₂O) — colourless, effloresces in dry air.
+        <br>Crystal C: Plaster of Paris = Calcium sulphate hemihydrate (CaSO₄·½H₂O) — white powder, sets hard with water.
+        <br><br>(ii) Efflorescence: Spontaneous loss of water of crystallisation by a hydrated salt when exposed to dry air. Crystal B (Na₂CO₃·10H₂O) shows it — it loses 9 water molecules to dry atmosphere, forming Na₂CO₃·H₂O (powder on surface).
+        <br><br>(iii) Crystal C (POP) is used in hospitals to make plaster casts for fractured bones. It is suitable because: (a) Sets hard quickly when mixed with water; (b) Slightly expands on setting → fits bone contour perfectly; (c) Lightweight, rigid, easily removable; (d) Biocompatible (non-toxic).
+        <br><br>(iv) Heating Crystal A:
+        <div class="qa-eq">CuSO₄·5H₂O →(heat)→ CuSO₄ + 5H₂O</div>
+        Product: Anhydrous copper sulphate (CuSO₄) — white powder. This is used as a test for water (white powder turns blue when water is added).
+      </div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">110</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Nisha bought a bottle of dilute sulphuric acid from a chemical shop to perform experiments. She was curious to see what happens when she adds it to (i) magnesium ribbon, (ii) sodium carbonate powder, (iii) copper oxide powder, (iv) iron filings. She carefully performed all four experiments, noting colour changes, gas evolution, and fizzing. Her teacher later explained why each reaction occurs differently.</div>
+        <div class="q-text">(i) What would Nisha observe when dilute H₂SO₄ is added to magnesium ribbon? Write the equation. (1)<br>(ii) What gas is released with sodium carbonate? How can it be identified? (1)<br>(iii) What colour change occurs when H₂SO₄ reacts with CuO? Write the equation. (1)<br>(iv) Would the same reactions occur if Nisha used copper pieces instead of iron filings? Why? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">
+        (i) Magnesium ribbon + dilute H₂SO₄: Brisk effervescence, magnesium dissolves, gas burns with 'pop' sound:
+        <div class="qa-eq">Mg(s) + H₂SO₄(aq) → MgSO₄(aq) + H₂(g)↑</div>
+        <br>(ii) Na₂CO₃ + dilute H₂SO₄ → CO₂ gas released (brisk effervescence). Test: Pass CO₂ through lime water → turns milky (CaCO₃ precipitate forms).
+        <div class="qa-eq">Na₂CO₃ + H₂SO₄ → Na₂SO₄ + H₂O + CO₂↑</div>
+        <br>(iii) Black CuO + H₂SO₄: The black solid dissolves, forming a blue/blue-green solution:
+        <div class="qa-eq">CuO(s) + H₂SO₄(aq) → CuSO₄(aq) + H₂O(l)</div>
+        Observation: Black solid disappears, blue-green solution of CuSO₄ forms.
+        <br><br>(iv) No, copper would NOT react with dilute H₂SO₄. Copper is below hydrogen in the reactivity series, so it cannot displace H₂ from dilute acids. Iron (above H in series) reacts to give FeSO₄ + H₂: Fe + H₂SO₄ → FeSO₄ + H₂↑. Only metals above H in reactivity series react with dilute acids.
+      </div>
+      <div class="qa-tip"><strong>Board Tip:</strong> This passage tests all 4 types of acid reactions. The copper non-reaction (reactivity series) is the key discriminating sub-question.</div>
+    </div>
+  </div>
+
+</div><!-- end case-list -->
+
+</div><!-- end main -->
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks"><li><a href="vistar10.html">Home</a></li><li><a href="subjects.html">Subjects</a></li><li><a href="ch2.html">Ch 2</a></li><li><a href="ch2-mcq.html">MCQ</a></li><li><a href="ch2-study.html">Study</a></li></ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 students &nbsp;·&nbsp; © 2026 VISTAR10</div>
+</footer>
+
+<script>
+/* ── TOGGLE ── */
+function toggle(qt) {
+  const card = qt.closest('.qcard');
+  card.classList.toggle('open');
+}
+
+/* ── FILTER ── */
+function filterQ(type, btn) {
+  document.querySelectorAll('.ftag').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  const cards = document.querySelectorAll('.qcard');
+  let vis = 0;
+  cards.forEach(c => {
+    const show = type === 'all' || c.dataset.type === type;
+    c.classList.toggle('hidden', !show);
+    if (show) vis++;
+  });
+  document.querySelectorAll('.sec-head').forEach(sh => {
+    const show = type === 'all' || sh.dataset.type === type;
+    sh.classList.toggle('hidden', !show);
+  });
+  document.getElementById('visCount').textContent = `Showing ${vis} questions`;
+}
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 28), {passive:true});
+
+/* ── REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

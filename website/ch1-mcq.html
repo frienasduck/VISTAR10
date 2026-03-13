@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VISTAR10 — Ch 1 MCQ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#F5F4FF;--violet:#6C5CE7;--violet-lt:#A29BFE;--mint:#00CEC9;
+      --text:#1A1A2E;--muted:#6B6B8A;--card:rgba(255,255,255,0.85);
+      --r:16px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+      --px:clamp(1rem,4vw,6%);
+      --green:#00B894;--red:#E17055;--orange:#FDCB6E;--yellow:#F9CA24;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--violet-lt);border-radius:99px;}
+
+    /* BLOBS */
+    .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18;animation:drift 20s ease-in-out infinite alternate;}
+    .b1{width:clamp(200px,40vw,460px);height:clamp(200px,40vw,460px);background:#A29BFE;top:-8%;left:-6%;}
+    .b2{width:clamp(140px,26vw,300px);height:clamp(140px,26vw,300px);background:#00CEC9;bottom:15%;right:-4%;animation-delay:-8s;}
+    @keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(20px,-30px);}}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px var(--px);transition:background .4s;}
+    nav.scrolled{background:rgba(245,244,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(108,92,231,.10);box-shadow:0 4px 28px rgba(108,92,231,.07);}
+    .logo{font-family:var(--fh);font-size:clamp(1rem,2vw,1.35rem);font-weight:800;color:var(--violet);display:flex;align-items:center;gap:8px;}
+    .logo-icon{width:26px;height:26px;background:linear-gradient(135deg,var(--violet),var(--mint));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;animation:spin 7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .nav-back{background:rgba(108,92,231,.10);color:var(--violet);font-family:var(--fb);font-size:.84rem;font-weight:600;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(108,92,231,.20);cursor:pointer;transition:all .25s;white-space:nowrap;}
+    .nav-back:hover{background:var(--violet);color:#fff;}
+
+    /* STREAK BAR */
+    .streak-bar{position:fixed;top:60px;left:0;right:0;z-index:190;background:rgba(245,244,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(108,92,231,.08);padding:10px var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;transition:transform .3s;}
+    .sb-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .streak-chip{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.90);border:1px solid rgba(108,92,231,.13);border-radius:50px;padding:5px 13px;font-size:.78rem;font-weight:600;}
+    .streak-chip .fire{animation:fireR 1s ease-in-out infinite;}
+    @keyframes fireR{0%,100%{transform:rotate(-4deg);}50%{transform:rotate(4deg);}}
+    .score-chip{display:flex;align-items:center;gap:6px;background:rgba(108,92,231,.08);border:1px solid rgba(108,92,231,.15);border-radius:50px;padding:5px 13px;font-size:.78rem;font-weight:600;color:var(--violet);}
+    .progress-wrap{flex:1;min-width:120px;max-width:260px;}
+    .progress-label{font-size:.65rem;font-weight:500;color:var(--muted);margin-bottom:4px;}
+    .progress-bar{height:5px;background:rgba(108,92,231,.12);border-radius:99px;overflow:hidden;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--mint));border-radius:99px;transition:width .5s ease;}
+
+    /* MAIN */
+    .main{position:relative;z-index:1;padding:clamp(130px,16vh,148px) var(--px) clamp(40px,6vh,60px);}
+
+    /* LEVEL SELECTOR */
+    .level-selector{margin-bottom:clamp(24px,3.5vw,36px);}
+    .ls-title{font-family:var(--fh);font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;color:var(--text);margin-bottom:6px;}
+    .ls-sub{font-size:clamp(.84rem,1vw,.92rem);color:var(--muted);font-weight:300;margin-bottom:20px;}
+    .level-tabs{display:flex;gap:10px;flex-wrap:wrap;}
+    .ltab{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.80);border:1.5px solid rgba(108,92,231,.15);border-radius:50px;padding:9px 18px;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .25s;backdrop-filter:blur(8px);}
+    .ltab:hover{border-color:var(--lc,var(--violet));color:var(--lc,var(--violet));}
+    .ltab.active{background:var(--lc,var(--violet));border-color:var(--lc,var(--violet));color:#fff;box-shadow:0 4px 16px rgba(108,92,231,.25);}
+    .ltab-dot{width:8px;height:8px;border-radius:50%;background:var(--lc,var(--violet));}
+    .ltab.active .ltab-dot{background:rgba(255,255,255,.7);}
+
+    /* QUESTION CARD */
+    .q-container{max-width:760px;}
+    .q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+    .q-meta{display:flex;align-items:center;gap:10px;}
+    .q-num{font-family:var(--fh);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+    .q-level-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:20px;color:#fff;}
+    .q-pyq{font-size:.65rem;font-weight:700;background:rgba(229,161,0,.15);color:#c68a00;padding:3px 9px;border-radius:20px;}
+    .hint-btn{display:flex;align-items:center;gap:5px;background:rgba(255,234,167,.35);border:1px solid rgba(229,185,0,.25);border-radius:50px;padding:6px 14px;font-size:.74rem;font-weight:600;color:#a37c00;cursor:pointer;transition:all .25s;font-family:var(--fb);}
+    .hint-btn:hover{background:rgba(255,234,167,.60);}
+    .hint-btn.used{opacity:.5;cursor:not-allowed;}
+
+    .q-card{background:var(--card);border:1.5px solid rgba(108,92,231,.13);border-radius:22px;padding:clamp(22px,3vw,30px) clamp(18px,2.5vw,26px);backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(108,92,231,.09);}
+    .q-text{font-size:clamp(.94rem,1.3vw,1.05rem);font-weight:500;color:var(--text);line-height:1.65;margin-bottom:22px;}
+    .q-eq{background:rgba(108,92,231,.06);border:1px solid rgba(108,92,231,.12);border-radius:10px;padding:10px 14px;font-family:'Courier New',monospace;font-size:clamp(.80rem,1vw,.90rem);color:var(--text);margin:10px 0 16px;line-height:1.5;}
+
+    .options{display:flex;flex-direction:column;gap:10px;}
+    .opt{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.70);border:1.5px solid rgba(108,92,231,.12);border-radius:13px;padding:clamp(12px,2vw,15px) clamp(14px,2vw,18px);cursor:pointer;transition:all .25s;position:relative;}
+    .opt:hover:not(.disabled){background:rgba(108,92,231,.05);border-color:rgba(108,92,231,.30);}
+    .opt.selected{border-color:var(--violet);background:rgba(108,92,231,.07);}
+    .opt.correct{border-color:var(--green)!important;background:rgba(0,184,148,.08)!important;}
+    .opt.wrong{border-color:var(--red)!important;background:rgba(225,112,85,.08)!important;}
+    .opt.disabled{cursor:default;}
+    .opt-key{width:28px;height:28px;border-radius:8px;background:rgba(108,92,231,.10);border:1.5px solid rgba(108,92,231,.18);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:.76rem;font-weight:700;color:var(--violet);flex-shrink:0;transition:all .25s;}
+    .opt.correct .opt-key{background:var(--green);border-color:var(--green);color:#fff;}
+    .opt.wrong .opt-key{background:var(--red);border-color:var(--red);color:#fff;}
+    .opt-text{font-size:clamp(.86rem,1.1vw,.94rem);color:var(--text);line-height:1.5;padding-top:2px;}
+    .opt-tick{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1rem;opacity:0;transition:opacity .2s;}
+    .opt.correct .opt-tick,.opt.wrong .opt-tick{opacity:1;}
+
+    /* HINT BOX */
+    .hint-box{background:rgba(255,234,167,.30);border:1px solid rgba(229,185,0,.30);border-radius:13px;padding:13px 16px;margin-top:14px;font-size:.84rem;color:#7a5c00;line-height:1.6;display:none;}
+    .hint-box.show{display:block;animation:fadeIn .3s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+    /* EXPLANATION */
+    .explanation{background:linear-gradient(135deg,rgba(0,184,148,.06),rgba(108,92,231,.04));border:1px solid rgba(0,184,148,.20);border-radius:13px;padding:clamp(14px,2vw,18px) clamp(14px,2vw,18px);margin-top:16px;display:none;}
+    .explanation.show{display:block;animation:fadeIn .35s ease;}
+    .exp-head{display:flex;align-items:center;gap:8px;font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--green);margin-bottom:8px;}
+    .exp-body{font-size:clamp(.82rem,.98vw,.90rem);color:var(--muted);line-height:1.65;}
+    .exp-tip{margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,184,148,.15);font-size:.78rem;color:var(--muted);font-style:italic;}
+
+    /* MISTAKE BANNER */
+    .mistake-banner{background:rgba(225,112,85,.08);border:1px solid rgba(225,112,85,.25);border-radius:13px;padding:13px 16px;margin-top:14px;font-size:.84rem;color:#a84422;line-height:1.6;display:none;}
+    .mistake-banner.show{display:block;animation:fadeIn .3s ease;}
+
+    /* ACTION ROW */
+    .action-row{display:flex;align-items:center;justify-content:space-between;margin-top:22px;flex-wrap:wrap;gap:12px;}
+    .btn-submit{background:linear-gradient(135deg,var(--violet),#9B8FF7);color:#fff;font-family:var(--fb);font-size:.9rem;font-weight:600;padding:12px 28px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 5px 20px rgba(108,92,231,.30);transition:all .3s;}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(108,92,231,.40);}
+    .btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+    .btn-next{background:var(--violet);color:#fff;font-family:var(--fb);font-size:.9rem;font-weight:600;padding:12px 28px;border-radius:50px;border:none;cursor:pointer;transition:all .3s;display:none;}
+    .btn-next:hover{transform:translateY(-2px);}
+    .q-counter-pill{font-size:.76rem;color:var(--muted);font-weight:400;}
+
+    /* ACHIEVEMENTS PANEL */
+    .achievements{margin-top:clamp(36px,5vw,52px);}
+    .ach-title{font-family:var(--fh);font-size:clamp(1.1rem,2vw,1.4rem);font-weight:800;color:var(--text);margin-bottom:16px;}
+    .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:12px;}
+    .ach-card{background:var(--card);border:1px solid rgba(108,92,231,.12);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;transition:all .3s;opacity:.40;}
+    .ach-card.unlocked{opacity:1;box-shadow:0 4px 18px rgba(108,92,231,.12);border-color:rgba(108,92,231,.22);}
+    .ach-card.unlocked{animation:achPop .5s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes achPop{0%{transform:scale(.85);}100%{transform:scale(1);}}
+    .ach-icon{font-size:1.6rem;flex-shrink:0;}
+    .ach-info{}
+    .ach-name{font-family:var(--fh);font-size:.78rem;font-weight:700;color:var(--text);}
+    .ach-desc{font-size:.68rem;color:var(--muted);margin-top:2px;}
+
+    /* RESULTS SCREEN */
+    .results{display:none;text-align:center;padding:clamp(32px,5vw,52px) clamp(20px,3vw,36px);background:var(--card);border:1px solid rgba(108,92,231,.13);border-radius:24px;backdrop-filter:blur(12px);max-width:600px;box-shadow:0 8px 40px rgba(108,92,231,.10);}
+    .results.show{display:block;animation:fadeIn .5s ease;}
+    .result-emoji{font-size:4rem;display:block;margin-bottom:16px;}
+    .result-score{font-family:var(--fh);font-size:clamp(2.5rem,7vw,4rem);font-weight:800;color:var(--violet);display:block;}
+    .result-label{font-size:1rem;color:var(--muted);margin-bottom:20px;}
+    .result-stats{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:24px;}
+    .rs{text-align:center;}
+    .rs-num{font-family:var(--fh);font-size:1.6rem;font-weight:800;display:block;}
+    .rs-lbl{font-size:.72rem;color:var(--muted);}
+    .btn-restart{background:linear-gradient(135deg,var(--violet),#9B8FF7);color:#fff;font-family:var(--fb);font-size:.9rem;font-weight:600;padding:13px 30px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 5px 20px rgba(108,92,231,.28);transition:all .3s;margin:6px;}
+    .btn-restart:hover{transform:translateY(-2px);}
+    .btn-other{background:rgba(108,92,231,.10);color:var(--violet);font-family:var(--fb);font-size:.9rem;font-weight:600;padding:13px 30px;border-radius:50px;border:1.5px solid rgba(108,92,231,.22);cursor:pointer;transition:all .3s;margin:6px;}
+    .btn-other:hover{background:rgba(108,92,231,.18);}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1A1A2E;color:#fff;font-family:var(--fb);font-size:.84rem;font-weight:500;padding:11px 22px;border-radius:50px;box-shadow:0 6px 24px rgba(0,0,0,.20);z-index:999;transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;opacity:0;white-space:nowrap;}
+    .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+    /* RESPONSIVE */
+    @media(max-width:600px){
+      .streak-bar{top:56px;padding:8px var(--px);}
+      .level-tabs{gap:7px;}
+      .ltab{padding:7px 13px;font-size:.76rem;}
+      .results{padding:24px 18px;}
+    }
+    @media(prefers-reduced-motion:reduce){.blob,.logo-icon,.streak-chip .fire{animation:none!important;}}
+  </style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <a href="ch1.html" class="nav-back">← Ch 1 Overview</a>
+</nav>
+
+<!-- STREAK BAR -->
+<div class="streak-bar" id="streakBar">
+  <div class="sb-left">
+    <div class="streak-chip"><span class="fire">🔥</span><span id="streakCount">0</span> streak</div>
+    <div class="score-chip">⭐ <span id="totalScore">0</span> pts</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="progLabel">Question 1 of 10</div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEVEL SELECTOR -->
+  <div class="level-selector" id="levelSelector">
+    <h1 class="ls-title">MCQ Practice</h1>
+    <p class="ls-sub">Chapter 1 · Chemical Reactions and Equations · 10 questions per level</p>
+    <div class="level-tabs">
+      <div class="ltab active" style="--lc:#00B894" onclick="setLevel('easy')" id="tab-easy">
+        <div class="ltab-dot" style="--lc:#00B894"></div> 🌱 Easy
+      </div>
+      <div class="ltab" style="--lc:#6C5CE7" onclick="setLevel('medium')" id="tab-medium">
+        <div class="ltab-dot" style="--lc:#6C5CE7"></div> 🎯 Medium
+      </div>
+      <div class="ltab" style="--lc:#e17055" onclick="setLevel('hard')" id="tab-hard">
+        <div class="ltab-dot" style="--lc:#e17055"></div> 🔥 Hard
+      </div>
+      <div class="ltab" style="--lc:#e5a100" onclick="setLevel('board')" id="tab-board">
+        <div class="ltab-dot" style="--lc:#e5a100"></div> 📋 Board Level
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTION AREA -->
+  <div class="q-container" id="qContainer" style="display:none">
+    <div class="q-header">
+      <div class="q-meta">
+        <div class="q-num" id="qNum">Question 1 / 10</div>
+        <div class="q-level-badge" id="qLevelBadge">Easy</div>
+        <div class="q-pyq" id="qPyqBadge" style="display:none">PYQ</div>
+      </div>
+      <button class="hint-btn" id="hintBtn" onclick="showHint()">💡 Hint</button>
+    </div>
+    <div class="q-card">
+      <div class="q-text" id="qText"></div>
+      <div class="q-eq" id="qEq" style="display:none"></div>
+      <div class="options" id="optList"></div>
+      <div class="hint-box" id="hintBox"></div>
+      <div class="explanation" id="expBox">
+        <div class="exp-head">✅ Explanation</div>
+        <div class="exp-body" id="expBody"></div>
+        <div class="exp-tip" id="expTip"></div>
+      </div>
+      <div class="mistake-banner" id="mistakeBanner"></div>
+    </div>
+    <div class="action-row">
+      <span class="q-counter-pill" id="qCounterPill">0 / 10 answered</span>
+      <div>
+        <button class="btn-submit" id="submitBtn" onclick="submitAnswer()" disabled>Submit Answer</button>
+        <button class="btn-next" id="nextBtn" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="resultsBox">
+    <span class="result-emoji" id="resEmoji">🎉</span>
+    <span class="result-score" id="resScore">8/10</span>
+    <div class="result-label" id="resLabel">Great job!</div>
+    <div class="result-stats">
+      <div class="rs"><span class="rs-num" id="resCorrect" style="color:var(--green)">0</span><div class="rs-lbl">Correct</div></div>
+      <div class="rs"><span class="rs-num" id="resWrong" style="color:var(--red)">0</span><div class="rs-lbl">Wrong</div></div>
+      <div class="rs"><span class="rs-num" id="resPoints" style="color:var(--violet)">0</span><div class="rs-lbl">Points</div></div>
+      <div class="rs"><span class="rs-num" id="resBestStreak" style="color:var(--orange)">0</span><div class="rs-lbl">Best Streak</div></div>
+    </div>
+    <div>
+      <button class="btn-restart" onclick="restartQuiz()">🔄 Try Again</button>
+      <button class="btn-other" onclick="goLevel()">Switch Level</button>
+      <a href="ch1.html"><button class="btn-other">← Back to Chapter</button></a>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS -->
+  <div class="achievements" id="achPanel">
+    <div class="ach-title">🏆 Achievements</div>
+    <div class="ach-grid" id="achGrid"></div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   QUESTION BANK
+═══════════════════════════════════════════ */
+const QB = {
+  easy: [
+    {q:"Which of the following is an example of a combination reaction?",opts:["CaCO₃ → CaO + CO₂","2Mg + O₂ → 2MgO","Fe + CuSO₄ → FeSO₄ + Cu","AgNO₃ + NaCl → AgCl + NaNO₃"],ans:1,hint:"Combination = two or more substances joining to form ONE product.",exp:"2Mg + O₂ → 2MgO is a combination reaction because two reactants (Mg and O₂) combine to form a single product (MgO). It is also an exothermic reaction since it releases heat and light.",tip:"Remember: Combination = joining. Think of it as a 'marriage' of substances.",pyq:false},
+    {q:"Magnesium ribbon is rubbed before burning because it has a coating of:",opts:["Basic magnesium carbonate","Basic magnesium oxide","Basic magnesium sulphide","Basic magnesium chloride"],ans:0,hint:"Magnesium reacts slowly with both CO₂ and moisture in air.",exp:"Magnesium ribbon has a coating of basic magnesium carbonate [Mg(OH)₂·MgCO₃] due to slow reaction with CO₂ and moisture in air. Rubbing removes this layer so that pure Mg is exposed for the reaction.",tip:"This is a commonly asked 1-mark board question. The answer is carbonate, not oxide!",pyq:true},
+    {q:"What is observed when lead nitrate is heated strongly?",opts:["White fumes are produced","Brown fumes and a yellow residue are formed","The substance melts","No change is observed"],ans:1,hint:"Pb(NO₃)₂ is a classic example of thermal decomposition.",exp:"2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂. Yellow residue is lead oxide (PbO), and brown fumes are nitrogen dioxide (NO₂). This is a thermal decomposition reaction.",tip:"PbO is yellow when hot, turns orange-red on cooling.",pyq:true},
+    {q:"Which gas is evolved when zinc reacts with dilute sulphuric acid?",opts:["Oxygen","Nitrogen","Hydrogen","Carbon dioxide"],ans:2,hint:"An active metal reacts with dilute acid to produce a gas that burns with a pop sound.",exp:"Zn + H₂SO₄ → ZnSO₄ + H₂↑. Hydrogen gas is evolved. It can be tested using a burning splint — it burns with a 'pop' sound.",tip:"Always remember: metal + dilute acid → salt + hydrogen.",pyq:false},
+    {q:"Chemically, rust is:",opts:["Ferrous oxide","Hydrated ferric oxide","Anhydrous ferric oxide","Iron sulphate"],ans:1,hint:"Rusting involves iron, oxygen, and water.",exp:"Rust is hydrated ferric oxide — Fe₂O₃·xH₂O. It forms when iron is exposed to moisture and oxygen, making it a slow oxidation process (corrosion).",tip:"Fe₂O₃·xH₂O is the chemical formula — always include 'hydrated' in the name.",pyq:true},
+    {q:"In a displacement reaction, a more reactive metal:",opts:["Combines with another metal","Displaces a less reactive metal from its salt solution","Gets displaced from its salt","Does not react"],ans:1,hint:"The reactivity series determines which metal displaces which.",exp:"In a displacement reaction, a more reactive metal displaces a less reactive metal from its salt solution. Example: Fe + CuSO₄ → FeSO₄ + Cu. Iron is more reactive than copper, so it displaces copper.",tip:"Always check the reactivity series: Zn > Fe > Cu > Ag.",pyq:false},
+    {q:"Which of the following is NOT a physical change?",opts:["Melting of ice","Boiling of water","Burning of paper","Breaking of glass"],ans:2,hint:"A chemical change produces a new substance that cannot easily be reversed.",exp:"Burning of paper is a chemical change — it produces new substances (CO₂, H₂O, ash) that cannot be converted back to paper. All other options only change the physical state or form.",tip:"Key indicators of chemical change: new substance, energy change, irreversible.",pyq:false},
+    {q:"The reaction between lime water and carbon dioxide is an example of:",opts:["Decomposition reaction","Combination reaction","Displacement reaction","No reaction"],ans:1,hint:"Ca(OH)₂ + CO₂ → ?",exp:"Ca(OH)₂ + CO₂ → CaCO₃ + H₂O. Two substances (lime water and CO₂) combine to form a single product (CaCO₃ precipitate). The white precipitate is what makes lime water turn milky.",tip:"This is why lime water turns milky — used as a test for CO₂.",pyq:true},
+    {q:"An example of a photochemical decomposition reaction is:",opts:["Electrolysis of water","Heating of calcium carbonate","Decomposition of silver chloride in sunlight","Heating of ferrous sulphate"],ans:2,hint:"'Photo' means light. Which reaction uses light as energy?",exp:"2AgCl → 2Ag + Cl₂ (in sunlight). Silver chloride decomposes in the presence of sunlight to form silver and chlorine gas. This reaction is used in black-and-white photography.",tip:"AgBr is used in photographic films — also a photochemical reaction.",pyq:false},
+    {q:"When iron nails are dipped in copper sulphate solution, the colour of the solution:",opts:["Becomes darker blue","Changes from blue to green","Remains unchanged","Turns colourless"],ans:1,hint:"CuSO₄ is blue. When Cu is displaced, a new iron salt forms.",exp:"Fe + CuSO₄ → FeSO₄ + Cu. Blue CuSO₄ is replaced by light green FeSO₄. The iron nails become copper-coated (reddish-brown). This is a classic displacement reaction.",tip:"Colour change from blue → green is a key observation for boards.",pyq:true},
+  ],
+  medium: [
+    {q:"Which of the following statements about the reaction 3Fe(s) + 4H₂O(g) → Fe₃O₄(s) + 4H₂(g) is correct?",opts:["Iron is getting reduced","Water is getting oxidised","Iron is getting oxidised and water is getting reduced","Iron is getting reduced and water is getting oxidised"],ans:2,hint:"Oxidation = gain of oxygen. Reduction = loss of oxygen. Check what happens to each element.",exp:"In this reaction, iron (Fe) gains oxygen to form Fe₃O₄ — so iron is oxidised. Water (H₂O) loses oxygen — so water is reduced. This is a redox (oxidation-reduction) reaction.",tip:"This exact reaction is a frequently asked PYQ! Learn both sides of the redox.",pyq:true},
+    {q:"Identify the type of reaction: H₂S + I₂ → 2HI + S",opts:["Combination","Displacement","Decomposition","Redox/Double displacement"],ans:3,hint:"Look at what gets oxidised and what gets reduced.",exp:"In H₂S + I₂ → 2HI + S: H₂S loses hydrogen (gets oxidised), while I₂ gains hydrogen (gets reduced). This makes it a redox reaction. H₂S is the reducing agent; I₂ is the oxidising agent.",tip:"If you see both oxidation AND reduction, it's a redox reaction.",pyq:false},
+    {q:"Which information is NOT conveyed by a balanced chemical equation?",opts:["Physical states of reactants and products","Symbols of all substances involved","Whether the reaction is feasible or not","Number of atoms/molecules"],ans:2,hint:"A chemical equation is a shorthand. What can't symbols tell you?",exp:"A balanced chemical equation does NOT tell whether a reaction is actually feasible (possible) under given conditions. It tells us the identities, states, and quantities of reactants and products — but not the tendency to occur.",tip:"This is a popular MCQ! The answer is always about feasibility.",pyq:true},
+    {q:"Rancidity of food is an example of which type of reaction?",opts:["Decomposition","Oxidation","Combination","Reduction"],ans:1,hint:"Rancidity involves fats reacting with something in air.",exp:"Rancidity is the slow oxidation of fats and oils in food by atmospheric oxygen, producing foul-smelling compounds. It is prevented by adding antioxidants, storing in air-tight containers, or flushing with nitrogen gas.",tip:"Antioxidants like BHA (Butylated Hydroxyanisole) are used to prevent rancidity.",pyq:false},
+    {q:"A student performed a reaction between barium chloride and sodium sulphate. Which observation confirms a double displacement reaction?",opts:["Evolution of a gas","Formation of a white precipitate","Change in colour of solution","Increase in temperature"],ans:1,hint:"Double displacement often produces an insoluble salt.",exp:"BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl. A white precipitate of barium sulphate (BaSO₄) forms. Precipitate formation (↓) is the characteristic indicator of a double displacement / precipitation reaction.",tip:"↓ symbol in equations = precipitate formed.",pyq:true},
+    {q:"What is the role of MnO₂ in the following reaction? 2H₂O₂ → 2H₂O + O₂",opts:["Oxidising agent","Reducing agent","Catalyst","Reactant"],ans:2,hint:"MnO₂ is not consumed in this reaction. It speeds it up.",exp:"MnO₂ acts as a catalyst — it speeds up the decomposition of hydrogen peroxide without being consumed in the reaction. MnO₂ does not appear in the final products.",tip:"Catalyst written above the arrow (→) in equations. Always recovered unchanged.",pyq:false},
+    {q:"Which type of reaction is represented by: AB + CD → AD + CB?",opts:["Displacement","Double displacement","Combination","Decomposition"],ans:1,hint:"Two compounds are exchanging their components.",exp:"AB + CD → AD + CB represents a double displacement reaction. The cations and anions of two compounds exchange to form two new compounds. Example: NaCl + AgNO₃ → AgCl↓ + NaNO₃.",tip:"Think of it as a 'partner swap' between two compounds.",pyq:false},
+    {q:"In the electrolysis of water, which gas is collected at the cathode?",opts:["Oxygen","Hydrogen","Both oxygen and hydrogen","Nitrogen"],ans:1,hint:"Cathode is negatively charged. Positive ions go to cathode.",exp:"In electrolysis of water (2H₂O → 2H₂ + O₂), H⁺ ions (positive) move to the cathode (negative electrode) and gain electrons to form H₂ gas. O₂ is collected at the anode.",tip:"Volume ratio: H₂ : O₂ = 2:1 at cathode : anode.",pyq:true},
+    {q:"The silver article turns black when kept open because of formation of:",opts:["AgS","Ag₂S","AgSO₄","Ag₂O"],ans:1,hint:"Silver reacts with sulphur compounds in air.",exp:"Silver reacts with hydrogen sulphide (H₂S) present in air: 4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O. Ag₂S is black in colour, causing the tarnishing of silver.",tip:"Ag₂S = Silver sulphide = black tarnish. Classic board question!",pyq:true},
+    {q:"Which of the following gases is used to prevent rancidity by packaging food items?",opts:["Oxygen","Hydrogen","Nitrogen","Carbon dioxide"],ans:2,hint:"This gas is inert and does not react with food.",exp:"Nitrogen (N₂) or argon gas is flushed into food packets (like chips) to prevent oxidation of fats and oils. Since N₂ is inert, it does not react with food and prevents rancidity.",tip:"Next time you open a chips packet — that 'air' is nitrogen!",pyq:false},
+  ],
+  hard: [
+    {q:"In the thermite reaction (Fe₂O₃ + 2Al → Al₂O₃ + 2Fe), identify the oxidising and reducing agents respectively:",opts:["Fe₂O₃ and Al","Al and Fe₂O₃","Fe and Al₂O₃","Al₂O₃ and Fe"],ans:0,hint:"Oxidising agent gets reduced (gains electrons/H, loses O). Reducing agent gets oxidised.",exp:"In this reaction, Fe₂O₃ provides oxygen to Al — so Fe₂O₃ is the oxidising agent (it gets reduced to Fe). Al accepts oxygen to form Al₂O₃ — so Al is the reducing agent (it gets oxidised). The thermite reaction produces molten iron and is highly exothermic.",tip:"OIL RIG: Oxidation Is Loss, Reduction Is Gain (of electrons).",pyq:true},
+    {q:"Ferrous sulphate crystals (FeSO₄·7H₂O) on heating first turn white and then a brown-black substance is formed. The brown-black substance is:",opts:["Fe₂O₃","FeO","Fe₃O₄","FeS"],ans:0,hint:"FeSO₄ undergoes decomposition. The final product is an iron oxide.",exp:"FeSO₄·7H₂O → FeSO₄ (white, loses water) → Fe₂O₃ (brown-black) + SO₂ + SO₃. The brown-black substance is ferric oxide (Fe₂O₃). The SO₂ gas released has a characteristic pungent smell of burning sulphur.",tip:"This 3-step change is a favourite board question for 3 marks.",pyq:true},
+    {q:"A dilute ferrous sulphate solution was added to acidified potassium permanganate (KMnO₄). The purple colour fades. Why?",opts:["KMnO₄ is unstable and decomposes","FeSO₄ acts as oxidising agent and oxidises KMnO₄","KMnO₄ is an oxidising agent and oxidises Fe²⁺ to Fe³⁺","The colour disappears due to dilution only"],ans:2,hint:"KMnO₄ is a strong oxidising agent. What does it do to Fe²⁺?",exp:"KMnO₄ (purple) oxidises Fe²⁺ (FeSO₄) to Fe³⁺. As KMnO₄ gets reduced, it forms Mn²⁺ which is colourless in acidic solution — hence the purple colour fades. This is a classic redox titration.",tip:"KMnO₄ acts as its own indicator in acidic solution.",pyq:true},
+    {q:"Which correctly identifies both the type of reaction AND the change in oxidation state for: 2H₂S + SO₂ → 3S + 2H₂O?",opts:["Redox; S in H₂S goes from -2 to 0","Combination; no change in oxidation state","Displacement; H is displaced from H₂S","Decomposition; SO₂ breaks down"],ans:0,hint:"Identify oxidation state of S in each compound. -2 in H₂S, +4 in SO₂, 0 in S.",exp:"S in H₂S has oxidation state -2, and goes to 0 in S (oxidised). S in SO₂ has oxidation state +4, and goes to 0 in S (reduced). Both oxidation and reduction occur simultaneously — hence it's a redox reaction. H₂S is the reducing agent, SO₂ is the oxidising agent.",tip:"Calculate oxidation states: H is +1, O is -2, then find S.",pyq:false},
+    {q:"Why does the colour of copper sulphate solution change when an iron nail is dipped in it? Name all observable changes.",opts:["Blue → colourless; iron dissolves","Blue → green; iron nail becomes reddish-brown","Blue → yellow; iron nail becomes silver","Green → blue; copper deposits on nail"],ans:1,hint:"Think about what forms and what disappears in Fe + CuSO₄ → ?",exp:"Fe + CuSO₄ → FeSO₄ + Cu. Observable changes: (1) Blue colour of CuSO₄ → light green (due to FeSO₄ formation). (2) Iron nail develops a reddish-brown copper coating. (3) Mass of iron nail decreases as Fe dissolves, while Cu deposits on it.",tip:"Boards often ask for ALL observations — list all three changes.",pyq:true},
+    {q:"Balance: Fe + H₂O → Fe₃O₄ + H₂. What are the coefficients from left to right?",opts:["3, 4, 1, 4","2, 3, 1, 3","1, 4, 1, 4","4, 3, 1, 4"],ans:0,hint:"Fe₃O₄ has 3 Fe and 4 O atoms. Start by balancing Fe first.",exp:"3Fe + 4H₂O → Fe₃O₄ + 4H₂. Check: Left: 3 Fe, 8 H, 4 O. Right: 3 Fe (in Fe₃O₄), 4 O (in Fe₃O₄), 8 H (in 4H₂). ✓ Balanced. This is the reaction of iron with steam.",tip:"Always verify by counting atoms on both sides after balancing.",pyq:true},
+    {q:"What happens when chlorine gas is passed through an aqueous potassium iodide solution? Identify the reaction type.",opts:["No reaction; Cl₂ and KI don't react","KI decomposes; decomposition reaction","Cl₂ displaces I₂ from KI; displacement reaction","K₂Cl₂ and I₂ form; combination reaction"],ans:2,hint:"Cl₂ is more reactive than I₂. Apply the halogen reactivity series.",exp:"Cl₂ + 2KI → 2KCl + I₂. Chlorine is more reactive than iodine, so it displaces iodine from potassium iodide. The solution turns brown/orange due to I₂ formation. This is a displacement reaction.",tip:"Halogen reactivity: F > Cl > Br > I. More reactive halogen displaces less reactive.",pyq:false},
+    {q:"A substance X is used in whitewashing walls. It reacts with CO₂ in air gradually, and the walls harden over time. Identify X and the type of reaction with CO₂.",opts:["Ca(OH)₂; combination reaction","CaO; decomposition reaction","CaCO₃; displacement reaction","Ca(OH)₂; decomposition reaction"],ans:0,hint:"Whitewash = a calcium compound dissolved in water. Hardens with CO₂.",exp:"X is Ca(OH)₂ (slaked lime). The reaction: Ca(OH)₂ + CO₂ → CaCO₃ + H₂O is a combination reaction (two reactants → one main product CaCO₃). CaCO₃ is insoluble and forms a hard layer on walls.",tip:"CaO + H₂O → Ca(OH)₂ first, then Ca(OH)₂ + CO₂ → CaCO₃ (hardening).",pyq:false},
+    {q:"In which of the following reactions is hydrogen acting as a reducing agent?",opts:["H₂ + Cl₂ → 2HCl","CuO + H₂ → Cu + H₂O","H₂O → H₂ + O₂","2H₂ + O₂ → 2H₂O"],ans:1,hint:"Reducing agent causes reduction in another substance. It removes oxygen.",exp:"CuO + H₂ → Cu + H₂O: H₂ removes oxygen from CuO (reducing CuO to Cu). Therefore H₂ is the reducing agent, and CuO is the oxidising agent. H₂ itself gets oxidised to H₂O.",tip:"In the above reaction H₂ reduces the oxide — this is why CuO test is used to test for hydrogen.",pyq:true},
+    {q:"Grapes hanging on a plant do not ferment, but after plucking they can. Which type of reaction is fermentation, and why does it only happen after plucking?",opts:["Physical change; enzymes activate after plucking","Chemical change; plant's immune system prevents microbial growth","Physical change; grape skin breaks","Chemical change; CO₂ is released only after plucking"],ans:1,hint:"Fermentation produces new substances. What stops microbes in living grapes?",exp:"Fermentation is a chemical change (new substances like ethanol and CO₂ are produced). When grapes are attached to the plant, the living immune system prevents microbial/fungal growth. After plucking, the immune system no longer works, allowing microbes to ferment the grape sugars under anaerobic conditions.",tip:"This is a HOTS question — connect biology with chemistry.",pyq:false},
+  ],
+  board: [
+    {q:"(PYQ 2023) A student prepared a solution of sodium sulphate and added barium chloride solution to it. Write the balanced equation and name the type of reaction.",opts:["Na₂SO₄ + BaCl₂ → BaSO₄ + 2NaCl; Double displacement","Na₂SO₄ + BaCl₂ → BaSO₄ + NaCl₂; Displacement","2Na + SO₄ + BaCl₂ → BaSO₄ + 2NaCl; Combination","Na₂SO₄ + Ba + Cl₂ → BaSO₄ + 2NaCl; Redox"],ans:0,hint:"Two ionic compounds exchange their ions. Check balancing carefully.",exp:"Na₂SO₄(aq) + BaCl₂(aq) → BaSO₄(s)↓ + 2NaCl(aq). Type: Double displacement (precipitation) reaction. The white precipitate BaSO₄ is formed and is insoluble in water (indicated by ↓).",tip:"Always write state symbols (aq, s) and ↓ for precipitate in board exams.",pyq:true},
+    {q:"(PYQ 2022) What is observed when a piece of zinc metal is added to copper sulphate solution? Write the equation and name the type of reaction.",opts:["No change; zinc doesn't react with CuSO₄","Solution turns blue; combination reaction","Blue colour fades, reddish-brown copper deposits; displacement reaction","White precipitate forms; double displacement reaction"],ans:2,hint:"Zinc is above copper in the reactivity series.",exp:"Zn + CuSO₄ → ZnSO₄ + Cu. Observations: (1) Blue colour of CuSO₄ solution fades gradually. (2) Reddish-brown copper deposits on the zinc piece. (3) Colourless ZnSO₄ solution forms. Type: Displacement reaction (Zn is more reactive than Cu).",tip:"State all three observations for full 3-mark credit.",pyq:true},
+    {q:"(Board Pattern) Assertion (A): Decomposition of vegetable matter into compost is exothermic. Reason (R): Exothermic reactions release heat energy. Choose the correct option:",opts:["Both A and R are true, and R is the correct explanation of A","Both A and R are true, but R is NOT the correct explanation of A","A is true but R is false","A is false but R is true"],ans:0,hint:"Is decomposition of organic matter exothermic? Does it release heat?",exp:"Decomposition of vegetable matter into compost releases heat energy — hence it is exothermic. R correctly explains A. You can feel warmth near a compost pit because of these exothermic chemical changes happening inside.",tip:"Assertion-Reason questions: FIRST check if A is true, THEN check R, THEN check if R explains A.",pyq:false},
+    {q:"(PYQ 2020) Write one equation each for decomposition reactions where energy is supplied in the form of: (i) Heat (ii) Light. Which of these is used in photography?",opts:["(i) CaCO₃ → CaO + CO₂; (ii) 2AgCl → 2Ag + Cl₂; Photography uses (ii)","(i) 2H₂O → 2H₂ + O₂; (ii) 2AgNO₃ → 2Ag + 2NO₂ + O₂; Photography uses (i)","(i) 2H₂O₂ → 2H₂O + O₂; (ii) 2AgCl → 2Ag + Cl₂; Photography uses (i)","(i) 2KClO₃ → 2KCl + 3O₂; (ii) CaCO₃ → CaO + CO₂; Photography uses (ii)"],ans:0,hint:"Photography uses silver salts sensitive to light.",exp:"Thermal decomposition: CaCO₃ →(heat) CaO + CO₂. Photochemical decomposition: 2AgCl →(sunlight) 2Ag + Cl₂. Photography uses the photochemical reaction with AgBr/AgCl as light-sensitive compounds on film.",tip:"AgBr is used in photographic film; AgCl is tested in board exams.",pyq:true},
+    {q:"(PYQ 2019) What does it mean when a substance is said to be 'oxidised'? Give one example from daily life where oxidation is harmful.",opts:["Oxidised means gain of hydrogen; rusting of iron is harmful","Oxidised means loss of oxygen; burning of fuels is harmful","Oxidised means gain of oxygen (or loss of hydrogen); rusting/corrosion of iron is harmful","Oxidised means gain of electrons; rancidity of food is harmful"],ans:2,hint:"Oxidation has two definitions — both matter in Class 10.",exp:"Oxidation = gain of oxygen OR loss of hydrogen. Harmful daily life example: Rusting/corrosion of iron (Fe + O₂ + H₂O → Fe₂O₃·xH₂O) causes structural damage to bridges, vehicles, and buildings worth crores annually. Rancidity is another valid harmful oxidation example.",tip:"Give BOTH definitions of oxidation in 3-mark answers.",pyq:true},
+    {q:"(Board 2024 Pattern) A blue solution B turns light green when metal strip A is dipped in it. Identify A and B, write the reaction, and name the type.",opts:["A = Cu, B = FeSO₄; Cu + FeSO₄ → CuSO₄ + Fe; displacement","A = Fe, B = CuSO₄; Fe + CuSO₄ → FeSO₄ + Cu; displacement","A = Zn, B = FeSO₄; Zn + FeSO₄ → ZnSO₄ + Fe; displacement","A = Ag, B = CuSO₄; Ag + CuSO₄ → AgSO₄ + Cu; displacement"],ans:1,hint:"Blue solution is a copper salt. Green forms when iron salt is produced.",exp:"Blue CuSO₄ turns green as FeSO₄ (light green) forms. A = Iron (Fe); B = Copper sulphate (CuSO₄). Fe + CuSO₄ → FeSO₄ + Cu. Type: Displacement reaction. Iron is more reactive than copper, so it displaces copper from its salt solution.",tip:"This is an HOT source-based question — read observations carefully.",pyq:true},
+    {q:"(PYQ 2021) Why is respiration considered an exothermic reaction?",opts:["Because it requires sunlight","Because it breaks down food to release energy (heat)","Because it absorbs CO₂","Because it is a physical process"],ans:1,hint:"Exothermic = releases energy. What does respiration produce?",exp:"Respiration: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy. Glucose (food) is broken down in the presence of oxygen to release energy. Since energy is released in the form of heat, respiration is an exothermic reaction.",tip:"Respiration and burning of fuels are classic examples of exothermic reactions.",pyq:true},
+    {q:"(Board Pattern 2024) The following reaction occurs: CuO(s) + H₂(g) → Cu(s) + H₂O(g). In this reaction, identify the substance oxidised, substance reduced, oxidising agent, and reducing agent:",opts:["Oxidised: CuO; Reduced: H₂; OA: H₂; RA: CuO","Oxidised: H₂; Reduced: CuO; OA: CuO; RA: H₂","Oxidised: Cu; Reduced: H; OA: H₂; RA: CuO","Oxidised: O; Reduced: Cu; OA: CuO; RA: H₂O"],ans:1,hint:"H₂ gains oxygen (gets oxidised). CuO loses oxygen (gets reduced).",exp:"CuO + H₂ → Cu + H₂O. H₂ gains oxygen to become H₂O — so H₂ is oxidised. H₂ is the reducing agent (causes reduction of CuO). CuO loses oxygen to form Cu — CuO is reduced. CuO is the oxidising agent (causes oxidation of H₂).",tip:"Oxidising agent = gets reduced. Reducing agent = gets oxidised. (They're opposites!)",pyq:true},
+    {q:"(PYQ 2023) What is corrosion? How can it be prevented? Give two methods.",opts:["Corrosion = rancidity of food; prevented by refrigeration and adding salt","Corrosion = slow oxidation of metals by moist air; prevented by painting, galvanisation, or alloying","Corrosion = decomposition of salts; prevented by heating and adding acid","Corrosion = displacement reaction; prevented by displacing with another metal"],ans:1,hint:"Corrosion specifically affects metals. Think of rusting of iron.",exp:"Corrosion is the slow chemical deterioration of metals by reaction with atmospheric oxygen and moisture. Prevention methods: (1) Painting or coating with oil/grease — prevents contact with moisture. (2) Galvanisation — coating iron with zinc. (3) Alloying — mixing with other metals (e.g., stainless steel). (4) Electroplating with less reactive metals.",tip:"Name at least 2 prevention methods for full marks.",pyq:true},
+    {q:"(Board 2024 Higher Order) A white powder P is used in making cement. When dissolved in water, it releases a large amount of heat. The resulting solution turns red litmus blue. Identify P, write the reaction with water, and name the reaction type.",opts:["P = NaCl; NaCl + H₂O → NaOH + HCl; displacement","P = CaO; CaO + H₂O → Ca(OH)₂; combination (exothermic)","P = CaCO₃; CaCO₃ + H₂O → Ca(HCO₃)₂; decomposition","P = MgO; MgO + H₂O → Mg(OH)₂; endothermic combination"],ans:1,hint:"Which calcium compound is used in cement? What turns litmus blue?",exp:"P = CaO (quicklime/calcium oxide). CaO + H₂O → Ca(OH)₂ + Heat. Type: Combination reaction (also called slaking of lime). Ca(OH)₂ is alkaline (turns red litmus blue). The reaction is highly exothermic — the vessel gets very hot.",tip:"Remember: CaO → slaking → Ca(OH)₂ → used in whitewash → reacts with CO₂ → CaCO₃.",pyq:false},
+  ]
+};
+
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let level = 'easy';
+let qIndex = 0;
+let selected = null;
+let submitted = false;
+let streak = 0;
+let bestStreak = 0;
+let score = 0;
+let correct = 0;
+let wrong = 0;
+let hintsUsed = 0;
+let questions = [];
+let achUnlocked = {};
+
+/* ═══════════════════════════════════════════
+   ACHIEVEMENTS
+═══════════════════════════════════════════ */
+const ACHIEVEMENTS = [
+  {id:'first',icon:'🎯',name:'First Blood',desc:'Answer your first question'},
+  {id:'streak3',icon:'🔥',name:'On Fire',desc:'Get 3 in a row correct'},
+  {id:'streak5',icon:'⚡',name:'Unstoppable',desc:'5 correct in a row'},
+  {id:'perfect',icon:'👑',name:'Perfect Score',desc:'10/10 in a level'},
+  {id:'nohints',icon:'🧠',name:'Hint-Free Hero',desc:'Complete a level with 0 hints'},
+  {id:'pyq',icon:'📋',name:'Board Ready',desc:'Answer a PYQ correctly'},
+  {id:'hard_complete',icon:'🏆',name:'Hard Mode Cleared',desc:'Complete the Hard level'},
+  {id:'board_complete',icon:'🌟',name:'Board Champion',desc:'Complete the Board level'},
+];
+
+function renderAchievements() {
+  const grid = document.getElementById('achGrid');
+  grid.innerHTML = ACHIEVEMENTS.map(a => `
+    <div class="ach-card ${achUnlocked[a.id]?'unlocked':''}" id="ach-${a.id}">
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-info">
+        <div class="ach-name">${a.name}</div>
+        <div class="ach-desc">${a.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+function unlock(id) {
+  if (achUnlocked[id]) return;
+  achUnlocked[id] = true;
+  const card = document.getElementById('ach-'+id);
+  if (card) card.classList.add('unlocked');
+  const a = ACHIEVEMENTS.find(x=>x.id===id);
+  if (a) showToast(a.icon+' Achievement unlocked: '+a.name+'!');
+}
+
+/* ═══════════════════════════════════════════
+   LEVEL
+═══════════════════════════════════════════ */
+function setLevel(lv) {
+  level = lv;
+  document.querySelectorAll('.ltab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+lv).classList.add('active');
+  document.getElementById('resultsBox').style.display = 'none';
+  document.getElementById('resultsBox').classList.remove('show');
+  document.getElementById('qContainer').style.display = 'block';
+  startQuiz();
+}
+
+function startQuiz() {
+  questions = [...QB[level]];
+  qIndex = 0; streak = 0; score = 0; correct = 0; wrong = 0; hintsUsed = 0;
+  document.getElementById('levelSelector').style.display = 'block';
+  document.getElementById('qContainer').style.display = 'block';
+  document.getElementById('resultsBox').classList.remove('show');
+  document.getElementById('resultsBox').style.display = 'none';
+  renderAchievements();
+  loadQuestion();
+}
+
+/* ═══════════════════════════════════════════
+   QUESTION
+═══════════════════════════════════════════ */
+function loadQuestion() {
+  selected = null; submitted = false;
+  const q = questions[qIndex];
+  document.getElementById('qNum').textContent = `Question ${qIndex+1} / ${questions.length}`;
+  const lvMeta = {easy:{label:'🌱 Easy',bg:'#00B894'},medium:{label:'🎯 Medium',bg:'#6C5CE7'},hard:{label:'🔥 Hard',bg:'#e17055'},board:{label:'📋 Board Level',bg:'#e5a100'}};
+  const badge = document.getElementById('qLevelBadge');
+  badge.textContent = lvMeta[level].label; badge.style.background = lvMeta[level].bg;
+  const pyqB = document.getElementById('qPyqBadge');
+  pyqB.style.display = q.pyq ? 'inline-flex' : 'none';
+
+  document.getElementById('qText').textContent = q.q;
+  const eqEl = document.getElementById('qEq');
+  if (q.eq) { eqEl.textContent = q.eq; eqEl.style.display = 'block'; }
+  else { eqEl.style.display = 'none'; }
+
+  const optList = document.getElementById('optList');
+  optList.innerHTML = q.opts.map((o,i) => `
+    <div class="opt" id="opt${i}" onclick="selectOpt(${i})">
+      <div class="opt-key">${String.fromCharCode(65+i)}</div>
+      <div class="opt-text">${o}</div>
+      <span class="opt-tick"></span>
+    </div>`).join('');
+
+  document.getElementById('hintBox').classList.remove('show');
+  document.getElementById('expBox').classList.remove('show');
+  document.getElementById('mistakeBanner').classList.remove('show');
+  document.getElementById('hintBtn').classList.remove('used');
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').style.display = 'inline-block';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  updateProgress();
+  updateStreak();
+}
+
+function selectOpt(i) {
+  if (submitted) return;
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('opt'+i).classList.add('selected');
+  selected = i;
+  document.getElementById('submitBtn').disabled = false;
+}
+
+function submitAnswer() {
+  if (selected === null || submitted) return;
+  submitted = true;
+  const q = questions[qIndex];
+  const isCorrect = selected === q.ans;
+
+  document.querySelectorAll('.opt').forEach((o,i) => {
+    o.classList.add('disabled');
+    if (i === q.ans) { o.classList.add('correct'); o.querySelector('.opt-tick').textContent = '✓'; }
+    else if (i === selected && !isCorrect) { o.classList.add('wrong'); o.querySelector('.opt-tick').textContent = '✗'; }
+  });
+
+  const expBox = document.getElementById('expBox');
+  document.getElementById('expBody').innerHTML = q.exp;
+  document.getElementById('expTip').textContent = q.tip ? '💡 Board Tip: '+q.tip : '';
+  expBox.classList.add('show');
+
+  if (isCorrect) {
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    score += calcPoints();
+    correct++;
+    updateStreak();
+    // achievements
+    if (correct === 1) unlock('first');
+    if (streak >= 3) unlock('streak3');
+    if (streak >= 5) unlock('streak5');
+    if (q.pyq) unlock('pyq');
+    showToast(streak>1 ? '🔥 +'+calcPoints()+' pts · Streak '+streak+'!' : '✅ Correct! +'+calcPoints()+' pts');
+  } else {
+    streak = 0; wrong++;
+    updateStreak();
+    const mb = document.getElementById('mistakeBanner');
+    mb.innerHTML = '❌ <strong>Incorrect.</strong> The correct answer is <strong>'+String.fromCharCode(65+q.ans)+'</strong>. Study the explanation above carefully — this type of mistake is common in boards.';
+    mb.classList.add('show');
+    showToast('❌ Incorrect — check the explanation!');
+  }
+
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'inline-block';
+  document.getElementById('nextBtn').textContent = qIndex < questions.length-1 ? 'Next Question →' : 'See Results 🏁';
+  document.getElementById('totalScore').textContent = score;
+}
+
+function calcPoints() {
+  const base = {easy:10,medium:15,hard:20,board:25}[level];
+  const bonus = hintsUsed > 0 ? 0 : 5; // no-hint bonus
+  const streakBonus = streak > 1 ? Math.min(streak-1,5)*2 : 0;
+  return base + bonus + streakBonus;
+}
+
+function nextQuestion() {
+  qIndex++;
+  if (qIndex >= questions.length) { showResults(); return; }
+  loadQuestion();
+}
+
+function showHint() {
+  const btn = document.getElementById('hintBtn');
+  if (btn.classList.contains('used') || submitted) return;
+  btn.classList.add('used');
+  hintsUsed++;
+  const hb = document.getElementById('hintBox');
+  hb.textContent = '💡 Hint: ' + questions[qIndex].hint;
+  hb.classList.add('show');
+}
+
+function updateProgress() {
+  const pct = ((qIndex) / questions.length) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = `Question ${qIndex+1} of ${questions.length}`;
+  document.getElementById('qCounterPill').textContent = `${correct+wrong} / ${questions.length} answered`;
+}
+
+function updateStreak() {
+  document.getElementById('streakCount').textContent = streak;
+  document.getElementById('totalScore').textContent = score;
+}
+
+/* ═══════════════════════════════════════════
+   RESULTS
+═══════════════════════════════════════════ */
+function showResults() {
+  document.getElementById('qContainer').style.display = 'none';
+  const pct = Math.round((correct/questions.length)*100);
+  let emoji = '😢', label = 'Keep practicing — you can do this!';
+  if (pct >= 90) { emoji = '🏆'; label = "Outstanding! You're board ready!"; }
+  else if (pct >= 70) { emoji = '🎉'; label = "Great job! A few more revisions and you're golden."; }
+  else if (pct >= 50) { emoji = '👍'; label = "Good effort! Review the explanations and try again."; }
+  document.getElementById('resEmoji').textContent = emoji;
+  document.getElementById('resScore').textContent = correct+'/'+questions.length;
+  document.getElementById('resLabel').textContent = label;
+  document.getElementById('resCorrect').textContent = correct;
+  document.getElementById('resWrong').textContent = wrong;
+  document.getElementById('resPoints').textContent = score;
+  document.getElementById('resBestStreak').textContent = bestStreak;
+  const rb = document.getElementById('resultsBox');
+  rb.style.display = 'block'; rb.classList.add('show');
+  document.getElementById('progFill').style.width = '100%';
+  document.getElementById('progLabel').textContent = 'Completed!';
+  // Achievements
+  if (pct === 100) unlock('perfect');
+  if (hintsUsed === 0) unlock('nohints');
+  if (level === 'hard') unlock('hard_complete');
+  if (level === 'board') unlock('board_complete');
+  renderAchievements();
+}
+
+function restartQuiz() { startQuiz(); }
+function goLevel() {
+  document.getElementById('resultsBox').style.display = 'none';
+  document.getElementById('resultsBox').classList.remove('show');
+  document.getElementById('qContainer').style.display = 'block';
+  startQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>28),{passive:true});
+renderAchievements();
+startQuiz();
+</script>
+</body>
+</html>

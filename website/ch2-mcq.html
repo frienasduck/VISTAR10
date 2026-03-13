@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VISTAR10 — Ch 2 MCQ · Acids, Bases & Salts</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#F5F4FF;--v:#6C5CE7;--vl:#A29BFE;--mint:#00CEC9;--g:#00B894;--r:#E17055;--o:#e5a100;--b:#0984e3;--text:#1A1A2E;--mu:#6B6B8A;--card:rgba(255,255,255,.88);--cb:rgba(108,92,231,.13);--sh:0 6px 32px rgba(108,92,231,.09);--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,5vw,6%);}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-thumb{background:var(--vl);border-radius:99px;}
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:drift 22s ease-in-out infinite alternate;}
+.b1{width:clamp(180px,38vw,420px);height:clamp(180px,38vw,420px);background:#A29BFE;top:-8%;left:-6%;}
+.b2{width:clamp(120px,24vw,280px);height:clamp(120px,24vw,280px);background:#00CEC9;bottom:5%;right:-3%;animation-delay:-9s;}
+@keyframes drift{to{transform:translate(18px,-22px);}}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+nav.sc{background:rgba(245,244,255,.94);backdrop-filter:blur(22px);border-bottom:1px solid rgba(108,92,231,.09);box-shadow:0 4px 24px rgba(108,92,231,.07);}
+.logo{font-family:var(--fh);font-size:clamp(.95rem,1.8vw,1.2rem);font-weight:800;color:var(--v);display:flex;align-items:center;gap:7px;}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,var(--v),var(--mint));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.nav-r{display:flex;gap:8px;}
+.nbtn{background:rgba(108,92,231,.10);color:var(--v);font-size:.76rem;font-weight:600;padding:6px 14px;border-radius:50px;border:1.5px solid rgba(108,92,231,.18);cursor:pointer;transition:all .22s;white-space:nowrap;}
+.nbtn:hover{background:var(--v);color:#fff;}
+
+/* STREAK BAR */
+.streak-bar{position:sticky;top:52px;z-index:100;background:rgba(245,244,255,.96);backdrop-filter:blur(18px);border-bottom:1px solid rgba(108,92,231,.10);padding:8px var(--px);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.sb-stat{display:flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;color:var(--mu);}
+.sb-stat span{color:var(--text);font-weight:700;}
+.streak-fire{font-size:1rem;}
+
+/* MAIN */
+.main{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:clamp(72px,10vh,96px) var(--px) 60px;}
+
+/* LEVEL TABS */
+.level-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.ltab{padding:7px 18px;border-radius:50px;font-size:.76rem;font-weight:600;cursor:pointer;border:1.5px solid var(--cb);background:var(--card);color:var(--mu);transition:all .22s;}
+.ltab.active{background:var(--lc,var(--v));color:#fff;border-color:var(--lc,var(--v));}
+.ltab:hover:not(.active){border-color:var(--lc,var(--v));color:var(--lc,var(--v));}
+
+/* LEVEL HEADER */
+.level-header{margin-bottom:22px;}
+.lh-badge{display:inline-flex;align-items:center;gap:7px;border-radius:50px;padding:5px 14px;font-size:.70rem;font-weight:700;letter-spacing:.4px;margin-bottom:8px;}
+.lh-title{font-family:var(--fh);font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:800;margin-bottom:4px;}
+.lh-sub{font-size:.82rem;color:var(--mu);}
+
+/* QUESTION CARD */
+.q-card{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;padding:clamp(18px,3vw,26px);box-shadow:var(--sh);margin-bottom:14px;transition:border-color .3s;}
+.q-card.correct{border-color:var(--g);}
+.q-card.wrong{border-color:var(--r);}
+.q-num{font-size:.65rem;font-weight:700;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.q-text{font-size:clamp(.86rem,1.08vw,.96rem);color:var(--text);line-height:1.7;margin-bottom:16px;font-weight:500;}
+.q-text code{font-family:'Courier New',monospace;background:rgba(108,92,231,.07);padding:1px 5px;border-radius:4px;font-size:.90em;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:11px;border:1.5px solid var(--cb);background:rgba(255,255,255,.6);cursor:pointer;transition:all .22s;font-size:clamp(.80rem,.98vw,.88rem);line-height:1.5;}
+.opt:hover:not(.disabled){border-color:var(--v);background:rgba(108,92,231,.05);}
+.opt.selected{border-color:var(--v);background:rgba(108,92,231,.08);}
+.opt.correct-ans{border-color:var(--g);background:rgba(0,184,148,.08);}
+.opt.wrong-ans{border-color:var(--r);background:rgba(225,112,85,.08);}
+.opt.disabled{cursor:default;}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(108,92,231,.10);color:var(--v);font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--fh);}
+.opt.correct-ans .opt-letter{background:var(--g);color:#fff;}
+.opt.wrong-ans .opt-letter{background:var(--r);color:#fff;}
+
+/* HINT & EXPLANATION */
+.hint-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(229,161,0,.10);border:1px solid rgba(229,161,0,.22);border-radius:50px;padding:5px 13px;font-size:.72rem;font-weight:600;color:var(--o);cursor:pointer;transition:all .22s;margin-top:10px;}
+.hint-btn:hover{background:rgba(229,161,0,.18);}
+.hint-box{display:none;margin-top:10px;background:rgba(229,161,0,.07);border:1px solid rgba(229,161,0,.18);border-radius:10px;padding:10px 13px;font-size:.80rem;color:var(--text);line-height:1.6;}
+.hint-box.show{display:block;}
+.explanation{display:none;margin-top:12px;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.18);border-radius:11px;padding:13px 15px;}
+.explanation.show{display:block;}
+.exp-title{font-family:var(--fh);font-size:.72rem;font-weight:700;color:var(--g);letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px;}
+.exp-text{font-size:.82rem;color:var(--text);line-height:1.65;}
+.board-tip{margin-top:8px;background:rgba(108,92,231,.06);border:1px solid rgba(108,92,231,.14);border-radius:8px;padding:8px 11px;font-size:.76rem;color:var(--v);font-weight:500;}
+.board-tip strong{font-weight:700;}
+
+/* MISTAKE BANNER */
+.mistake-banner{display:none;background:rgba(225,112,85,.07);border:1px solid rgba(225,112,85,.18);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.80rem;color:var(--r);font-weight:500;}
+.mistake-banner.show{display:block;}
+
+/* SCORE / RESULTS */
+.results{background:var(--card);border:1.5px solid var(--cb);border-radius:20px;padding:clamp(24px,4vw,36px);box-shadow:var(--sh);text-align:center;display:none;}
+.results.show{display:block;}
+.res-score{font-family:var(--fh);font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:var(--v);margin-bottom:6px;}
+.res-sub{font-size:.88rem;color:var(--mu);margin-bottom:20px;}
+.res-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
+.res-badge{background:rgba(108,92,231,.10);border:1px solid rgba(108,92,231,.18);border-radius:50px;padding:5px 14px;font-size:.74rem;font-weight:600;color:var(--v);}
+.res-btn{background:var(--v);color:#fff;border:none;border-radius:50px;padding:10px 26px;font-size:.84rem;font-weight:700;cursor:pointer;transition:background .22s;}
+.res-btn:hover{background:#5a4bd1;}
+
+/* ACHIEVEMENTS */
+.achievements{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+.ach{background:rgba(255,255,255,.70);border:1.5px solid var(--cb);border-radius:50px;padding:5px 13px;font-size:.72rem;font-weight:600;color:var(--mu);transition:all .4s;display:flex;align-items:center;gap:5px;}
+.ach.earned{background:linear-gradient(135deg,rgba(108,92,231,.12),rgba(0,206,201,.08));border-color:var(--v);color:var(--v);}
+
+/* SWITCH LEVEL */
+.switch-level{text-align:center;margin-top:10px;}
+.switch-btn{background:linear-gradient(135deg,var(--v),var(--mint));color:#fff;border:none;border-radius:50px;padding:12px 30px;font-size:.86rem;font-weight:700;cursor:pointer;transition:opacity .22s;display:none;}
+.switch-btn:hover{opacity:.88;}
+.switch-btn.show{display:inline-flex;align-items:center;gap:8px;}
+.btn-next{display:none;margin-top:16px;background:linear-gradient(135deg,var(--v),var(--mint));color:#fff;border:none;border-radius:50px;padding:11px 28px;font-size:.86rem;font-weight:700;cursor:pointer;transition:opacity .22s;width:100%;}
+.btn-next:hover{opacity:.88;}
+.btn-next.show{display:block;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1A1A2E;color:#fff;border-radius:50px;padding:10px 22px;font-size:.80rem;font-weight:600;z-index:999;transition:transform .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(108,92,231,.09);padding:clamp(22px,3.5vw,36px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:48px;}
+.flogo{font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--v);}
+.ftg{font-size:.70rem;color:var(--mu);margin-top:2px;}
+.flinks{display:flex;gap:18px;list-style:none;}
+.flinks a{font-size:.76rem;color:var(--mu);}.flinks a:hover{color:var(--v);}
+.fcopy{font-size:.68rem;color:var(--mu);}
+.fcopy span{color:var(--v);}
+@media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}}
+@media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <div class="nav-r">
+    <a href="ch2.html" class="nbtn">← Ch 2 Overview</a>
+    <a href="ch2-pyq.html" class="nbtn">📅 Question Bank</a>
+  </div>
+</nav>
+
+<div class="streak-bar">
+  <div class="sb-stat"><span class="streak-fire">🔥</span>Streak: <span id="streakCount">0</span></div>
+  <div class="sb-stat">Score: <span id="scoreCount">0</span></div>
+  <div class="sb-stat">Level: <span id="levelName">Easy</span></div>
+  <div class="sb-stat">Q: <span id="qProgress">0/10</span></div>
+</div>
+
+<div class="main">
+  <div style="margin-bottom:8px;font-size:.70rem;color:var(--mu);">
+    <a href="vistar10.html" style="color:var(--v);font-weight:500">Home</a> › <a href="subjects.html" style="color:var(--v);font-weight:500">Science</a> › <a href="ch2.html" style="color:var(--v);font-weight:500">Chapter 2</a> › MCQ Practice
+  </div>
+
+  <div class="achievements" id="achievements">
+    <div class="ach" id="ach-first">🩸 First Blood</div>
+    <div class="ach" id="ach-fire">🔥 On Fire</div>
+    <div class="ach" id="ach-unstop">⚡ Unstoppable</div>
+    <div class="ach" id="ach-perfect">🏆 Perfect Score</div>
+    <div class="ach" id="ach-nohint">💡 Hint-Free Hero</div>
+    <div class="ach" id="ach-board">📋 Board Ready</div>
+    <div class="ach" id="ach-hard">🔬 Hard Cleared</div>
+    <div class="ach" id="ach-champ">👑 pH Champion</div>
+  </div>
+
+  <div class="level-tabs">
+    <div class="ltab active" style="--lc:#00B894" onclick="setLevel(0)" id="tab0">🌱 Easy</div>
+    <div class="ltab" style="--lc:#6C5CE7" onclick="setLevel(1)" id="tab1">🎯 Medium</div>
+    <div class="ltab" style="--lc:#e17055" onclick="setLevel(2)" id="tab2">🔥 Hard</div>
+    <div class="ltab" style="--lc:#0984e3" onclick="setLevel(3)" id="tab3">📋 Board Level</div>
+  </div>
+
+  <div id="quizArea"></div>
+  <div class="switch-level"><button class="switch-btn" id="switchBtn" onclick="nextLevel()">Next Level →</button></div>
+  <div class="results" id="results">
+    <div class="res-score" id="resScore">0</div>
+    <div class="res-sub" id="resSub"></div>
+    <div class="res-badges" id="resBadges"></div>
+    <button class="res-btn" onclick="restartAll()">🔄 Start Over</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks"><li><a href="vistar10.html">Home</a></li><li><a href="subjects.html">Subjects</a></li><li><a href="ch2.html">Ch 2</a></li><li><a href="ch2-pyq.html">PYQ</a></li><li><a href="ch2-study.html">Study</a></li></ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 · © 2026 VISTAR10</div>
+</footer>
+
+<script>
+const LEVELS=[
+  {name:'Easy',emoji:'🌱',color:'#00B894',pts:10,sub:'Fundamental concepts — definitions, properties, indicators'},
+  {name:'Medium',emoji:'🎯',color:'#6C5CE7',pts:15,sub:'Application level — reactions, pH, neutralisation'},
+  {name:'Hard',emoji:'🔥',color:'#E17055',pts:20,sub:'HOTS — salts, industrial processes, calculations'},
+  {name:'Board Level',emoji:'📋',color:'#0984e3',pts:25,sub:'PYQ-style — assertion-reason, source-based, multi-concept'}
+];
+
+const QUESTIONS=[
+  // ── LEVEL 0: EASY (10 questions) ──
+  [
+    {q:'Which of the following turns blue litmus paper red?',opts:['NaOH solution','Lime water','Dilute H₂SO₄','Baking soda solution'],ans:2,hint:'Acids turn blue litmus red.',exp:'Dilute H₂SO₄ is an acid and turns blue litmus red. NaOH, lime water, and baking soda are basic — they turn red litmus blue.',tip:'Board Tip: Always remember — Acid = Red (AR). Base = Blue (BR). Simple memory trick.'},
+    {q:'What is the pH of a neutral solution?',opts:['0','7','14','1'],ans:1,hint:'Neutral means neither acidic nor basic.',exp:'pH = 7 is neutral. pH < 7 is acidic; pH > 7 is basic. Pure water at 25°C has a pH of exactly 7.',tip:'Board Tip: pH 0 = strongest acid, pH 14 = strongest base. Human blood pH ≈ 7.4.'},
+    {q:'Which acid is present in vinegar?',opts:['Hydrochloric acid','Sulphuric acid','Acetic acid','Citric acid'],ans:2,hint:'Vinegar is used in cooking — it\'s a weak acid.',exp:'Vinegar contains acetic acid (ethanoic acid, CH₃COOH) in dilute form (about 5%). It is a weak organic acid.',tip:'Board Tip: Citric acid is in lemons, tartaric acid is in tamarind, acetic acid is in vinegar — a common 1-mark question.'},
+    {q:'The chemical formula of washing soda is:',opts:['NaCl','Na₂CO₃·10H₂O','NaHCO₃','Na₂SO₄'],ans:1,hint:'Washing soda contains crystals of water (hydrated).',exp:'Washing soda = sodium carbonate decahydrate = Na₂CO₃·10H₂O. Baking soda = NaHCO₃. Common salt = NaCl.',tip:'Board Tip: Know all 5 important salts by name, formula, and use — at least one is asked every year.'},
+    {q:'Which indicator turns pink/red in a basic solution?',opts:['Litmus','Methyl orange','Phenolphthalein','Turmeric'],ans:2,hint:'This indicator is colourless in acids and pink/red in bases.',exp:'Phenolphthalein is colourless in acidic medium and turns pink/red in basic medium. It is used in titrations to detect neutralisation.',tip:'Board Tip: Methyl orange is red in acid, yellow in base. Phenolphthalein is colourless in acid, pink in base.'},
+    {q:'What is formed when an acid reacts with a base?',opts:['Salt only','Water only','Salt and water','Gas and salt'],ans:2,hint:'This is the definition of neutralisation.',exp:'Acid + Base → Salt + Water. This is a neutralisation reaction. E.g., HCl + NaOH → NaCl + H₂O.',tip:'Board Tip: Neutralisation always produces salt and water. The salt formed depends on which acid and which base reacted.'},
+    {q:'Which gas is produced when a metal carbonate reacts with an acid?',opts:['Hydrogen','Oxygen','Carbon dioxide','Nitrogen'],ans:2,hint:'This gas turns lime water milky.',exp:'Metal carbonate + acid → salt + water + CO₂↑. E.g., Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑. CO₂ turns lime water milky (CaCO₃ forms).',tip:'Board Tip: CO₂ test = lime water turns milky. H₂ test = burns with pop sound. O₂ test = relights glowing splint.'},
+    {q:'The pH of lemon juice is approximately:',opts:['2','7','11','14'],ans:0,hint:'Lemon juice tastes sour — that tells you something about its pH.',exp:'Lemon juice is acidic (contains citric acid) with pH ≈ 2–3. Acidic solutions have pH < 7.',tip:'Board Tip: pH values to know — gastric acid ≈ 1–2, lemon ≈ 2, pure water = 7, blood ≈ 7.4, baking soda ≈ 8.3, soap ≈ 10.'},
+    {q:'Which of the following is a strong base?',opts:['Mg(OH)₂','NH₄OH','Ca(OH)₂','NaOH'],ans:3,hint:'Strong bases are fully ionised in water.',exp:'NaOH (sodium hydroxide) is a strong base — it completely ionises in water to give Na⁺ and OH⁻. Mg(OH)₂ and NH₄OH are weak bases.',tip:'Board Tip: Strong acids: HCl, H₂SO₄, HNO₃. Strong bases: NaOH, KOH, Ca(OH)₂. All others are weak.'},
+    {q:'What does an alkali produce in water?',opts:['H⁺ ions','OH⁻ ions','CO₂ gas','Salt'],ans:1,hint:'Alkalis are bases dissolved in water.',exp:'Alkalis are bases that are soluble in water. They produce OH⁻ (hydroxide) ions in water. Not all bases are alkalis — only water-soluble ones.',tip:'Board Tip: Alkali ⊆ Base. All alkalis are bases, but not all bases are alkalis. NaOH is an alkali; Cu(OH)₂ is a base but not an alkali.'},
+  ],
+  // ── LEVEL 1: MEDIUM (10 questions) ──
+  [
+    {q:'What happens when dilute HCl is added to zinc granules?',opts:['No reaction','ZnCl₂ + H₂↑ gas evolved','ZnO forms','Zn dissolves releasing O₂'],ans:1,hint:'Metals above hydrogen in reactivity series react with dilute acids.',exp:'Zn + 2HCl → ZnCl₂ + H₂↑. Zinc is above hydrogen in the reactivity series, so it displaces H₂ from dilute acid. The gas burns with a pop sound.',tip:'Board Tip: Metals BELOW hydrogen in reactivity series (Cu, Ag, Au) do NOT react with dilute acids.'},
+    {q:'Which of the following is NOT used to test whether a solution is acidic or basic?',opts:['Litmus solution','pH paper','Phenolphthalein','Distilled water'],ans:3,hint:'Distilled water itself is neutral.',exp:'Distilled water (pH 7) is used as a solvent/medium, not as an indicator. Litmus, pH paper, and phenolphthalein are all indicators that change colour based on the acidic/basic nature of the solution.',tip:'Board Tip: Natural indicators include litmus (lichen), turmeric, red cabbage extract, and china rose petals.'},
+    {q:'What is the pH range of a solution that turns phenolphthalein pink?',opts:['1–6','7','8–14','0–7'],ans:2,hint:'Phenolphthalein turns pink in basic conditions.',exp:'Phenolphthalein turns pink in basic solutions (pH > 7). It is colourless in acidic and neutral conditions. It changes colour at around pH 8.2–10.',tip:'Board Tip: In titration, when the last drop of base turns the phenolphthalein solution permanently pink — that is the endpoint.'},
+    {q:'What is produced at the cathode during electrolysis of brine?',opts:['Chlorine gas','Oxygen gas','Hydrogen gas','Sodium metal'],ans:2,hint:'Brine = salt water. Cathode is negative electrode.',exp:'In the chlor-alkali process (electrolysis of brine): H₂ is produced at cathode, Cl₂ at anode, and NaOH in solution. 2NaCl(aq) + 2H₂O → 2NaOH + Cl₂↑ + H₂↑',tip:'Board Tip: Remember the products at each electrode — Cathode = H₂, Anode = Cl₂. "CAThode = CATch the H₂".'},
+    {q:'Bleaching powder is formed by the reaction of chlorine with:',opts:['Slaked lime Ca(OH)₂','Quicklime CaO','Limestone CaCO₃','Washing soda Na₂CO₃'],ans:0,hint:'Bleaching powder has formula CaOCl₂.',exp:'Ca(OH)₂ + Cl₂ → CaOCl₂ + H₂O. Chlorine gas is passed over dry slaked lime (calcium hydroxide) to form bleaching powder (calcium oxychloride, CaOCl₂).',tip:'Board Tip: Bleaching powder = chlorine + slaked lime. Used for bleaching cotton/linen, disinfecting water, as oxidising agent in chemical industry.'},
+    {q:'When CO₂ is passed through lime water (Ca(OH)₂), it turns milky. What happens if excess CO₂ is passed?',opts:['Stays milky','Becomes clear again','Turns blue','Precipitate increases'],ans:1,hint:'Excess CO₂ reacts with CaCO₃ to form a soluble salt.',exp:'CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂ (soluble). Excess CO₂ converts insoluble CaCO₃ (white precipitate) to soluble calcium bicarbonate, making the solution clear again.',tip:'Board Tip: This reaction is why caves form stalactites — rainwater (CO₂ + H₂O) slowly dissolves limestone.'},
+    {q:'The pH of human blood is approximately:',opts:['5.5–6.5','7.35–7.45','8–9','6–7'],ans:1,hint:'Blood is very slightly basic — even small changes are dangerous.',exp:'Human blood pH is tightly maintained between 7.35–7.45. It is slightly basic. pH < 7.35 is acidosis; pH > 7.45 is alkalosis. Both are medical emergencies.',tip:'Board Tip: Tooth enamel dissolves at pH < 5.5. Antacids (Mg(OH)₂) neutralise excess stomach acid (HCl). Both are common application questions.'},
+    {q:'What is the chemical name of baking soda?',opts:['Sodium carbonate','Sodium hydrogen carbonate','Sodium chloride','Calcium carbonate'],ans:1,hint:'Baking soda is used in cooking and fire extinguishers.',exp:'Baking soda = sodium hydrogen carbonate (NaHCO₃). It is also called sodium bicarbonate. When heated: 2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑. CO₂ makes baked goods rise.',tip:'Board Tip: Baking soda vs baking powder — baking powder = baking soda + a mild acid (tartaric acid). Both produce CO₂.'},
+    {q:'An aqueous solution has pH = 1. Which of the following best describes it?',opts:['Weakly acidic','Strongly acidic','Neutral','Strongly basic'],ans:1,hint:'pH 1 is very close to pH 0.',exp:'pH 1 means high concentration of H⁺ ions. The lower the pH (closer to 0), the more strongly acidic the solution. pH 1 ≈ 0.1 M HCl (very strong acid).',tip:'Board Tip: pH is a log scale — each unit = 10× difference in H⁺ concentration. pH 3 is 10× more acidic than pH 4.'},
+    {q:'Which of the following salts is acidic in nature?',opts:['NaCl','Na₂CO₃','NH₄Cl','NaHCO₃'],ans:2,hint:'Think about which acid and base formed this salt.',exp:'NH₄Cl is formed from a strong acid (HCl) and a weak base (NH₄OH). Salts of strong acid + weak base are acidic. NaCl is neutral. Na₂CO₃ and NaHCO₃ are basic.',tip:'Board Tip: Strong acid + weak base = acidic salt. Weak acid + strong base = basic salt. Strong acid + strong base = neutral salt.'},
+  ],
+  // ── LEVEL 2: HARD (10 questions) ──
+  [
+    {q:'Plaster of Paris (POP) is obtained by heating gypsum at:',opts:['100°C','373 K (100°C)','100°C for a long time','373 K for exact 3/4 water removal'],ans:1,hint:'Gypsum = CaSO₄·2H₂O. POP = CaSO₄·½H₂O. Controlled heating removes water.',exp:'CaSO₄·2H₂O →(373 K) CaSO₄·½H₂O + 3/2 H₂O. Gypsum is heated at 100°C (373 K) to form POP. If heated above 120°C, dead burnt plaster (CaSO₄) forms which does NOT set with water.',tip:'Board Tip: POP + water → gypsum (expands slightly, used for casts). POP is used in dentistry, plaster of ceilings, surgical casts.'},
+    {q:'The process of mixing concentrated H₂SO₄ with water is exothermic. The correct method is:',opts:['Add water to acid quickly','Add acid to water slowly','Both methods are equivalent','Add acid to water, then cool'],ans:1,hint:'The concentrated acid must be the one being added, not the water.',exp:'Always add acid to water (AAW) slowly, not water to acid. Water has high specific heat and can absorb the heat generated. Adding water to concentrated H₂SO₄ can cause a violent exothermic reaction, spattering boiling acid.',tip:'Board Tip: "Add Acid to Water" = AAW. Acid → Water is SAFE. Water → Acid is DANGEROUS. This is a common safety question in boards.'},
+    {q:'What is the formula of the salt formed when excess NaOH reacts with H₂SO₄?',opts:['NaHSO₄','Na₂SO₄','Na₂SO₃','NaOH·H₂SO₄'],ans:1,hint:'Excess NaOH means the base is in excess — complete neutralisation occurs.',exp:'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O (excess base = complete neutralisation → normal salt). With limited NaOH: H₂SO₄ + NaOH → NaHSO₄ + H₂O (acid salt forms).',tip:'Board Tip: Acid salt forms when the acid is in excess. Normal salt forms when the base is in excess or in equimolar amounts.'},
+    {q:'Sodium carbonate (washing soda) is obtained from baking soda by:',opts:['Cooling','Heating','Adding water','Electrolysis'],ans:1,hint:'Baking soda → washing soda requires thermal decomposition.',exp:'2NaHCO₃ →(heat) Na₂CO₃ + H₂O + CO₂↑. Heating baking soda gives sodium carbonate. Then dissolving Na₂CO₃ in water and crystallising gives washing soda (Na₂CO₃·10H₂O).',tip:'Board Tip: Baking soda (NaHCO₃) → heating → Washing soda (Na₂CO₃) → dissolve + crystallise → Na₂CO₃·10H₂O.'},
+    {q:'What is the nature of the solution formed when HCl gas is dissolved in benzene (non-polar solvent)?',opts:['Strongly acidic','Neutral','Basic','Weakly acidic'],ans:1,hint:'Ionisation of acids requires polar solvent (water).',exp:'HCl produces H⁺ ions only when dissolved in water (polar). In benzene (non-polar solvent), HCl does NOT ionise and produces no H⁺ ions — so the solution is neutral. This proves that H⁺ ions cause acidity, not HCl molecules.',tip:'Board Tip: This is a classic concept question — acids show acidic properties only in aqueous solution because ionisation requires water.'},
+    {q:'When NaOH reacts with HCl during neutralisation, the temperature of the solution:',opts:['Decreases','Stays the same','Increases','First increases then decreases'],ans:2,hint:'Neutralisation is an exothermic process.',exp:'Neutralisation (acid + base → salt + water) is always exothermic. Heat is released, so the temperature of the solution increases. The heat released per mole of water formed is called the heat of neutralisation.',tip:'Board Tip: All neutralisation reactions are exothermic. This can be shown with a thermometer — temperature rises sharply at the equivalence point.'},
+    {q:'Which of the following salts does NOT contain water of crystallisation?',opts:['Blue vitriol (CuSO₄·5H₂O)','Washing soda (Na₂CO₃·10H₂O)','Baking soda (NaHCO₃)','Gypsum (CaSO₄·2H₂O)'],ans:2,hint:'Water of crystallisation = water molecules embedded in the crystal structure.',exp:'Baking soda (NaHCO₃) is an anhydrous salt — it does not have water of crystallisation. CuSO₄·5H₂O, Na₂CO₃·10H₂O, and CaSO₄·2H₂O all have water molecules in their crystal structure.',tip:'Board Tip: "x H₂O" after the formula = water of crystallisation. These salts lose their colour and turn into powders when heated (effloresence).'},
+    {q:'What colour does turmeric (haldi) paper turn when dipped in an alkaline solution?',opts:['Yellow','Red','Green','Blue'],ans:1,hint:'Turmeric contains curcumin — a natural indicator.',exp:'Turmeric (curcumin) turns red/brown in basic/alkaline solutions. It stays yellow in acidic and neutral solutions. This is why soap (basic) can leave yellowish stains that look different on turmeric-stained cloth.',tip:'Board Tip: Natural indicators to know — turmeric (yellow→red in base), red cabbage extract (red→green in base), china rose petals (pink→green in base).'},
+    {q:'The universal indicator shows a green colour for a solution with pH:',opts:['1','4','7','10'],ans:2,hint:'Green is the middle of the universal indicator scale.',exp:'Universal indicator shows green at pH 7 (neutral). Red/orange at low pH (acidic). Blue/violet at high pH (basic). The colour changes progressively across the pH scale.',tip:'Board Tip: Universal indicator is a mixture of indicators and gives a full spectrum of colours across pH 0–14. It is more informative than litmus which only gives acid/base.'},
+    {q:'In the chlor-alkali process, NaOH solution is formed:',opts:['At the anode','At the cathode','In the bulk of solution around cathode','In the bulk of solution away from electrodes'],ans:2,hint:'NaOH is not directly produced at either electrode.',exp:'In chlor-alkali electrolysis: Cl₂ is at anode, H₂ at cathode. NaOH remains in solution near the cathode compartment (Na⁺ + OH⁻ form as H₂O is reduced). The electrodes must be kept separate to prevent Cl₂ reacting with NaOH.',tip:'Board Tip: The three products of chlor-alkali — NaOH (used in soaps, paper, detergent), Cl₂ (used in bleaching, PVC), H₂ (used in fuel, margarine).'},
+  ],
+  // ── LEVEL 3: BOARD LEVEL (10 questions) ──
+  [
+    {q:'Assertion (A): Dry HCl gas does not change the colour of dry litmus paper.\nReason (R): Dry HCl gas does not ionise to produce H⁺ ions.',opts:['A is true, R is true, R explains A','A is true, R is true, R does not explain A','A is true, R is false','A is false, R is true'],ans:0,hint:'Think about whether ionisation requires water.',exp:'Both A and R are true, and R correctly explains A. HCl ionises only in the presence of water (H₂O). Without water, no H⁺ ions form, and litmus cannot change colour. This is why dry HCl (or HCl in benzene) is not acidic.',tip:'Board Tip: Assertion-Reason questions always require you to check: (1) Is A true? (2) Is R true? (3) Does R explain A? Three separate checks.'},
+    {q:'A student added dilute H₂SO₄ to Na₂CO₃ solution. The observation was: effervescence + colourless gas which turned lime water milky. The gas and the salt formed are:',opts:['CO₂, Na₂SO₄','H₂, NaSO₄','SO₂, Na₂CO₃','CO₂, NaHSO₄'],ans:0,hint:'Acid + carbonate → salt + water + CO₂.',exp:'Na₂CO₃ + H₂SO₄ → Na₂SO₄ + H₂O + CO₂↑. The colourless gas that turns lime water milky is CO₂. The salt formed is sodium sulphate (Na₂SO₄). Effervescence is due to CO₂ bubbles.',tip:'Board Tip: The test for CO₂ = passed through Ca(OH)₂ (lime water) → turns milky (CaCO₃↓ forms). This is asked as both theory and observation questions.'},
+    {q:'Which of the following correctly explains why concentrated H₂SO₄ should not be mixed with water rapidly?',opts:['H₂SO₄ is very dense so it sinks','The mixing is highly exothermic and can cause boiling and spattering','H₂SO₄ reacts with water producing toxic SO₂','H₂SO₄ turns water acidic which corrodes the container'],ans:1,hint:'This is a safety question about dilution.',exp:'Mixing concentrated H₂SO₄ with water releases a large amount of heat (highly exothermic) because of the formation of hydronium ions (H₃O⁺). If water is added to acid, localised boiling occurs and the boiling acid spatters, causing severe burns.',tip:'Board Tip: "Add Acid to Water" — always. Lab safety question that often appears in 1-mark or very short answer format.'},
+    {q:'Tooth enamel is made of hydroxyapatite Ca₅(PO₄)₃(OH). It dissolves when pH of mouth falls below 5.5. Which of the following correctly explains the role of toothpaste?',opts:['Toothpaste is acidic — it neutralises the enamel','Toothpaste is basic — it neutralises mouth acids','Toothpaste contains sugar for energy','Toothpaste makes teeth harder physically'],ans:1,hint:'Acids dissolve enamel. The solution is neutralisation.',exp:'Toothpaste is mildly basic (contains basic compounds like sodium fluoride, calcium carbonate). It neutralises the acids produced by bacteria in the mouth (from sugar fermentation), raising pH above 5.5 to protect enamel.',tip:'Board Tip: "Tooth enamel + pH" is a 3-mark application question. Mention: bacteria produce acid, pH drops, enamel dissolves, toothpaste (basic) neutralises acid.'},
+    {q:'A 10 mL sample of baking soda solution is titrated against 0.1 M HCl. Exactly 20 mL of HCl is required. The reaction is: NaHCO₃ + HCl → NaCl + H₂O + CO₂. What is the concentration of baking soda?',opts:['0.1 M','0.2 M','0.05 M','0.5 M'],ans:1,hint:'Moles of HCl = moles of NaHCO₃ (1:1 ratio).',exp:'Moles of HCl = 0.1 × 20/1000 = 0.002 mol. Ratio NaHCO₃:HCl = 1:1, so moles NaHCO₃ = 0.002. Concentration = 0.002 / (10/1000) = 0.002/0.01 = 0.2 M.',tip:'Board Tip: Moles = Molarity × Volume(L). For 1:1 reactions, moles of both reactants at equivalence = equal. Know the formula M₁V₁ = M₂V₂ for 1:1 titrations.'},
+    {q:'In which of the following cases is effluvescence (gas) NOT produced when an acid is added?',opts:['Na₂CO₃ + HCl','NaHCO₃ + H₂SO₄','NaCl + HNO₃','Na₂SO₃ + HCl'],ans:2,hint:'Not all salts react with acids to give gases.',exp:'NaCl + HNO₃: NaCl is a salt of strong acid (HCl) and strong base (NaOH). Stronger acid (HNO₃) cannot displace Cl⁻ here to give a gas under normal conditions. The others: carbonates/bicarbonates give CO₂, sulphites give SO₂.',tip:'Board Tip: Salts of strong acid + strong base are neutral and do not produce gases with other acids.'},
+    {q:'Source: A student added aqueous NaOH drop by drop to HCl, monitoring pH. The pH started at 1, rose slowly to 6, then jumped sharply to 8 near the equivalence point, then rose to 13. What does the sharp jump indicate?',opts:['End of acid','Sudden dilution with water','Near-complete neutralisation at equivalence point','Addition of excess indicator'],ans:2,hint:'The shape of an acid-base titration curve has a sharp jump at the equivalence point.',exp:'The sharp rise from acidic to basic pH near the equivalence point indicates the neutralisation is nearly complete. Just before equivalence, all the NaOH is consumed; at equivalence, equal moles have reacted; just after, excess NaOH makes it strongly basic.',tip:'Board Tip: Titration curve questions are increasingly common in CBSE boards. The key features: gradual change far from equivalence, sharp jump at equivalence point.'},
+    {q:'Which combination correctly matches the salt, its parent acid, and parent base?',opts:['Na₂CO₃ — H₂CO₃ — NaOH','Na₂SO₄ — H₂SO₄ — KOH','NH₄Cl — HCl — NH₄OH','CaCO₃ — H₂CO₃ — Ca(OH)₂'],ans:2,hint:'Salt name = metal from base + acid radical.',exp:'NH₄Cl = NH₄OH (base) + HCl (acid). All others: Na₂SO₄ = NaOH + H₂SO₄ (KOH is wrong). Na₂CO₃ = NaOH + H₂CO₃ ✓. CaCO₃ = Ca(OH)₂ + H₂CO₃ ✓. But option C specifies NH₄Cl = HCl + NH₄OH, which is the only complete set that matches.',tip:'Board Tip: Salt = base cation + acid anion. NaCl (Na from NaOH, Cl from HCl). Na₂SO₄ (Na from NaOH, SO₄ from H₂SO₄).'},
+    {q:'Assertion (A): Sodium hydrogen carbonate is used in fire extinguishers.\nReason (R): On heating, NaHCO₃ releases CO₂ which smothers the fire.',opts:['A true, R true, R explains A','A true, R true, R does not explain A','A true, R false','A false, R true'],ans:0,hint:'Think about why CO₂ is good at extinguishing fires.',exp:'Both A and R are correct, and R explains A. When NaHCO₃ is heated (by the fire or acid reaction): 2NaHCO₃ → Na₂CO₃ + H₂O + CO₂↑. CO₂ is heavier than air and smothers fire by cutting off oxygen supply.',tip:'Board Tip: CO₂ fire extinguisher is used for electrical fires where water cannot be used. In soda-acid extinguisher, H₂SO₄ reacts with NaHCO₃ to produce CO₂.'},
+    {q:'A universal indicator shows the following colours for four solutions: P=orange, Q=green, R=red, S=blue-green. Which solution is most likely to be stomach acid (gastric juice)?',opts:['P','Q','R','S'],ans:2,hint:'Stomach acid (HCl) is very strongly acidic.',exp:'Gastric juice is strongly acidic (pH ≈ 1.5–2, contains HCl). On the universal indicator: red = very acidic (pH 1–2). Orange = moderately acidic (pH 3–4). Green = neutral (pH 7). Blue-green = weakly basic (pH 8).',tip:'Board Tip: Universal indicator colour key — Red: pH 1–3, Orange: pH 3–5, Yellow: pH 5–6, Green: pH 7, Blue: pH 8–9, Violet: pH 10–14.'},
+  ]
+];
+
+let curLevel=0,curQ=0,score=0,streak=0,hintUsed=false,levelScores=[0,0,0,0];
+let achEarned={first:false,fire:false,unstop:false,perfect:false,nohint:true,board:false,hard:false,champ:false};
+
+function setLevel(lv){
+  curLevel=lv;curQ=0;hintUsed=false;
+  ['tab0','tab1','tab2','tab3'].forEach((id,i)=>{
+    const t=document.getElementById(id);
+    t.classList.toggle('active',i===lv);
+  });
+  document.getElementById('levelName').textContent=LEVELS[lv].name;
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('switchBtn').classList.remove('show');
+  renderQ();
+}
+
+function renderQ(){
+  const lv=LEVELS[curLevel],qs=QUESTIONS[curLevel];
+  if(curQ>=qs.length){showResults();return;}
+  const q=qs[curQ];
+  document.getElementById('qProgress').textContent=`${curQ+1}/10`;
+  const area=document.getElementById('quizArea');
+  const letters=['A','B','C','D'];
+  area.innerHTML=`
+    <div class="level-header">
+      <div class="lh-badge" style="background:${lv.color}22;color:${lv.color}">${lv.emoji} ${lv.name} · ${lv.pts} pts</div>
+      <div class="lh-title">Question ${curQ+1} of 10</div>
+      <div class="lh-sub">${lv.sub}</div>
+    </div>
+    <div class="q-card" id="qcard">
+      <div class="q-num">Chapter 2 · ${lv.name} · Q${curQ+1}</div>
+      <div class="q-text">${q.q.replace(/\n/g,'<br>')}</div>
+      <div class="options" id="opts">
+        ${q.opts.map((o,i)=>`<div class="opt" id="opt${i}" onclick="selectOpt(${i})"><div class="opt-letter">${letters[i]}</div>${o}</div>`).join('')}
+      </div>
+      <button class="hint-btn" id="hintBtn" onclick="showHint()">💡 Show Hint (−5 pts)</button>
+      <div class="hint-box" id="hintBox">💡 ${q.hint}</div>
+      <div class="explanation" id="expBox">
+        <div class="exp-title">✅ Explanation</div>
+        <div class="exp-text">${q.exp}</div>
+        <div class="board-tip"><strong>📋 Board Tip:</strong> ${q.tip}</div>
+      </div>
+      <div class="mistake-banner" id="mistakeBanner">❌ Incorrect. The correct answer is highlighted above. Study the explanation carefully!</div>
+      <button class="btn-next" id="nextBtn" onclick="goNext()"></button>
+    </div>
+  `;
+  hintUsed=false;
+}
+
+function selectOpt(i){
+  const q=QUESTIONS[curLevel][curQ];
+  const opts=document.querySelectorAll('.opt');
+  if(opts[0].classList.contains('disabled'))return;
+  opts.forEach(o=>o.classList.add('disabled'));
+  opts[i].classList.add('selected');
+  const correct=i===q.ans;
+  if(correct){
+    opts[i].classList.add('correct-ans');
+    const pts=LEVELS[curLevel].pts+(hintUsed?0:5);
+    const bonus=streak>=4?10:streak>=2?5:0;
+    score+=pts+bonus;
+    streak++;
+    levelScores[curLevel]+=pts+bonus;
+    document.getElementById('scoreCount').textContent=score;
+    document.getElementById('streakCount').textContent=streak;
+    if(!achEarned.first){achEarned.first=true;earnAch('ach-first','🩸 First Blood!');}
+    if(streak>=3&&!achEarned.fire){achEarned.fire=true;earnAch('ach-fire','🔥 On Fire! 3 streak!');}
+    if(streak>=5&&!achEarned.unstop){achEarned.unstop=true;earnAch('ach-unstop','⚡ Unstoppable! 5 streak!');}
+    if(bonus>0)showToast(`🔥 Streak bonus +${bonus} pts!`);
+    else showToast(`✅ Correct! +${pts} pts`);
+  } else {
+    opts[i].classList.add('wrong-ans');
+    opts[q.ans].classList.add('correct-ans');
+    streak=0;
+    document.getElementById('streakCount').textContent=streak;
+    document.getElementById('mistakeBanner').classList.add('show');
+    showToast('❌ Wrong — check the explanation');
+    if(hintUsed)achEarned.nohint=false;
+  }
+  document.getElementById('expBox').classList.add('show');
+  document.getElementById('hintBtn').style.display='none';
+  document.getElementById('hintBox').classList.remove('show');
+  const nb=document.getElementById('nextBtn');
+  nb.textContent=curQ+1 < QUESTIONS[curLevel].length ? 'Next Question →' : 'See Results 🏁';
+  nb.classList.add('show');
+}
+
+function goNext(){
+  curQ++;
+  if(curQ<QUESTIONS[curLevel].length)renderQ();
+  else showResults();
+}
+
+function showHint(){
+  hintUsed=true;achEarned.nohint=false;
+  document.getElementById('hintBox').classList.add('show');
+  document.getElementById('hintBtn').style.display='none';
+}
+
+function showResults(){
+  document.getElementById('quizArea').innerHTML='';
+  document.getElementById('switchBtn').classList.remove('show');
+  const lv=curLevel,ls=levelScores[lv],qs=QUESTIONS[lv].length;
+  if(lv===2&&!achEarned.hard){achEarned.hard=true;earnAch('ach-hard','🔬 Hard Cleared!');}
+  if(lv===3&&!achEarned.board){achEarned.board=true;earnAch('ach-board','📋 Board Ready!');}
+  if(lv===3&&achEarned.board&&!achEarned.champ){achEarned.champ=true;earnAch('ach-champ','👑 pH Champion!');}
+  const maxPts=qs*(LEVELS[lv].pts+5);
+  const pct=Math.round((ls/maxPts)*100);
+  let msg=pct>=90?'🏆 Outstanding! You\'ve mastered this level!':pct>=70?'🎯 Great work! Keep it up!':pct>=50?'📖 Good effort — review the explanations and try again.':'💪 Keep practising — every attempt makes you better!';
+  const res=document.getElementById('results');
+  res.innerHTML=`
+    <div class="res-score">${ls} pts</div>
+    <div class="res-sub">${msg}<br><small style="color:var(--mu)">${pct}% of max score · Level: ${LEVELS[lv].name}</small></div>
+    <div class="res-badges" id="resBadges"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="res-btn" onclick="setLevel(${lv})">🔄 Retry Level</button>
+      ${lv<3?`<button class="res-btn" style="background:var(--mint)" onclick="setLevel(${lv+1})">Next Level →</button>`:''}
+    </div>
+  `;
+  res.classList.add('show');
+  if(pct>=90&&!achEarned.perfect){achEarned.perfect=true;earnAch('ach-perfect','🏆 Perfect Score!');}
+  if(achEarned.nohint)earnAch('ach-nohint','💡 Hint-Free Hero!');
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function nextLevel(){
+  if(curLevel<3)setLevel(curLevel+1);
+}
+
+function restartAll(){
+  score=0;streak=0;curLevel=0;curQ=0;levelScores=[0,0,0,0];
+  document.getElementById('scoreCount').textContent=0;
+  document.getElementById('streakCount').textContent=0;
+  document.getElementById('results').classList.remove('show');
+  setLevel(0);
+}
+
+function earnAch(id,msg){
+  const el=document.getElementById(id);
+  if(el){el.classList.add('earned');showToast('🏅 Achievement: '+msg);}
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>28),{passive:true});
+setLevel(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VISTAR10 — Ch 1 · Question Bank</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;--mint:#00CEC9;--peach:#FDAE9A;
+      --text:#1A1A2E;--muted:#6B6B8A;--card:rgba(255,255,255,.85);--cb:rgba(108,92,231,.13);
+      --sh:0 6px 32px rgba(108,92,231,.09);--shh:0 14px 48px rgba(108,92,231,.16);
+      --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,4vw,6%);
+      --green:#00B894;--red:#E17055;--orange:#e5a100;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--vlt);border-radius:99px;}
+
+    /* BLOBS */
+    .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+    .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.16;animation:drift 22s ease-in-out infinite alternate;}
+    .b1{width:clamp(180px,36vw,420px);height:clamp(180px,36vw,420px);background:#A29BFE;top:-8%;left:-5%;}
+    .b2{width:clamp(120px,24vw,280px);height:clamp(120px,24vw,280px);background:#00CEC9;bottom:10%;right:-4%;animation-delay:-9s;}
+    .b3{width:clamp(100px,18vw,220px);height:clamp(100px,18vw,220px);background:#FDAE9A;top:45%;left:5%;animation-delay:-16s;}
+    @keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(18px,-26px);}}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+    nav.scrolled{background:rgba(245,244,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(108,92,231,.09);box-shadow:0 4px 24px rgba(108,92,231,.07);}
+    .logo{font-family:var(--fh);font-size:clamp(1rem,2vw,1.3rem);font-weight:800;color:var(--violet);display:flex;align-items:center;gap:7px;}
+    .logo-icon{width:25px;height:25px;background:linear-gradient(135deg,var(--violet),var(--mint));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .nav-back{background:rgba(108,92,231,.10);color:var(--violet);font-size:.82rem;font-weight:600;padding:7px 16px;border-radius:50px;border:1.5px solid rgba(108,92,231,.20);cursor:pointer;transition:all .25s;white-space:nowrap;}
+    .nav-back:hover{background:var(--violet);color:#fff;}
+
+    /* HERO */
+    .hero{position:relative;z-index:1;padding:clamp(88px,12vh,116px) var(--px) clamp(20px,3vh,32px);}
+    .bc{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--muted);margin-bottom:14px;flex-wrap:wrap;}
+    .bc a{color:var(--violet);font-weight:500;}
+    .bc a:hover{text-decoration:underline;}
+    .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(108,92,231,.10);border:1px solid rgba(108,92,231,.20);border-radius:50px;padding:5px 14px;font-size:.68rem;font-weight:600;color:var(--violet);margin-bottom:14px;letter-spacing:.4px;}
+    .hero h1{font-family:var(--fh);font-size:clamp(1.7rem,4.5vw,3.1rem);font-weight:800;line-height:1.12;margin-bottom:12px;}
+    .hero h1 span{color:var(--violet);}
+    .hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+    .hm{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:50px;padding:4px 12px;font-size:.70rem;font-weight:500;color:var(--muted);}
+    .hm .dot{width:6px;height:6px;border-radius:50%;}
+    .stats-row{display:flex;gap:12px;flex-wrap:wrap;}
+    .stat-chip{background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:12px;padding:10px 16px;text-align:center;backdrop-filter:blur(8px);}
+    .stat-n{font-family:var(--fh);font-size:1.2rem;font-weight:800;color:var(--violet);}
+    .stat-l{font-size:.64rem;color:var(--muted);margin-top:1px;}
+
+    /* FILTER BAR */
+    .filter-bar{position:sticky;top:56px;z-index:150;background:rgba(245,244,255,.93);backdrop-filter:blur(18px);border-bottom:1px solid rgba(108,92,231,.09);padding:10px var(--px);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .fb-label{font-size:.70rem;font-weight:600;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;}
+    .ftag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1.5px solid rgba(108,92,231,.14);border-radius:50px;padding:6px 14px;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .22s;white-space:nowrap;}
+    .ftag:hover{border-color:var(--fc,var(--violet));color:var(--fc,var(--violet));}
+    .ftag.on{background:var(--fc,var(--violet));border-color:var(--fc,var(--violet));color:#fff;}
+    .ftag-all.on{background:var(--violet);border-color:var(--violet);color:#fff;}
+    .q-count-badge{margin-left:auto;font-size:.72rem;font-weight:600;color:var(--muted);white-space:nowrap;}
+
+    /* MAIN */
+    .main{position:relative;z-index:1;padding:clamp(20px,3vw,32px) var(--px) clamp(48px,7vw,72px);}
+
+    /* SECTION HEADING */
+    .sec-head{margin:clamp(28px,4vw,44px) 0 clamp(14px,2vw,20px);}
+    .sec-head:first-child{margin-top:0;}
+    .sec-label{display:inline-flex;align-items:center;gap:8px;background:rgba(108,92,231,.08);border:1px solid rgba(108,92,231,.16);border-radius:50px;padding:5px 14px;font-size:.68rem;font-weight:700;color:var(--violet);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+    .sec-title{font-family:var(--fh);font-size:clamp(1.05rem,1.8vw,1.3rem);font-weight:800;color:var(--text);margin-bottom:4px;}
+    .sec-sub{font-size:clamp(.76rem,.9vw,.82rem);color:var(--muted);font-weight:300;}
+
+    /* QUESTION CARD */
+    .q-list{display:flex;flex-direction:column;gap:clamp(12px,1.8vw,16px);}
+    .qcard{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .3s,border-color .3s;}
+    .qcard:hover{box-shadow:var(--shh);}
+    .qcard.hidden{display:none;}
+
+    /* QUESTION TOP */
+    .qt{display:flex;align-items:flex-start;gap:14px;padding:clamp(16px,2.5vw,22px) clamp(16px,2.5vw,22px) clamp(14px,2vw,18px);cursor:pointer;user-select:none;}
+    .q-num-badge{flex-shrink:0;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:.72rem;font-weight:800;color:#fff;}
+    .q-body{flex:1;min-width:0;}
+    .q-tags{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:7px;}
+    .qtag{font-size:.60rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;}
+    .q-text{font-size:clamp(.88rem,1.1vw,.97rem);font-weight:500;color:var(--text);line-height:1.65;}
+    .q-eq{background:rgba(108,92,231,.05);border:1px solid rgba(108,92,231,.11);border-radius:9px;padding:9px 13px;font-family:'Courier New',monospace;font-size:clamp(.76rem,.9vw,.84rem);color:var(--text);margin-top:9px;line-height:1.55;}
+    .q-opts{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
+    .qopt{font-size:clamp(.80rem,.98vw,.88rem);color:var(--muted);padding:3px 0;display:flex;gap:7px;}
+    .qopt-key{font-weight:700;color:var(--violet);min-width:16px;}
+    .q-toggle{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(108,92,231,.09);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--violet);transition:transform .3s,background .25s;margin-top:2px;}
+    .qcard.open .q-toggle{transform:rotate(180deg);background:rgba(108,92,231,.16);}
+
+    /* ANSWER */
+    .qa{border-top:1px solid rgba(108,92,231,.10);padding:clamp(14px,2vw,18px) clamp(16px,2.5vw,22px);background:rgba(0,184,148,.04);display:none;}
+    .qcard.open .qa{display:block;}
+    .qa-head{display:flex;align-items:center;gap:7px;font-family:var(--fh);font-size:.78rem;font-weight:700;color:var(--green);margin-bottom:9px;}
+    .qa-text{font-size:clamp(.82rem,.98vw,.90rem);color:var(--text);line-height:1.7;font-weight:400;}
+    .qa-eq{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.18);border-radius:9px;padding:9px 13px;font-family:'Courier New',monospace;font-size:clamp(.74rem,.88vw,.82rem);color:var(--text);margin:8px 0;line-height:1.55;}
+    .qa-tip{margin-top:10px;padding:9px 13px;background:rgba(229,161,0,.08);border-left:3px solid var(--orange);border-radius:0 9px 9px 0;font-size:.78rem;color:#7a5c00;line-height:1.6;}
+    .qa-tip strong{font-weight:700;}
+
+    /* MCQ correct highlight */
+    .qopt.correct-opt .qopt-key{color:var(--green);}
+    .qopt.correct-opt{color:var(--text);font-weight:500;}
+    .qopt.correct-opt::after{content:' ✓';color:var(--green);font-weight:700;font-size:.70rem;}
+
+    /* CASE BASED */
+    .case-passage{background:rgba(108,92,231,.04);border:1px solid rgba(108,92,231,.13);border-radius:13px;padding:clamp(14px,2vw,20px);margin-bottom:14px;font-size:clamp(.82rem,.98vw,.90rem);color:var(--text);line-height:1.75;}
+    .case-passage strong{font-weight:600;}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+    .reveal.vis{opacity:1;transform:translateY(0);}
+
+    /* FOOTER */
+    footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(108,92,231,.09);padding:clamp(22px,3.5vw,36px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:20px;}
+    .flogo{font-family:var(--fh);font-size:1.05rem;font-weight:800;color:var(--violet);}
+    .ftg{font-size:.72rem;color:var(--muted);margin-top:2px;}
+    .flinks{display:flex;gap:18px;list-style:none;}
+    .flinks a{font-size:.78rem;color:var(--muted);}
+    .flinks a:hover{color:var(--violet);}
+    .fcopy{font-size:.70rem;color:var(--muted);}
+    .fcopy span{color:var(--violet);}
+
+    /* RESPONSIVE */
+    @media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}.stats-row{gap:8px;}}
+    @media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+  </style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <a href="ch1.html" class="nav-back">← Ch 1 Overview</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bc"><a href="vistar10.html">Home</a><span>›</span><a href="subjects.html">Subjects</a><span>›</span><a href="subjects.html">Science</a><span>›</span><a href="ch1.html">Chapter 1</a><span>›</span><span>Question Bank</span></div>
+  <div class="hero-badge">⚗️ &nbsp; Chemistry · Chapter 1 · Question Bank</div>
+  <h1><span>Previous Year &</span><br/>Practice Questions</h1>
+  <div class="hero-meta">
+    <div class="hm"><div class="dot" style="background:#6C5CE7"></div>CBSE 2013–2024</div>
+    <div class="hm"><div class="dot" style="background:#00CEC9"></div>All Question Types</div>
+    <div class="hm"><div class="dot" style="background:#FDAE9A"></div>Answers Hidden · Click to Reveal</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-chip"><div class="stat-n" id="totalCount">105</div><div class="stat-l">Total Questions</div></div>
+    <div class="stat-chip"><div class="stat-n">20</div><div class="stat-l">MCQ</div></div>
+    <div class="stat-chip"><div class="stat-n">25</div><div class="stat-l">VSA (1 mark)</div></div>
+    <div class="stat-chip"><div class="stat-n">22</div><div class="stat-l">SA I (2 marks)</div></div>
+    <div class="stat-chip"><div class="stat-n">24</div><div class="stat-l">SA II (3 marks)</div></div>
+    <div class="stat-chip"><div class="stat-n">8</div><div class="stat-l">LA (5 marks)</div></div>
+    <div class="stat-chip"><div class="stat-n">6</div><div class="stat-l">Case Based</div></div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="fb-label">Filter:</span>
+  <div class="ftag ftag-all on" style="--fc:#6C5CE7" onclick="filterQ('all',this)">All</div>
+  <div class="ftag" style="--fc:#6C5CE7" onclick="filterQ('mcq',this)">MCQ</div>
+  <div class="ftag" style="--fc:#00A8A8" onclick="filterQ('vsa',this)">VSA · 1 Mark</div>
+  <div class="ftag" style="--fc:#e17055" onclick="filterQ('sa1',this)">SA I · 2 Marks</div>
+  <div class="ftag" style="--fc:#e5a100" onclick="filterQ('sa2',this)">SA II · 3 Marks</div>
+  <div class="ftag" style="--fc:#6C5CE7" onclick="filterQ('la',this)">LA · 5 Marks</div>
+  <div class="ftag" style="--fc:#00B894" onclick="filterQ('case',this)">Case Based</div>
+  <span class="q-count-badge" id="visCount">Showing 105 questions</span>
+</div>
+
+<div class="main" id="mainContent">
+
+<!-- ════════════════════ MCQ ════════════════════ -->
+<div class="sec-head reveal" data-type="mcq">
+  <div class="sec-label">🎯 MCQ · 1 Mark Each</div>
+  <div class="sec-title">Multiple Choice Questions</div>
+  <div class="sec-sub">From CBSE Board Exams 2013–2024. Choose the most appropriate answer.</div>
+</div>
+<div class="q-list" id="mcq-list">
+
+  <!-- Q1 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">1</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">Identify 'x', 'y' and 'z' in the balanced equation: 2KClO₃ →(x) 2KCl + 3O₂ where x is above the arrow, (s) or (g) labels are missing.</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> x = gas; y = reaction condition; z = gas</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> x = physical state of KClO₃ and KCl; y = reaction condition; z = physical state of O₂</div>
+          <div class="qopt"><span class="qopt-key">C.</span> x = number of moles of KClO₃; y = reaction condition; z = number of molecules of O₂</div>
+          <div class="qopt"><span class="qopt-key">D.</span> x = solid; y = liquid; z = gas</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">In a chemical equation, the letters in brackets (s), (l), (g), (aq) represent the physical states of substances. 'x' represents the physical states (s) for KClO₃ and KCl; 'y' represents the reaction condition (heat/MnO₂); 'z' represents the physical state (g) for O₂.</div></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">2</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Assertion (A): Burning of natural gas is an endothermic process.<br>Reason (R): Methane gas combines with oxygen to produce carbon dioxide and water.</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Both A and R are true, and R is the correct explanation of A</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Both A and R are true, but R is NOT the correct explanation of A</div>
+          <div class="qopt"><span class="qopt-key">C.</span> A is true but R is false</div>
+          <div class="qopt correct-opt"><span class="qopt-key">D.</span> A is false but R is true</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: D</div><div class="qa-text">A is false — burning of natural gas (combustion of methane) is actually an <strong>exothermic</strong> process, not endothermic. It releases heat and light. R is true — methane does combine with oxygen to produce CO₂ and water. Since A is false but R is true, the answer is D.</div><div class="qa-tip"><strong>Board Tip:</strong> Combustion = always exothermic. Assertion-Reason: check A first, then R, then whether R explains A.</div></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">3</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">When aqueous solutions of potassium iodide and lead nitrate are mixed, an insoluble substance separates out. The correct balanced chemical equation for the reaction is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> KI + PbNO₃ → PbI + KNO₃</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> 2KI + Pb(NO₃)₂ → PbI₂↓ + 2KNO₃</div>
+          <div class="qopt"><span class="qopt-key">C.</span> KI + Pb(NO₃)₂ → PbI + KNO₃</div>
+          <div class="qopt"><span class="qopt-key">D.</span> KI + PbNO₃ → PbI₂ + KNO₃</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">2KI(aq) + Pb(NO₃)₂(aq) → PbI₂(s)↓ + 2KNO₃(aq). This is a double displacement (precipitation) reaction. The yellow precipitate is lead iodide (PbI₂). The equation must be balanced — 2 KI needed to provide 2 I⁻ ions for one Pb²⁺ ion.</div><div class="qa-tip"><strong>Board Tip:</strong> Always check balancing. Lead iodide is yellow — a commonly tested observation.</div></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">4</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">When lead nitrate powder is heated in a boiling tube, we observe:</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Brown fumes of nitrogen dioxide</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Brown fumes of lead oxide</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Yellow fumes of nitrogen dioxide</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Brown fumes of nitric oxide</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂. On heating, brown/reddish-brown fumes of nitrogen dioxide (NO₂) are produced. A yellow residue of lead oxide (PbO) is left. Note: PbO is yellow, not the fumes — students often confuse this.</div><div class="qa-tip"><strong>Board Tip:</strong> NO₂ = brown gas. PbO = yellow residue. Two separate observations!</div></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">5</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">Assertion (A): Silver salts are used in black and white photography.<br>Reason (R): Silver salts do not decompose in the presence of light.</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Both A and R are true, and R is the correct explanation of A</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Both A and R are true, but R is NOT the correct explanation of A</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> A is true but R is false</div>
+          <div class="qopt"><span class="qopt-key">D.</span> A is false but R is true</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">A is true — silver salts (AgBr, AgCl) are indeed used in black-and-white photography. R is false — silver salts <strong>do</strong> decompose in the presence of light (that is exactly WHY they are used in photography). 2AgBr → 2Ag + Br₂ (in sunlight).</div></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">6</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div>
+        <div class="q-text">The endothermic process(es) among the following is/are:<br>I. Dilution of H₂SO₄ &nbsp; II. Sublimation of dry ice &nbsp; III. Condensation of water vapour &nbsp; IV. Dissolution of NH₄Cl in water</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> I and III</div>
+          <div class="qopt"><span class="qopt-key">B.</span> II only</div>
+          <div class="qopt"><span class="qopt-key">C.</span> III only</div>
+          <div class="qopt correct-opt"><span class="qopt-key">D.</span> II and IV</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: D</div><div class="qa-text">Endothermic = absorbs heat from surroundings. Sublimation of dry ice absorbs heat (solid CO₂ → gas). Dissolution of NH₄Cl is endothermic (flask feels cold). Dilution of H₂SO₄ is exothermic (gives heat). Condensation of water vapour is exothermic.</div><div class="qa-tip"><strong>Board Tip:</strong> Sublimation and dissolution of ammonium salts = endothermic. Condensation and dilution of acids = exothermic.</div></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">7</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div>
+        <div class="q-text">Assertion (A): The equation 3Fe + 4H₂O → Fe₃O₄ + 4H₂ is balanced.<br>Reason (R): The law of conservation of mass holds good for a chemical equation.</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Both A and R are true, and R is the correct explanation of A</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Both A and R are true, but R is NOT the correct explanation of A</div>
+          <div class="qopt"><span class="qopt-key">C.</span> A is true but R is false</div>
+          <div class="qopt"><span class="qopt-key">D.</span> A is false but R is true</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">A is true — verify: Left: 3Fe, 8H, 4O. Right: 3Fe (in Fe₃O₄), 4O (in Fe₃O₄), 8H (in 4H₂). Balanced ✓. R is true — we balance equations precisely to satisfy the Law of Conservation of Mass. R correctly explains why A is true.</div></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">8</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div>
+        <div class="q-text">A solution 'X' turns milky when CO₂ is passed through it. After some time, it becomes clear. On passing more CO₂ it turns milky again. Solution X is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> NaOH solution</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Ca(OH)₂ solution (lime water)</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Na₂CO₃ solution</div>
+          <div class="qopt"><span class="qopt-key">D.</span> KOH solution</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Ca(OH)₂ + CO₂ → CaCO₃↓ (milky) + H₂O. On passing excess CO₂: CaCO₃ + H₂O + CO₂ → Ca(HCO₃)₂ (soluble, clear). On heating/standing, Ca(HCO₃)₂ → CaCO₃↓ (milky again). This is a classic property of lime water.</div><div class="qa-tip"><strong>Board Tip:</strong> Lime water turning milky = test for CO₂. The clear → milky → clear cycle is due to formation of soluble Ca(HCO₃)₂.</div></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">9</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">In the reaction: CuO + H₂ → Cu + H₂O, which substance is being oxidised and which is being reduced?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> CuO is oxidised; H₂ is reduced</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> H₂ is oxidised; CuO is reduced</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Both CuO and H₂ are oxidised</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Neither is oxidised or reduced</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">H₂ gains oxygen to form H₂O → H₂ is <strong>oxidised</strong> (and is the reducing agent). CuO loses oxygen to form Cu → CuO is <strong>reduced</strong> (and is the oxidising agent).</div><div class="qa-tip"><strong>Board Tip:</strong> The substance that causes reduction is the reducing agent (itself gets oxidised). Oxidising agent causes oxidation (itself gets reduced).</div></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">10</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div>
+        <div class="q-text">Which of the following is a decomposition reaction?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> NaOH + HCl → NaCl + H₂O</div>
+          <div class="qopt"><span class="qopt-key">B.</span> CaO + H₂O → Ca(OH)₂</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> 2H₂O₂ → 2H₂O + O₂</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Fe + CuSO₄ → FeSO₄ + Cu</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">In decomposition, a single compound breaks down into two or more simpler substances. 2H₂O₂ → 2H₂O + O₂ is decomposition. A is neutralisation (double displacement), B is combination, D is displacement.</div></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">11</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div>
+        <div class="q-text">Translate the following into a balanced equation: "Barium chloride reacts with aluminium sulphate to give aluminium chloride and barium sulphate." Which is the correct balanced equation?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> BaCl₂ + Al₂(SO₄)₃ → 2AlCl₃ + BaSO₄</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> 3BaCl₂ + Al₂(SO₄)₃ → 2AlCl₃ + 3BaSO₄</div>
+          <div class="qopt"><span class="qopt-key">C.</span> 2BaCl₂ + Al₂(SO₄)₃ → 2AlCl₃ + 2BaSO₄</div>
+          <div class="qopt"><span class="qopt-key">D.</span> BaCl + Al₂SO₄ → AlCl₃ + BaSO₄</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">3BaCl₂ + Al₂(SO₄)₃ → 2AlCl₃ + 3BaSO₄. Check: Left: 3 Ba, 6 Cl, 2 Al, 3 SO₄. Right: 2 Al, 6 Cl, 3 Ba, 3 SO₄. Balanced ✓. This is a double displacement reaction.</div></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">12</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span></div>
+        <div class="q-text">Which gas is used to flush packets of chips to prevent rancidity?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Oxygen</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Hydrogen</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Nitrogen</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Carbon dioxide</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Nitrogen (N₂) is an inert gas. Flushing packets with nitrogen prevents contact between food and atmospheric oxygen, thereby preventing oxidation (rancidity) of fats and oils.</div></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">13</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">Which of the following pairs is an example of a combination reaction?<br>(i) CaO + H₂O → Ca(OH)₂ &nbsp;&nbsp; (ii) 2AgCl → 2Ag + Cl₂</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Only (i)</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Only (ii)</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Both (i) and (ii)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Neither (i) nor (ii)</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">(i) CaO + H₂O → Ca(OH)₂ is a combination reaction — two substances combine to form a single product. (ii) 2AgCl → 2Ag + Cl₂ is a decomposition (photochemical) reaction — one substance breaks into two products.</div></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">14</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span></div>
+        <div class="q-text">The type of reaction represented by A + BC → AC + B is:</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> Displacement reaction</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Double displacement reaction</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Combination reaction</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Decomposition reaction</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">A + BC → AC + B is a displacement reaction. The element A displaces B from compound BC because A is more reactive than B. Example: Fe + CuSO₄ → FeSO₄ + Cu.</div></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">15</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2018</span></div>
+        <div class="q-text">Which of the following is NOT a chemical change?</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Burning of coal</div>
+          <div class="qopt"><span class="qopt-key">B.</span> Rusting of iron</div>
+          <div class="qopt correct-opt"><span class="qopt-key">C.</span> Melting of wax</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Souring of milk</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: C</div><div class="qa-text">Melting of wax is a physical change — only the state changes (solid → liquid), and no new substance is formed. Burning, rusting, and souring all produce new substances and are chemical changes.</div></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">16</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span></div>
+        <div class="q-text">In the thermite reaction: Fe₂O₃ + 2Al → Al₂O₃ + 2Fe, the reducing agent is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Fe₂O₃</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Al</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Al₂O₃</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Fe</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Al is the reducing agent because it donates electrons and causes reduction of Fe₂O₃ to Fe. Al itself gets oxidised to Al₂O₃. Fe₂O₃ is the oxidising agent.</div></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">17</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div>
+        <div class="q-text">Magnesium ribbon is cleaned by rubbing with sandpaper before burning in air because:</div>
+        <div class="q-opts">
+          <div class="qopt correct-opt"><span class="qopt-key">A.</span> It removes the layer of basic magnesium carbonate from its surface</div>
+          <div class="qopt"><span class="qopt-key">B.</span> It makes the surface rough for better burning</div>
+          <div class="qopt"><span class="qopt-key">C.</span> It removes moisture from its surface</div>
+          <div class="qopt"><span class="qopt-key">D.</span> It activates the magnesium for reaction</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: A</div><div class="qa-text">Magnesium ribbon develops a layer of basic magnesium carbonate [Mg(OH)₂·MgCO₃] due to slow reaction with CO₂ and moisture in air. This coating prevents Mg from burning properly. Rubbing removes this layer.</div></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">18</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span></div>
+        <div class="q-text">The black coating on silver articles is due to formation of:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Silver oxide (Ag₂O)</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Silver sulphide (Ag₂S)</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Silver chloride (AgCl)</div>
+          <div class="qopt"><span class="qopt-key">D.</span> Silver carbonate (Ag₂CO₃)</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">Silver reacts with H₂S in air: 4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O. Ag₂S (silver sulphide) is black in colour. This is corrosion of silver.</div></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">19</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div>
+        <div class="q-text">Essential condition(s) for the reaction 2AgCl → 2Ag + Cl₂:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> Heat only</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> Sunlight</div>
+          <div class="qopt"><span class="qopt-key">C.</span> Electricity</div>
+          <div class="qopt"><span class="qopt-key">D.</span> High pressure</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">The decomposition of silver chloride is a photochemical reaction — it requires sunlight. 2AgCl →(sunlight) 2Ag + Cl₂. Silver chloride turns grey in sunlight due to formation of silver. This reaction is used in black-and-white photography.</div></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="qcard reveal" data-type="mcq">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">20</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">MCQ</span></div>
+        <div class="q-text">Electrolysis of water is a decomposition reaction. The ratio of volumes of H₂ : O₂ collected at cathode and anode respectively is:</div>
+        <div class="q-opts">
+          <div class="qopt"><span class="qopt-key">A.</span> 1:2</div>
+          <div class="qopt correct-opt"><span class="qopt-key">B.</span> 2:1</div>
+          <div class="qopt"><span class="qopt-key">C.</span> 1:1</div>
+          <div class="qopt"><span class="qopt-key">D.</span> 4:1</div>
+        </div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer: B</div><div class="qa-text">2H₂O → 2H₂ + O₂. 2 moles of H₂ are produced for every 1 mole of O₂. Since volume is proportional to moles (at same T and P), H₂:O₂ = 2:1. H₂ is collected at cathode, O₂ at anode.</div></div>
+  </div>
+
+</div><!-- end mcq-list -->
+
+<!-- ════════════════════ VSA ════════════════════ -->
+<div class="sec-head reveal" data-type="vsa">
+  <div class="sec-label">✍️ VSA · 1 Mark</div>
+  <div class="sec-title">Very Short Answer Questions</div>
+  <div class="sec-sub">1-mark questions — one-line or one-word answers expected.</div>
+</div>
+<div class="q-list">
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">21</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div><div class="q-text">What is a balanced chemical equation?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A chemical equation in which the number of atoms of each element is equal on both sides (reactant side and product side) is called a balanced chemical equation. It obeys the Law of Conservation of Mass.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">22</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div><div class="q-text">Name the type of chemical reaction that takes place when quicklime is added to water.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Combination reaction (also exothermic). CaO + H₂O → Ca(OH)₂ + Heat.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">23</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div><div class="q-text">What is a precipitation reaction? Give one example.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A reaction in which an insoluble solid (precipitate) is formed when two aqueous solutions are mixed is called a precipitation reaction. Example: Na₂SO₄(aq) + BaCl₂(aq) → BaSO₄↓(s) + 2NaCl(aq). White precipitate of BaSO₄ is formed.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">24</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What does the symbol ↓ indicate in a chemical equation?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">The symbol ↓ (downward arrow) indicates that the substance is a precipitate — an insoluble solid that settles out of the solution during the reaction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">25</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What does the symbol ↑ indicate in a chemical equation?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">The symbol ↑ (upward arrow) indicates that the substance is a gas that escapes from the reaction mixture — i.e., gas evolved.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">26</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div><div class="q-text">What is a thermal decomposition reaction? Give one example.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A decomposition reaction in which heat is used as energy to break down a compound is called thermal decomposition. Example: CaCO₃ →(heat) CaO + CO₂↑.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">27</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Define rancidity.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Rancidity is the slow oxidation of fats and oils in food by atmospheric oxygen, resulting in the development of unpleasant smell and taste. It is a type of oxidation reaction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">28</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Define corrosion.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Corrosion is the slow eating away (deterioration) of metals by the action of atmospheric oxygen, moisture, or other chemicals. Example: rusting of iron — 4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O (rust).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">29</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div><div class="q-text">Name the type of reaction: CaO + H₂O → Ca(OH)₂</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Combination reaction (also exothermic). Two reactants combine to form a single product.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">30</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div><div class="q-text">Name the type of reaction: 3BaCl₂ + Al₂(SO₄)₃ → 2AlCl₃ + 3BaSO₄</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Double displacement reaction (precipitation reaction). Two ionic compounds exchange their ions and an insoluble precipitate (BaSO₄) is formed.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">31</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What is the chemical name of rust?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Hydrated ferric oxide (Fe₂O₃·xH₂O). It is also called iron (III) oxide hydrate.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">32</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What is the colour of copper sulphate solution? What change is observed when an iron nail is dipped in it?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Copper sulphate solution is blue. When an iron nail is dipped, the blue colour gradually fades and a reddish-brown copper deposit forms on the nail. The solution turns light green (FeSO₄).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">33</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Name the law on which balancing of chemical equations is based.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Law of Conservation of Mass (Lavoisier's Law): Mass can neither be created nor destroyed in a chemical reaction. The total mass of reactants equals the total mass of products.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">34</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What type of energy is used in electrolysis of water?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Electrical energy (electricity) is used in the electrolysis of water. 2H₂O →(electricity) 2H₂ + O₂.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">35</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Give one example each of: (i) exothermic reaction (ii) endothermic reaction</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) Exothermic: Burning of coal — C + O₂ → CO₂ + Heat; or CaO + H₂O → Ca(OH)₂ + Heat.<br>(ii) Endothermic: Decomposition of calcium carbonate — CaCO₃ →(heat) CaO + CO₂ (heat is absorbed).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">36</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div><div class="q-text">What is the brown gas produced during thermal decomposition of lead nitrate? Give its chemical formula.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Nitrogen dioxide (NO₂) — it is a brown/reddish-brown gas. The reaction: 2Pb(NO₃)₂ →(heat) 2PbO + 4NO₂↑ + O₂↑.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">37</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What is oxidation? Give one example.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Oxidation is the gain of oxygen or loss of hydrogen by a substance during a chemical reaction. Example: 2Mg + O₂ → 2MgO (Mg gains oxygen, so Mg is oxidised).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">38</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What is reduction? Give one example.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Reduction is the loss of oxygen or gain of hydrogen by a substance during a chemical reaction. Example: CuO + H₂ → Cu + H₂O (CuO loses oxygen, so CuO is reduced).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">39</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Why should a chemical equation be balanced?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A chemical equation must be balanced to satisfy the Law of Conservation of Mass — i.e., the total number of atoms of each element must be the same on both sides. Mass cannot be created or destroyed in a chemical reaction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">40</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What is a redox reaction?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A reaction in which both oxidation and reduction occur simultaneously is called a redox (oxidation-reduction) reaction. Example: Fe₂O₃ + 2Al → Al₂O₃ + 2Fe (Al is oxidised; Fe₂O₃ is reduced).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">41</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Balance the equation: Na + H₂O → NaOH + H₂</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)↑</div><div class="qa-tip"><strong>Check:</strong> Left: 2 Na, 4 H, 2 O. Right: 2 Na, 4 H (2 in NaOH×2 + 2 in H₂), 2 O. Balanced ✓</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">42</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">Give the chemical name of the reactants and products: HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + H₂O</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Reactants:</strong> HNO₃ = Nitric acid; Ca(OH)₂ = Calcium hydroxide (slaked lime).<br><strong>Products:</strong> Ca(NO₃)₂ = Calcium nitrate; H₂O = Water.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">43</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What are antioxidants? Give one example.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Antioxidants are substances added to food to prevent their oxidation (rancidity). They get preferentially oxidised instead of the food. Example: Butylated Hydroxyanisole (BHA), Vitamin C (ascorbic acid).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">44</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What type of reaction is photosynthesis? Write its balanced equation.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Photosynthesis is an endothermic reaction (absorbs light energy). 6CO₂(g) + 6H₂O(l) →(sunlight/chlorophyll) C₆H₁₂O₆(aq) + 6O₂(g).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="vsa">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00A8A8">45</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(0,168,168,.12);color:#007070">VSA</span></div><div class="q-text">What change is observed in the colour of FeSO₄ crystals on heating?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">FeSO₄·7H₂O (ferrous sulphate heptahydrate) crystals are light green. On heating, they first turn white (loss of water of crystallisation) and then a brown-black residue of Fe₂O₃ (ferric oxide) is formed, with release of SO₂ and SO₃ gases.</div></div>
+  </div>
+
+</div><!-- end vsa -->
+
+<!-- ════════════════════ SA I ════════════════════ -->
+<div class="sec-head reveal" data-type="sa1">
+  <div class="sec-label">📝 SA I · 2 Marks</div>
+  <div class="sec-title">Short Answer Type I</div>
+  <div class="sec-sub">2-mark questions — 2–4 lines expected. Precision matters.</div>
+</div>
+<div class="q-list">
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">46</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div><div class="q-text">Study the equation: H₂ + Cl₂ → 2HCl. (i) Identify the type of reaction. (ii) Write a balanced equation for another example of this type.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) Combination reaction — two substances combine to form a single product.<br>(ii) Example: 2Mg + O₂ → 2MgO &nbsp; or &nbsp; N₂ + 3H₂ → 2NH₃ (Haber process).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">47</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2014</span></div><div class="q-text">State the type of reactions represented by: (a) A + BC → AC + B &nbsp; (b) A + B → C &nbsp; (c) PQ + RS → PS + RQ &nbsp; (d) A₂O₃ + 2B → B₂O₃ + 2A</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) Displacement reaction<br>(b) Combination reaction<br>(c) Double displacement reaction<br>(d) Displacement reaction (also a redox reaction)</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">48</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div><div class="q-text">What is observed when a piece of zinc metal is added to copper sulphate solution? Write the balanced equation and name the type of reaction.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Observations:</strong> The blue colour of CuSO₄ fades. Reddish-brown copper deposits on the zinc piece. Colourless ZnSO₄ solution forms.<br><div class="qa-eq">Zn(s) + CuSO₄(aq) → ZnSO₄(aq) + Cu(s)</div><strong>Type:</strong> Displacement reaction (Zn is more reactive than Cu).</div><div class="qa-tip"><strong>Board Tip:</strong> State all three observations for full marks.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">49</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div><div class="q-text">Copper powder was taken in a China dish and heated. (a) What change takes place on heating? (b) When hydrogen gas is passed over this heated substance, what change is observed? Write equations for both reactions.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) Reddish-brown copper turns black (copper oxide forms): <div class="qa-eq">2Cu + O₂ →(heat) 2CuO (black)</div>(b) Black CuO turns back to reddish-brown copper: <div class="qa-eq">CuO + H₂ →(heat) Cu + H₂O</div>Reaction (a) = oxidation; Reaction (b) = reduction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">50</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Write the balanced chemical equations for the following reactions and identify the types: (i) Calcium carbonate decomposes on heating. (ii) Silver chloride turns grey in sunlight.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) <div class="qa-eq">CaCO₃(s) →(heat) CaO(s) + CO₂(g)↑</div> Type: Thermal decomposition.<br>(ii) <div class="qa-eq">2AgCl(s) →(sunlight) 2Ag(s) + Cl₂(g)↑</div> Type: Photochemical decomposition.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">51</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div><div class="q-text">What is a displacement reaction? Give one example with a balanced equation. Why is it different from double displacement?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A displacement reaction is one where a more reactive element displaces a less reactive element from its salt solution. <div class="qa-eq">Fe(s) + CuSO₄(aq) → FeSO₄(aq) + Cu(s)</div>In displacement, one element displaces another. In double displacement, ions of two compounds exchange — no single element is freed.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">52</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Give two methods to prevent rancidity of food.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">1. Adding antioxidants (e.g., BHA) — they get oxidised preferentially, protecting fats from oxidation.<br>2. Storing in airtight containers / flushing with nitrogen gas — prevents contact with oxygen.<br>3. Refrigeration — slows down the rate of oxidation.<br>4. Vacuum packing — removes oxygen from the packaging.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">53</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div><div class="q-text">Why is respiration considered an exothermic reaction? Write the equation for cellular respiration.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Respiration is exothermic because it releases energy (heat) during the oxidation of glucose. Energy is produced and used for body functions. <div class="qa-eq">C₆H₁₂O₆(aq) + 6O₂(g) → 6CO₂(g) + 6H₂O(l) + Energy</div></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">54</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">What information is NOT conveyed by a balanced chemical equation? (Give two points.)</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A balanced chemical equation does NOT tell us:<br>1. Whether the reaction will actually take place (feasibility of reaction).<br>2. The speed (rate) at which the reaction proceeds.<br>3. The heat/energy change involved (unless specifically indicated).<br>4. The concentration or quantity of reactants/products used in practice.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">55</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div><div class="q-text">Write balanced equations and name the products for: (i) Zinc + Silver nitrate solution (ii) Aluminium + Dilute HCl</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) <div class="qa-eq">Zn + 2AgNO₃ → Zn(NO₃)₂ + 2Ag</div>Products: Zinc nitrate + Silver (silver deposits on zinc).<br>(ii) <div class="qa-eq">2Al + 6HCl → 2AlCl₃ + 3H₂↑</div>Products: Aluminium chloride + Hydrogen gas.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">56</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Write the balanced chemical equations for: (a) Reaction of sodium sulphate with barium chloride (b) Reaction of zinc with dilute sulphuric acid</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">Na₂SO₄(aq) + BaCl₂(aq) → BaSO₄(s)↓ + 2NaCl(aq)</div>Double displacement (precipitation). White BaSO₄ precipitate.<br>(b) <div class="qa-eq">Zn(s) + H₂SO₄(aq) → ZnSO₄(aq) + H₂(g)↑</div>Displacement reaction. H₂ gas burns with a pop sound.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">57</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Explain with an example: Can a displacement reaction also be a redox reaction?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Yes! Many displacement reactions are also redox reactions. Example: <div class="qa-eq">Fe + CuSO₄ → FeSO₄ + Cu</div>Fe loses electrons (gets oxidised to Fe²⁺) — Fe is the reducing agent. Cu²⁺ gains electrons (gets reduced to Cu) — CuSO₄ is the oxidising agent. Both oxidation and reduction occur, making it a redox reaction too.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">58</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">When silver article is kept in the open, it turns black. Name the substance formed and the type of reaction. How is this similar to corrosion?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Silver turns black due to formation of silver sulphide (Ag₂S): <div class="qa-eq">4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O</div>Type: Oxidation reaction. This is similar to corrosion — both involve slow oxidation of a metal by atmospheric agents (oxygen and H₂S), degrading the surface.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">59</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2016</span></div><div class="q-text">Name the types of chemical reactions and write balanced equations: (i) CaO + H₂O → Ca(OH)₂ (ii) 3BaCl₂ + Al₂(SO₄)₃ → 2AlCl₃ + 3BaSO₄ (iii) 2FeSO₄ →(heat) Fe₂O₃ + SO₂ + SO₃</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) Combination reaction — already balanced.<br>(ii) Double displacement (precipitation) reaction — already balanced. BaSO₄ is the white precipitate.<br>(iii) Thermal decomposition reaction — already balanced. FeSO₄ breaks down into Fe₂O₃, SO₂ and SO₃ on heating.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">60</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">What are the harmful effects of corrosion? Name two methods to prevent it.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Harmful effects:</strong> Corrosion weakens metal structures (bridges, ships, vehicles), causes huge economic loss worth crores annually, and can make metal machinery unsafe.<br><strong>Prevention:</strong> (1) Painting or oil/grease coating — prevents contact with moisture and oxygen. (2) Galvanisation — coating iron with zinc. (3) Alloying — stainless steel is resistant to corrosion. (4) Electroplating with chromium or tin.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">61</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">In H₂S + I₂ → 2HI + S, identify the oxidising and reducing agents.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">H₂S loses hydrogen (gets oxidised) → H₂S is the <strong>reducing agent</strong>.<br>I₂ gains hydrogen (gets reduced) → I₂ is the <strong>oxidising agent</strong>.</div><div class="qa-tip"><strong>Board Tip:</strong> The reducing agent is the substance that gets oxidised; the oxidising agent is the substance that gets reduced.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">62</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div><div class="q-text">Why do chips manufacturers flush bags of chips with nitrogen gas? What would happen if oxygen was left inside instead?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Nitrogen is used because it is inert and does not react with the food. It prevents contact between chips and atmospheric oxygen, thereby preventing oxidation (rancidity) of fats, which would cause bad smell and taste.<br>If oxygen were left inside, the fats/oils in chips would get oxidised (rancidity), causing off-flavours and making them unfit to eat.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">63</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Balance the following equations: (i) Fe + H₂O → Fe₃O₄ + H₂ (ii) Mg + HCl → MgCl₂ + H₂</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) <div class="qa-eq">3Fe(s) + 4H₂O(g) → Fe₃O₄(s) + 4H₂(g)</div>Check: 3Fe, 8H, 4O both sides ✓<br>(ii) <div class="qa-eq">Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g)↑</div>Check: 1 Mg, 2 H, 2 Cl both sides ✓</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">64</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Give two differences between physical changes and chemical changes.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><table style="width:100%;font-size:.82rem;border-collapse:collapse;margin-top:6px"><tr style="background:rgba(108,92,231,.07)"><th style="padding:6px 10px;text-align:left;border:1px solid rgba(108,92,231,.15)">Physical Change</th><th style="padding:6px 10px;text-align:left;border:1px solid rgba(108,92,231,.15)">Chemical Change</th></tr><tr><td style="padding:6px 10px;border:1px solid rgba(108,92,231,.10)">No new substance formed</td><td style="padding:6px 10px;border:1px solid rgba(108,92,231,.10)">New substance(s) formed</td></tr><tr style="background:rgba(108,92,231,.03)"><td style="padding:6px 10px;border:1px solid rgba(108,92,231,.10)">Usually reversible</td><td style="padding:6px 10px;border:1px solid rgba(108,92,231,.10)">Usually irreversible</td></tr><tr><td style="padding:6px 10px;border:1px solid rgba(108,92,231,.10)">Example: Melting of ice</td><td style="padding:6px 10px;border:1px solid rgba(108,92,231,.10)">Example: Burning of coal</td></tr></table></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">65</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">What is galvanisation? How does it prevent corrosion of iron?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Galvanisation is the process of coating iron or steel with a thin layer of zinc to protect it from corrosion. Zinc is more reactive than iron — when exposed, zinc reacts with oxygen/moisture preferentially (sacrificial protection), leaving the iron unaffected. Even if the zinc coating is scratched, it continues to protect iron.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">66</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span></div><div class="q-text">Write balanced equations for two decomposition reactions using different sources of energy (heat and electricity).</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">Heat (thermal decomposition): <div class="qa-eq">CaCO₃(s) →(heat) CaO(s) + CO₂(g)↑</div>Electricity (electrolytic decomposition): <div class="qa-eq">2H₂O(l) →(electricity) 2H₂(g)↑ + O₂(g)↑</div></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa1">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e17055">67</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(225,112,85,.12);color:#a03010">SA I · 2M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div><div class="q-text">Write the balanced equation and name the type: (A) Write the essential condition for: 2AgCl → 2Ag + Cl₂ (B) Complete and balance: AgNO₃ + NaCl → ? + ?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(A) Essential condition: Sunlight. Type: Photochemical decomposition. AgCl turns grey as Ag metal forms.<br>(B) <div class="qa-eq">AgNO₃(aq) + NaCl(aq) → AgCl(s)↓ + NaNO₃(aq)</div>White precipitate of AgCl forms. Type: Double displacement (precipitation) reaction.</div></div>
+  </div>
+
+</div><!-- end sa1 -->
+
+<!-- ════════════════════ SA II ════════════════════ -->
+<div class="sec-head reveal" data-type="sa2">
+  <div class="sec-label">📖 SA II · 3 Marks</div>
+  <div class="sec-title">Short Answer Type II</div>
+  <div class="sec-sub">3-mark questions — write complete, structured answers with equations where applicable.</div>
+</div>
+<div class="q-list">
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">68</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2017</span></div><div class="q-text">2 g of ferrous sulphate crystals are heated in a dry boiling tube. (a) List any two observations. (b) Name the type of chemical reaction. (c) Write the balanced equation and name all products.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) Observations:<br>1. Light green crystals first turn white (loss of water of crystallisation).<br>2. Pungent smell of SO₂ gas; brown-black residue forms.<br>(b) Thermal decomposition reaction.<br>(c) <div class="qa-eq">2FeSO₄(s) →(heat) Fe₂O₃(s) + SO₂(g)↑ + SO₃(g)↑</div>Products: Ferric oxide (Fe₂O₃), Sulphur dioxide (SO₂), Sulphur trioxide (SO₃).</div><div class="qa-tip"><strong>Board Tip:</strong> Write FeSO₄·7H₂O in the full reaction for full credit. The 3-step process (green → white → brown-black) is frequently asked.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">69</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div><div class="q-text">What is a reduction reaction? Identify the substances oxidised and reduced in: (a) Fe₂O₃ + 2Al → Al₂O₃ + 2Fe &nbsp; (b) 2PbO + C → 2Pb + CO₂</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Reduction:</strong> A reaction in which oxygen is removed from a substance or hydrogen is added to a substance.<br>(a) Fe₂O₃ is reduced → Fe (it loses O). Al is oxidised → Al₂O₃ (it gains O). Reducing agent: Al. Oxidising agent: Fe₂O₃.<br>(b) PbO is reduced → Pb (it loses O). C is oxidised → CO₂ (it gains O). Reducing agent: C. Oxidising agent: PbO.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">70</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2019</span></div><div class="q-text">You might have noted that when copper powder is heated in a China dish, the reddish-brown surface becomes coated with a black substance. (a) Why has this black substance formed? (b) What is the black substance? (c) Write the chemical equation. On passing H₂ over heated CuO, what happens? Why?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) Copper reacts with atmospheric oxygen when heated — it undergoes oxidation.<br>(b) The black substance is copper oxide (CuO).<br>(c) <div class="qa-eq">2Cu(s) + O₂(g) →(heat) 2CuO(s)</div>When H₂ is passed over heated CuO: CuO is reduced back to Cu (reddish-brown), and H₂ is oxidised to H₂O. The black colour disappears and reddish-brown colour reappears. <div class="qa-eq">CuO(s) + H₂(g) → Cu(s) + H₂O(l)</div></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">71</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div><div class="q-text">What is corrosion? Write the chemical name of rust and the equation for rusting. Name three methods to prevent corrosion.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Corrosion:</strong> Slow chemical deterioration of metals on exposure to atmospheric agents (oxygen, moisture, CO₂).<br><strong>Rust:</strong> Hydrated ferric oxide, Fe₂O₃·xH₂O.<div class="qa-eq">4Fe(s) + 3O₂(g) + xH₂O(l) → 2Fe₂O₃·xH₂O(s)</div><strong>Prevention:</strong><br>1. Painting (barrier between metal and atmosphere).<br>2. Galvanisation (zinc coat gives sacrificial protection).<br>3. Alloying (e.g., stainless steel does not rust).</div><div class="qa-tip"><strong>Board Tip:</strong> Name at least 3 prevention methods for 3-mark credit.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">72</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2015</span></div><div class="q-text">(i) Why is respiration considered exothermic? (ii) Write the chemical name and formula of the brown gas in thermal decomposition of lead nitrate. (iii) Why do chips manufacturers flush bags with nitrogen gas?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) Respiration releases energy: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy. Since energy is released, it is exothermic.<br>(ii) Nitrogen dioxide (NO₂). Brown gas evolved when Pb(NO₃)₂ decomposes: 2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂.<br>(iii) N₂ is inert, preventing oxidation of fats/oils (rancidity) which would spoil chips. N₂ displaces O₂ inside the packet.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">73</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">Write the balanced chemical equations for the following and classify each reaction: (a) Photosynthesis (b) Combustion of ethanol (C₂H₅OH) (c) Action of steam on hot iron</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">6CO₂ + 6H₂O →(sunlight/chlorophyll) C₆H₁₂O₆ + 6O₂</div>Type: Endothermic; Combination (sort of) — actually a complex reaction series; categorised as an endothermic reaction.<br>(b) <div class="qa-eq">C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O + Heat</div>Type: Combustion (exothermic oxidation).<br>(c) <div class="qa-eq">3Fe + 4H₂O → Fe₃O₄ + 4H₂</div>Type: Redox reaction (Fe is oxidised; H₂O is reduced).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">74</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2020</span></div><div class="q-text">Define: (i) Exothermic reaction (ii) Endothermic reaction. Give one example of each with a balanced equation.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) <strong>Exothermic reaction:</strong> A reaction in which energy (heat) is released to the surroundings. The temperature of the surroundings increases. Example: <div class="qa-eq">C(s) + O₂(g) → CO₂(g) + Heat</div>(ii) <strong>Endothermic reaction:</strong> A reaction in which energy (heat) is absorbed from the surroundings. The temperature of the surroundings decreases. Example: <div class="qa-eq">CaCO₃(s) →(heat) CaO(s) + CO₂(g)</div></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">75</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">A student performed a reaction between KI and Pb(NO₃)₂ solutions. A yellow precipitate was formed. (a) Write the balanced equation. (b) Name the precipitate and the type of reaction. (c) What happens to this precipitate on heating? Write the equation.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">2KI(aq) + Pb(NO₃)₂(aq) → PbI₂(s)↓ + 2KNO₃(aq)</div>(b) Precipitate: Lead iodide (PbI₂), yellow. Type: Double displacement (precipitation) reaction.<br>(c) On heating: PbI₂ dissolves (precipitate dissolves in hot water as its solubility increases). On cooling, the yellow precipitate reappears (golden sparkles observed — used as a demonstration).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">76</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2022</span></div><div class="q-text">Write the balanced equations and name the types for: (a) Sodium hydroxide + Hydrochloric acid (b) Iron + Steam (c) Barium chloride + Potassium sulphate</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">NaOH(aq) + HCl(aq) → NaCl(aq) + H₂O(l)</div>Type: Double displacement (neutralisation).<br>(b) <div class="qa-eq">3Fe(s) + 4H₂O(g) → Fe₃O₄(s) + 4H₂(g)↑</div>Type: Displacement / Redox reaction.<br>(c) <div class="qa-eq">BaCl₂(aq) + K₂SO₄(aq) → BaSO₄(s)↓ + 2KCl(aq)</div>Type: Double displacement (precipitation). White precipitate of BaSO₄.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">77</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">Explain with balanced equations why the following are oxidation reactions: (a) Burning of magnesium ribbon (b) Rusting of iron (c) Tarnishing of silver</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">2Mg + O₂ → 2MgO</div>Mg gains oxygen → oxidised.<br>(b) <div class="qa-eq">4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O</div>Fe gains oxygen → oxidised (slow oxidation = corrosion).<br>(c) <div class="qa-eq">4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O</div>Ag gets oxidised (loses electrons to H₂S and O₂).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">78</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">A student adds silver nitrate solution to a solution of sodium chloride. (a) What observation is made? (b) Write the balanced equation. (c) Name the type of reaction. (d) What happens when the precipitate formed is taken into sunlight?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) A white curdy precipitate of silver chloride (AgCl) is formed.<br>(b) <div class="qa-eq">AgNO₃(aq) + NaCl(aq) → AgCl(s)↓ + NaNO₃(aq)</div>(c) Double displacement (precipitation) reaction.<br>(d) In sunlight: 2AgCl →(sunlight) 2Ag + Cl₂. The white AgCl turns grey/black as silver is formed (photochemical decomposition).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">79</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2021</span></div><div class="q-text">Define: combination, decomposition, and displacement reactions. Give one example of each with balanced equation.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Combination:</strong> Two or more substances combine to form a single product. <div class="qa-eq">2Mg + O₂ → 2MgO</div><strong>Decomposition:</strong> A single compound breaks into two or more simpler substances. <div class="qa-eq">2H₂O →(electricity) 2H₂ + O₂</div><strong>Displacement:</strong> A more reactive element displaces a less reactive element from its salt solution. <div class="qa-eq">Fe + CuSO₄ → FeSO₄ + Cu</div></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">80</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">An iron nail is kept in copper sulphate solution for a few days. (a) List three observations. (b) Write the balanced equation. (c) Why is this a displacement reaction and also a redox reaction?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) Observations:<br>1. Blue colour of CuSO₄ fades to light green.<br>2. Reddish-brown copper deposits on the iron nail surface.<br>3. Mass of iron nail decreases.<br>(b) <div class="qa-eq">Fe(s) + CuSO₄(aq) → FeSO₄(aq) + Cu(s)</div>(c) Displacement: Fe displaces Cu from CuSO₄ (Fe is more reactive). Redox: Fe is oxidised (Fe → Fe²⁺, loses electrons); Cu²⁺ is reduced (Cu²⁺ → Cu, gains electrons).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">81</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">State the Law of Conservation of Mass. Illustrate it using the equation: Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂. Verify using atomic masses (Na=23, C=12, O=16, H=1, Cl=35.5).</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Law:</strong> Mass can neither be created nor destroyed in a chemical reaction. Total mass of reactants = Total mass of products.<br><strong>Verification:</strong><br>Reactants: Na₂CO₃ = 106; 2HCl = 73. Total = 179 g.<br>Products: 2NaCl = 117; H₂O = 18; CO₂ = 44. Total = 179 g.<br>Both sides = 179 g ✓ Law verified.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">82</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">What happens when (a) dilute H₂SO₄ is poured on zinc (b) dilute HCl is added to iron filings (c) silver nitrate solution is added to sodium chloride solution? Write equations and name reaction types.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">Zn + H₂SO₄ → ZnSO₄ + H₂↑</div>Displacement reaction. H₂ gas burns with pop sound.<br>(b) <div class="qa-eq">Fe + 2HCl → FeCl₂ + H₂↑</div>Displacement reaction. Iron filings dissolve; H₂ evolved.<br>(c) <div class="qa-eq">AgNO₃ + NaCl → AgCl↓ + NaNO₃</div>Double displacement. White precipitate of AgCl.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">83</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">Explain the significance of photosynthesis. Write the balanced equation. Why is it considered an endothermic reaction?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Significance:</strong> Photosynthesis converts solar energy into chemical energy stored in glucose. It produces oxygen needed for respiration. It is the primary process that sustains life on Earth and forms the base of all food chains.<div class="qa-eq">6CO₂ + 6H₂O →(sunlight/chlorophyll) C₆H₁₂O₆ + 6O₂</div><strong>Endothermic:</strong> Photosynthesis absorbs light energy from the sun to drive the reaction. Energy input is needed, so it is endothermic.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">84</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">What are the three ways in which decomposition reactions can be carried out? Give one example (with balanced equation) for each.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">1. <strong>Thermal decomposition (heat):</strong><div class="qa-eq">CaCO₃(s) →(heat) CaO(s) + CO₂(g)↑</div>2. <strong>Electrolytic decomposition (electricity):</strong><div class="qa-eq">2H₂O(l) →(electricity) 2H₂(g)↑ + O₂(g)↑</div>3. <strong>Photochemical decomposition (light):</strong><div class="qa-eq">2AgCl(s) →(sunlight) 2Ag(s) + Cl₂(g)↑</div></div><div class="qa-tip"><strong>Board Tip:</strong> This is a very high-frequency 3-mark question. Learn all three with examples.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">85</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">In the reaction: MnO₂ + 4HCl → MnCl₂ + 2H₂O + Cl₂, identify which substance is oxidised and which is reduced. Name the oxidising and reducing agents.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">In MnO₂ + 4HCl → MnCl₂ + 2H₂O + Cl₂:<br>HCl is oxidised (Cl⁻ loses electrons to form Cl₂) → HCl is the <strong>reducing agent</strong>.<br>MnO₂ is reduced (Mn⁴⁺ → Mn²⁺, gains electrons) → MnO₂ is the <strong>oxidising agent</strong>.<br>This is a redox reaction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">86</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2023</span></div><div class="q-text">Write balanced equations for the following. Name the type of each: (a) Calcium oxide + Water (b) Lead nitrate → heated (c) Sodium hydroxide + Hydrochloric acid</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">CaO(s) + H₂O(l) → Ca(OH)₂(aq) + Heat</div>Combination reaction (exothermic).<br>(b) <div class="qa-eq">2Pb(NO₃)₂(s) →(heat) 2PbO(s) + 4NO₂(g)↑ + O₂(g)↑</div>Thermal decomposition reaction.<br>(c) <div class="qa-eq">NaOH(aq) + HCl(aq) → NaCl(aq) + H₂O(l)</div>Double displacement (neutralisation) reaction.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">87</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">Grapes do not ferment while on the vine, but ferment after plucking. (a) Name and classify the fermentation reaction. (b) Why does fermentation not occur while grapes are on the vine? (c) Write the balanced equation for fermentation of glucose.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) Fermentation is a chemical change (new substances — ethanol and CO₂ — are formed). It is a decomposition/oxidation reaction facilitated by microbes.<br>(b) While attached to the vine, the plant's immune system prevents microbial growth, so fermentation cannot begin.<br>(c) <div class="qa-eq">C₆H₁₂O₆ →(yeast/microbes) 2C₂H₅OH + 2CO₂↑</div></div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">88</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">What is the role of a catalyst in a chemical reaction? With reference to 2H₂O₂ → 2H₂O + O₂: (a) What is the catalyst used? (b) Why is MnO₂ written above the arrow? (c) Is MnO₂ consumed in the reaction?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">A <strong>catalyst</strong> is a substance that speeds up a chemical reaction without itself being consumed or permanently changed.<br>(a) MnO₂ (manganese dioxide) is the catalyst.<br>(b) MnO₂ is written above the arrow to indicate it is the reaction condition/catalyst, not a reactant or product.<br>(c) No, MnO₂ is not consumed — it can be recovered unchanged after the reaction. It is a catalyst.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">89</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ 2024</span></div><div class="q-text">Write three observations when magnesium ribbon burns in air. Write the balanced equation. Name the type of reaction and state whether it is exothermic or endothermic.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Observations:</strong><br>1. Mg burns with a dazzling white flame (very bright light produced).<br>2. White powder (ash) of MgO is formed.<br>3. Heat is released — the reaction is exothermic (temperature increases).<div class="qa-eq">2Mg(s) + O₂(g) → 2MgO(s)</div>Type: Combination reaction. Exothermic (heat and light are released).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">90</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">How will you test whether a gas evolved in a reaction is (a) hydrogen gas (b) carbon dioxide gas (c) oxygen gas?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <strong>Hydrogen (H₂):</strong> Bring a burning splint near the gas — it burns with a pop/squeaky pop sound.<br>(b) <strong>Carbon dioxide (CO₂):</strong> Pass the gas through lime water — it turns milky (Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O).<br>(c) <strong>Oxygen (O₂):</strong> Bring a glowing splint near the gas — it relights/bursts into flame.</div><div class="qa-tip"><strong>Board Tip:</strong> Memorise all three gas tests — they appear frequently in 1-mark and 3-mark questions.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="sa2">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#e5a100">91</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(229,161,0,.15);color:#7a5c00">SA II · 3M</span></div><div class="q-text">Balance these equations and identify the type of each: (a) C₃H₈ + O₂ → CO₂ + H₂O (b) KClO₃ →(heat/MnO₂) KCl + O₂ (c) Pb(NO₃)₂ + KI → PbI₂ + KNO₃</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">C₃H₈ + 5O₂ → 3CO₂ + 4H₂O</div>Combustion (exothermic oxidation).<br>(b) <div class="qa-eq">2KClO₃ →(MnO₂/heat) 2KCl + 3O₂↑</div>Thermal decomposition (MnO₂ = catalyst).<br>(c) <div class="qa-eq">Pb(NO₃)₂ + 2KI → PbI₂↓ + 2KNO₃</div>Double displacement (precipitation). Yellow precipitate of PbI₂.</div></div>
+  </div>
+
+</div><!-- end sa2 -->
+
+<!-- ════════════════════ LA ════════════════════ -->
+<div class="sec-head reveal" data-type="la">
+  <div class="sec-label">📚 LA · 5 Marks</div>
+  <div class="sec-title">Long Answer Questions</div>
+  <div class="sec-sub">5-mark questions — write structured, detailed answers. Include all points.</div>
+</div>
+<div class="q-list">
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">92</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">Write a short note on corrosion and rancidity. Include: (a) Definition (b) Chemical equations (c) Effects (d) Prevention methods for each.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>CORROSION:</strong><br>(a) Slow chemical deterioration of a metal surface on reaction with atmospheric oxygen and moisture.<br>(b) <div class="qa-eq">4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O (rust)</div>(c) Effects: Weakens metal structures, large economic damage, unsafe machinery.<br>(d) Prevention: Painting, oiling, galvanising, alloying (stainless steel), electroplating.<br><br><strong>RANCIDITY:</strong><br>(a) Slow oxidation of fats and oils in food by atmospheric oxygen, producing unpleasant smell and taste.<br>(b) Fats + O₂ → oxidised products (peroxides, aldehydes — foul smell).<br>(c) Effects: Food becomes unsafe and unpalatable; nutritional value decreases.<br>(d) Prevention: Airtight containers, adding antioxidants (BHA), flushing with nitrogen, refrigeration, vacuum packing.</div><div class="qa-tip"><strong>Board Tip:</strong> 5-mark answers need at least 3 prevention methods each and chemical equations.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">93</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">Define and explain all five types of chemical reactions with one example each (balanced equation, identification, and key feature).</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>1. Combination:</strong> Two/more substances → one product. <div class="qa-eq">CaO + H₂O → Ca(OH)₂</div>Key: Single product formed. Often exothermic.<br><strong>2. Decomposition:</strong> One compound → two/more simpler substances. <div class="qa-eq">CaCO₃ →(heat) CaO + CO₂</div>Key: Needs energy (heat/light/electricity). Opposite of combination.<br><strong>3. Displacement:</strong> More reactive element displaces less reactive from salt. <div class="qa-eq">Fe + CuSO₄ → FeSO₄ + Cu</div>Key: Uses reactivity series. Also a redox reaction.<br><strong>4. Double Displacement:</strong> Ions of two compounds exchange. <div class="qa-eq">Na₂SO₄ + BaCl₂ → BaSO₄↓ + 2NaCl</div>Key: Usually forms precipitate or water.<br><strong>5. Oxidation-Reduction (Redox):</strong> Simultaneous oxidation and reduction. <div class="qa-eq">Fe₂O₃ + 2Al → Al₂O₃ + 2Fe</div>Key: OA gets reduced; RA gets oxidised. Always occur together.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">94</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ Pattern</span></div><div class="q-text">(a) What is a decomposition reaction? (b) Write balanced equations for decomposition reactions using three different energy sources. (c) Which one is used in photography? Why? (d) What is the difference between thermal and photochemical decomposition?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) A reaction in which a single compound breaks into two or more simpler substances.<br>(b) Three types:<div class="qa-eq">CaCO₃ →(heat) CaO + CO₂ [Thermal]</div><div class="qa-eq">2H₂O →(electricity) 2H₂ + O₂ [Electrolytic]</div><div class="qa-eq">2AgCl →(sunlight) 2Ag + Cl₂ [Photochemical]</div>(c) Photochemical decomposition (AgBr/AgCl) is used in photography because silver salts are sensitive to light. When light hits the film, AgBr decomposes wherever light hits, creating a latent image that is later developed.<br>(d) Thermal decomposition uses heat energy; photochemical decomposition uses light energy. Photochemical reactions are typically reversible under appropriate conditions.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">95</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">Explain with balanced equations: (a) What is a balanced chemical equation? Why is it necessary? (b) Balance: (i) Al + O₂ → Al₂O₃ (ii) NH₃ + O₂ → NO + H₂O (iii) Fe₂O₃ + C → Fe + CO₂ (c) What information does a balanced equation convey?</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) A balanced equation has equal number of atoms of each element on both sides, satisfying the Law of Conservation of Mass. Necessary because mass cannot be created or destroyed.<br>(b) Balancing:<div class="qa-eq">(i) 4Al + 3O₂ → 2Al₂O₃</div><div class="qa-eq">(ii) 4NH₃ + 5O₂ → 4NO + 6H₂O</div><div class="qa-eq">(iii) 2Fe₂O₃ + 3C → 4Fe + 3CO₂</div>(c) A balanced equation conveys: identities and formulae of reactants/products, physical states (s,l,g,aq), the ratio in which they react (moles), and reaction conditions (heat, catalyst) if mentioned.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">96</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">Write a detailed note on oxidation and reduction. Include: definition, examples, concept of oxidising/reducing agents, and explain the thermite reaction in terms of redox.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Oxidation:</strong> Gain of oxygen OR loss of hydrogen by a substance.<br><strong>Reduction:</strong> Loss of oxygen OR gain of hydrogen by a substance.<br>Both occur simultaneously in a <strong>redox reaction</strong>.<br><strong>Oxidising agent:</strong> Causes oxidation in another; itself gets reduced.<br><strong>Reducing agent:</strong> Causes reduction in another; itself gets oxidised.<br><strong>Thermite Reaction:</strong><div class="qa-eq">Fe₂O₃ + 2Al → Al₂O₃ + 2Fe</div>Fe₂O₃ gives oxygen to Al → Fe₂O₃ is oxidising agent (gets reduced to Fe).<br>Al accepts oxygen → Al is reducing agent (gets oxidised to Al₂O₃).<br>This highly exothermic reaction produces molten iron — used in welding railway tracks (thermite welding).<br><strong>Another example:</strong><div class="qa-eq">CuO + H₂ → Cu + H₂O</div>H₂ is reducing agent (oxidised to H₂O); CuO is oxidising agent (reduced to Cu).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">97</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">A student performed the following experiments. For each, identify the reaction type, write the balanced equation, and state key observations: (i) Magnesium ribbon burned in air (ii) Lime water exposed to CO₂ (iii) Iron + CuSO₄ solution (iv) AgNO₃ + NaCl solutions mixed (v) Pb(NO₃)₂ heated strongly</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(i) <strong>Combination (exothermic):</strong><div class="qa-eq">2Mg + O₂ → 2MgO</div>Dazzling white flame; white ash formed.<br>(ii) <strong>Combination:</strong><div class="qa-eq">Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O</div>Lime water turns milky due to CaCO₃.<br>(iii) <strong>Displacement/Redox:</strong><div class="qa-eq">Fe + CuSO₄ → FeSO₄ + Cu</div>Blue → light green; reddish-brown Cu deposits.<br>(iv) <strong>Double displacement (precipitation):</strong><div class="qa-eq">AgNO₃ + NaCl → AgCl↓ + NaNO₃</div>White curdy precipitate of AgCl.<br>(v) <strong>Thermal decomposition:</strong><div class="qa-eq">2Pb(NO₃)₂ → 2PbO + 4NO₂↑ + O₂↑</div>Brown fumes (NO₂), yellow residue (PbO).</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">98</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">Give a detailed explanation of exothermic and endothermic reactions. Include definitions, 3 examples each (with equations), and the concept of energy in reactions. Also, classify photosynthesis and respiration with justification.</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text"><strong>Exothermic reactions</strong> release energy (usually heat) to surroundings. Temperature rises.<br>Examples: <div class="qa-eq">C + O₂ → CO₂ + Heat (combustion)</div><div class="qa-eq">CaO + H₂O → Ca(OH)₂ + Heat (slaking)</div><div class="qa-eq">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy (respiration)</div><strong>Endothermic reactions</strong> absorb energy from surroundings. Temperature drops.<br>Examples:<div class="qa-eq">CaCO₃ →(heat) CaO + CO₂ (thermal decomp.)</div><div class="qa-eq">2H₂O →(electricity) 2H₂ + O₂ (electrolysis)</div><div class="qa-eq">6CO₂ + 6H₂O →(light) C₆H₁₂O₆ + 6O₂ (photosynthesis)</div><strong>Photosynthesis:</strong> Endothermic — absorbs light energy from sun.<br><strong>Respiration:</strong> Exothermic — releases energy from glucose for body functions.</div></div>
+  </div>
+
+  <div class="qcard reveal" data-type="la">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#6C5CE7">99</div>
+      <div class="q-body"><div class="q-tags"><span class="qtag" style="background:rgba(108,92,231,.12);color:#6C5CE7">LA · 5M</span></div><div class="q-text">Balance the following and classify each reaction type: (a) HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + H₂O (b) NaOH + H₂SO₄ → Na₂SO₄ + H₂O (c) BaCl₂ + H₂SO₄ → BaSO₄ + HCl (d) Na₂CO₃ + HCl → NaCl + H₂O + CO₂ (e) Al₂O₃ + H₂SO₄ → Al₂(SO₄)₃ + H₂O</div></div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa"><div class="qa-head">✅ Answer</div><div class="qa-text">(a) <div class="qa-eq">2HNO₃ + Ca(OH)₂ → Ca(NO₃)₂ + 2H₂O</div>Double displacement (neutralisation).<br>(b) <div class="qa-eq">2NaOH + H₂SO₄ → Na₂SO₄ + 2H₂O</div>Double displacement (neutralisation).<br>(c) <div class="qa-eq">BaCl₂ + H₂SO₄ → BaSO₄↓ + 2HCl</div>Double displacement (precipitation). White BaSO₄ precipitate.<br>(d) <div class="qa-eq">Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑</div>Double displacement with gas evolution.<br>(e) <div class="qa-eq">Al₂O₃ + 3H₂SO₄ → Al₂(SO₄)₃ + 3H₂O</div>Double displacement (acid-base reaction).</div></div>
+  </div>
+
+</div><!-- end la -->
+
+<!-- ════════════════════ CASE BASED ════════════════════ -->
+<div class="sec-head reveal" data-type="case">
+  <div class="sec-label">📋 Case Based · 4 Marks</div>
+  <div class="sec-title">Case Based Questions</div>
+  <div class="sec-sub">Read the passage carefully, then answer all sub-questions. New CBSE 2021+ pattern.</div>
+</div>
+<div class="q-list">
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">100</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ Pattern 2022</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Rahul observed that when iron nails were kept in copper sulphate solution for two days, the blue colour of the solution faded and a reddish-brown substance appeared on the nails. He also noticed that the copper sulphate solution changed to light green. Meanwhile, his friend Priya noted that when silver articles in her house were left open, they turned black after a few weeks.</div>
+        <div class="q-text">Based on the passage, answer the following:<br>(i) Name the type of reaction taking place in Rahul's experiment. (1)<br>(ii) Write the balanced chemical equation for Rahul's experiment. (1)<br>(iii) What is the reddish-brown substance deposited on the nails? Why did it form? (1)<br>(iv) Name the black substance formed on silver articles and write its chemical formula. What type of reaction is this? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">(i) Displacement reaction (also a redox reaction).<br>(ii) <div class="qa-eq">Fe(s) + CuSO₄(aq) → FeSO₄(aq) + Cu(s)</div>(iii) The reddish-brown substance is copper (Cu). It formed because iron is more reactive than copper in the reactivity series — iron displaces copper from copper sulphate solution.<br>(iv) Black substance: Silver sulphide (Ag₂S). Type: Oxidation reaction / Corrosion. Silver reacts with H₂S in the atmosphere: 4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">101</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ Pattern 2023</span></div>
+        <div class="case-passage"><strong>Passage:</strong> During a science practical, students were asked to heat lead nitrate in a boiling tube. They observed brown fumes being produced and a yellow residue was left behind. In another activity, they dissolved potassium iodide in water and added lead nitrate solution to it. A bright yellow precipitate was immediately formed. The teacher explained that these are both very important types of reactions and that the yellow precipitate is actually a beautiful demonstration called "Golden Rain."</div>
+        <div class="q-text">(i) Name the brown gas evolved in the first activity and write its chemical formula. (1)<br>(ii) Write the balanced equation for the first activity. Name the type of reaction. (1)<br>(iii) Write the balanced equation for the second activity ("Golden Rain"). Name the precipitate. (1)<br>(iv) Name the type of reaction in the second activity. Why is a precipitate formed? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">(i) Nitrogen dioxide (NO₂) — brown/reddish-brown gas.<br>(ii) <div class="qa-eq">2Pb(NO₃)₂(s) →(heat) 2PbO(s) + 4NO₂(g)↑ + O₂(g)↑</div>Type: Thermal decomposition reaction.<br>(iii) <div class="qa-eq">2KI(aq) + Pb(NO₃)₂(aq) → PbI₂(s)↓ + 2KNO₃(aq)</div>Precipitate: Lead iodide (PbI₂), bright yellow.<br>(iv) Double displacement (precipitation) reaction. A precipitate forms because PbI₂ is insoluble in water — the product ions cannot remain dissolved and settle out as a solid.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">102</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Ananya's mother was concerned that the ghee kept in the kitchen had started smelling unpleasant and tasted bitter. When Ananya told her chemistry teacher about this, the teacher explained that this is a chemical process called rancidity. The teacher also explained that the same problem affects ships and automobiles, but in a different way. The teacher told Ananya three ways to prevent the food problem.</div>
+        <div class="q-text">(i) What is rancidity? What causes the unpleasant smell and taste? (1)<br>(ii) Name the similar problem affecting metals and give its chemical name. Write the equation for rusting of iron. (1)<br>(iii) State two methods the teacher might have suggested to prevent rancidity. (1)<br>(iv) State one method to prevent corrosion of iron (not painting) and explain how it works. (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">(i) Rancidity is the slow oxidation of fats and oils by atmospheric oxygen, producing compounds (peroxides, aldehydes) with unpleasant smell and taste.<br>(ii) Corrosion. Rust = hydrated ferric oxide (Fe₂O₃·xH₂O).<div class="qa-eq">4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O</div>(iii) Adding antioxidants (BHA) and storing in airtight containers / flushing with nitrogen gas.<br>(iv) Galvanisation — coating iron with zinc. Zinc is more reactive than iron and gets preferentially oxidised, protecting iron underneath (sacrificial protection). Even if scratched, the zinc continues to protect the iron.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">103</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span><span class="qtag" style="background:rgba(229,161,0,.12);color:#a37c00">PYQ Pattern 2024</span></div>
+        <div class="case-passage"><strong>Passage:</strong> During a chemistry class, the teacher placed a piece of magnesium ribbon in a Bunsen burner flame. A dazzling white light was produced. Later, the teacher dissolved the white powder formed in water and tested it with litmus. The solution turned red litmus blue. In another demonstration, white solid X was added to water and the mixture became very hot. The resulting solution also turned red litmus blue.</div>
+        <div class="q-text">(i) Write the balanced equation for burning of magnesium ribbon. Name the type of reaction. (1)<br>(ii) What does the litmus test indicate about the product of magnesium burning? (1)<br>(iii) Identify substance X. Write the balanced equation for X dissolving in water. Name the type of reaction. (1)<br>(iv) Both products turned red litmus blue. What does this indicate? What is the common name of the product of X + water reaction? (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">(i) <div class="qa-eq">2Mg(s) + O₂(g) → 2MgO(s)</div>Combination reaction (exothermic).<br>(ii) MgO dissolved in water forms Mg(OH)₂ which is a base (alkaline). The blue litmus indicates the solution is basic/alkaline (pH > 7).<br>(iii) X = CaO (quicklime/calcium oxide). <div class="qa-eq">CaO(s) + H₂O(l) → Ca(OH)₂(aq) + Heat</div>Combination reaction (exothermic — mixture becomes very hot).<br>(iv) Both turn red litmus blue → both products are basic/alkaline. Common name of Ca(OH)₂: Slaked lime.</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">104</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span></div>
+        <div class="case-passage"><strong>Passage:</strong> A chemistry teacher explained to Class 10 students that in ancient Egypt, gold and silver artefacts survived thousands of years in tombs with almost no degradation, while iron tools found in the same tombs had completely crumbled away. She further explained that while iron corrodes rapidly, gold and silver are much less reactive. She also mentioned that silver articles do tarnish over time due to a specific reaction with the atmosphere, and that copper slowly turns green.</div>
+        <div class="q-text">(i) What name is given to the slow deterioration of metals by atmospheric reaction? Name the product formed on iron and give its formula. (1)<br>(ii) Why did gold artefacts survive but not iron? What chemical property explains this? (1)<br>(iii) Write the reaction responsible for tarnishing of silver. Name the compound formed. (1)<br>(iv) Copper turns green due to reaction with CO₂ and moisture forming basic copper carbonate. Write the probable chemical formula and name the type of reaction. (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">(i) Corrosion. Product on iron: Rust = Hydrated ferric oxide (Fe₂O₃·xH₂O).<br>(ii) Gold is at the bottom of the reactivity series — it is the least reactive metal and does not react with atmospheric oxygen, moisture, or CO₂. Iron is highly reactive in comparison.<br>(iii) <div class="qa-eq">4Ag + 2H₂S + O₂ → 2Ag₂S + 2H₂O</div>Compound: Silver sulphide (Ag₂S) — black in colour.<br>(iv) Basic copper carbonate: Cu(OH)₂·CuCO₃ (also written as Cu₂(OH)₂CO₃). Type: Combination/Oxidation reaction (copper gains oxygen/reacts with atmospheric CO₂ and moisture).</div>
+    </div>
+  </div>
+
+  <div class="qcard reveal" data-type="case">
+    <div class="qt" onclick="toggle(this)">
+      <div class="q-num-badge" style="background:#00B894">105</div>
+      <div class="q-body">
+        <div class="q-tags"><span class="qtag" style="background:rgba(0,184,148,.12);color:#007a60">Case Based</span></div>
+        <div class="case-passage"><strong>Passage:</strong> Rohan performed an experiment: he poured dilute H₂SO₄ onto zinc granules in a test tube and collected the gas over water. He brought a burning splint near the collected gas and heard a pop sound. He also noticed the test tube became warm. He then tried the same with copper granules and observed no reaction. His teacher explained this is because of the reactivity series.</div>
+        <div class="q-text">(i) Name the gas collected and identify the type of reaction. Write the balanced equation. (1)<br>(ii) Why did the test tube become warm? What type of reaction is this (exo/endothermic)? (1)<br>(iii) Why did copper not react with dilute H₂SO₄? (1)<br>(iv) If Rohan tried silver instead of zinc, would a reaction occur? Give a reason using the reactivity series. (1)</div>
+      </div>
+      <div class="q-toggle">▼</div>
+    </div>
+    <div class="qa">
+      <div class="qa-head">✅ Answers</div>
+      <div class="qa-text">(i) Hydrogen gas (H₂) — burns with a pop sound. Displacement reaction.<div class="qa-eq">Zn(s) + H₂SO₄(aq) → ZnSO₄(aq) + H₂(g)↑</div>(ii) The test tube became warm because the reaction is exothermic — heat is released. Exothermic reaction.<br>(iii) Copper is below hydrogen in the reactivity series (Zn > Fe > H > Cu > Ag). Copper is less reactive than hydrogen, so it cannot displace hydrogen from an acid. No reaction occurs.<br>(iv) No, silver would not react. Silver is even less reactive than copper, placed below it in the reactivity series. Only metals above hydrogen in the reactivity series can displace H₂ from dilute acids.</div>
+    </div>
+  </div>
+
+</div><!-- end case -->
+
+</div><!-- end main -->
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks"><li><a href="vistar10.html">Home</a></li><li><a href="subjects.html">Subjects</a></li><li><a href="ch1.html">Ch 1</a></li><li><a href="ch1-mcq.html">MCQ</a></li></ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 students &nbsp;·&nbsp; © 2026 VISTAR10</div>
+</footer>
+
+<script>
+/* ── TOGGLE ── */
+function toggle(qt) {
+  const card = qt.closest('.qcard');
+  card.classList.toggle('open');
+}
+
+/* ── FILTER ── */
+function filterQ(type, btn) {
+  document.querySelectorAll('.ftag').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  const cards = document.querySelectorAll('.qcard');
+  let vis = 0;
+  cards.forEach(c => {
+    const show = type === 'all' || c.dataset.type === type;
+    c.classList.toggle('hidden', !show);
+    if (show) vis++;
+  });
+  // Also toggle section headers
+  document.querySelectorAll('.sec-head').forEach(sh => {
+    const show = type === 'all' || sh.dataset.type === type;
+    sh.classList.toggle('hidden', !show);
+  });
+  document.getElementById('visCount').textContent = `Showing ${vis} questions`;
+}
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 28), {passive:true});
+
+/* ── REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VISTAR10 — Ch 4 MCQ · Carbon &amp; its Compounds</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#F5F4FF;--v:#6C5CE7;--vl:#A29BFE;--mint:#00CEC9;--g:#00B894;--r:#E17055;--o:#e5a100;--acc:#00b894;--acc2:#007a5e;--text:#1A1A2E;--mu:#6B6B8A;--card:rgba(255,255,255,.88);--cb:rgba(0,184,148,.15);--sh:0 6px 32px rgba(0,184,148,.09);--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,5vw,6%);}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px;}
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;animation:drift 22s ease-in-out infinite alternate;}
+.b1{width:clamp(180px,38vw,420px);height:clamp(180px,38vw,420px);background:#00b894;top:-8%;left:-6%;}
+.b2{width:clamp(120px,24vw,280px);height:clamp(120px,24vw,280px);background:#A29BFE;bottom:5%;right:-3%;animation-delay:-9s;}
+.b3{width:clamp(90px,16vw,200px);height:clamp(90px,16vw,200px);background:#FDAE9A;top:45%;left:55%;animation-delay:-5s;}
+@keyframes drift{to{transform:translate(18px,-22px);}}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+nav.sc{background:rgba(245,244,255,.94);backdrop-filter:blur(22px);border-bottom:1px solid rgba(0,184,148,.09);box-shadow:0 4px 24px rgba(0,184,148,.07);}
+.logo{font-family:var(--fh);font-size:clamp(.95rem,1.8vw,1.2rem);font-weight:800;color:var(--acc2);display:flex;align-items:center;gap:7px;}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,var(--acc),var(--v));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.nav-r{display:flex;gap:8px;}
+.nbtn{background:rgba(0,184,148,.10);color:var(--acc2);font-size:.76rem;font-weight:600;padding:6px 14px;border-radius:50px;border:1.5px solid rgba(0,184,148,.20);cursor:pointer;transition:all .22s;white-space:nowrap;}
+.nbtn:hover{background:var(--acc);color:#fff;}
+.streak-bar{position:sticky;top:52px;z-index:100;background:rgba(245,244,255,.96);backdrop-filter:blur(18px);border-bottom:1px solid rgba(0,184,148,.10);padding:8px var(--px);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.sb-stat{display:flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;color:var(--mu);}
+.sb-stat span{color:var(--text);font-weight:700;}
+.main{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:clamp(72px,10vh,96px) var(--px) 60px;}
+.level-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;}
+.ltab{padding:7px 18px;border-radius:50px;font-size:.76rem;font-weight:600;cursor:pointer;border:1.5px solid var(--cb);background:var(--card);color:var(--mu);transition:all .22s;}
+.ltab.active{background:var(--lc,var(--acc));color:#fff;border-color:var(--lc,var(--acc));}
+.ltab:hover:not(.active){border-color:var(--lc,var(--acc));color:var(--lc,var(--acc));}
+.level-header{margin-bottom:22px;}
+.lh-badge{display:inline-flex;align-items:center;gap:7px;border-radius:50px;padding:5px 14px;font-size:.70rem;font-weight:700;letter-spacing:.4px;margin-bottom:8px;}
+.lh-title{font-family:var(--fh);font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:800;margin-bottom:4px;}
+.lh-sub{font-size:.82rem;color:var(--mu);}
+.q-card{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;padding:clamp(18px,3vw,26px);box-shadow:var(--sh);margin-bottom:14px;transition:border-color .3s;}
+.q-card.correct{border-color:var(--g);}
+.q-card.wrong{border-color:var(--r);}
+.q-num{font-size:.65rem;font-weight:700;color:var(--mu);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.q-text{font-size:clamp(.86rem,1.08vw,.96rem);color:var(--text);line-height:1.7;margin-bottom:16px;font-weight:500;white-space:pre-line;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:11px;border:1.5px solid var(--cb);background:rgba(255,255,255,.6);cursor:pointer;transition:all .22s;font-size:clamp(.80rem,.98vw,.88rem);line-height:1.5;}
+.opt:hover:not(.disabled){border-color:var(--acc);background:rgba(0,184,148,.05);}
+.opt.selected{border-color:var(--acc);background:rgba(0,184,148,.08);}
+.opt.correct-ans{border-color:var(--g);background:rgba(0,184,148,.08);}
+.opt.wrong-ans{border-color:var(--r);background:rgba(225,112,85,.08);}
+.opt.disabled{cursor:default;}
+.opt-letter{width:22px;height:22px;border-radius:50%;background:rgba(0,184,148,.12);color:var(--acc2);font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--fh);}
+.opt.correct-ans .opt-letter{background:var(--g);color:#fff;}
+.opt.wrong-ans .opt-letter{background:var(--r);color:#fff;}
+.hint-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(229,161,0,.10);border:1px solid rgba(229,161,0,.22);border-radius:50px;padding:5px 13px;font-size:.72rem;font-weight:600;color:var(--o);cursor:pointer;transition:all .22s;margin-top:10px;}
+.hint-btn:hover{background:rgba(229,161,0,.18);}
+.hint-box{display:none;margin-top:10px;background:rgba(229,161,0,.07);border:1px solid rgba(229,161,0,.18);border-radius:10px;padding:10px 13px;font-size:.80rem;color:var(--text);line-height:1.6;}
+.hint-box.show{display:block;}
+.explanation{display:none;margin-top:12px;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.18);border-radius:11px;padding:13px 15px;}
+.explanation.show{display:block;}
+.exp-title{font-family:var(--fh);font-size:.72rem;font-weight:700;color:var(--g);letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px;}
+.exp-text{font-size:.82rem;color:var(--text);line-height:1.65;}
+.board-tip{margin-top:8px;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.16);border-radius:8px;padding:8px 11px;font-size:.76rem;color:var(--acc2);font-weight:500;}
+.board-tip strong{font-weight:700;}
+.mistake-banner{display:none;background:rgba(225,112,85,.07);border:1px solid rgba(225,112,85,.18);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.80rem;color:var(--r);font-weight:500;}
+.mistake-banner.show{display:block;}
+.results{background:var(--card);border:1.5px solid var(--cb);border-radius:20px;padding:clamp(24px,4vw,36px);box-shadow:var(--sh);text-align:center;display:none;}
+.results.show{display:block;}
+.res-score{font-family:var(--fh);font-size:clamp(2rem,5vw,3.2rem);font-weight:800;color:var(--acc);margin-bottom:6px;}
+.res-sub{font-size:.88rem;color:var(--mu);margin-bottom:20px;}
+.res-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
+.res-btn{background:var(--acc);color:#fff;border:none;border-radius:50px;padding:10px 26px;font-size:.84rem;font-weight:700;cursor:pointer;transition:background .22s;}
+.res-btn:hover{background:var(--acc2);}
+.achievements{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+.ach{background:rgba(255,255,255,.70);border:1.5px solid var(--cb);border-radius:50px;padding:5px 13px;font-size:.72rem;font-weight:600;color:var(--mu);transition:all .4s;display:flex;align-items:center;gap:5px;}
+.ach.earned{background:linear-gradient(135deg,rgba(0,184,148,.12),rgba(108,92,231,.08));border-color:var(--acc);color:var(--acc2);}
+.btn-next{display:none;margin-top:16px;background:linear-gradient(135deg,var(--acc),var(--v));color:#fff;border:none;border-radius:50px;padding:11px 28px;font-size:.86rem;font-weight:700;cursor:pointer;transition:opacity .22s;width:100%;}
+.btn-next:hover{opacity:.88;}
+.btn-next.show{display:block;}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1A1A2E;color:#fff;border-radius:50px;padding:10px 22px;font-size:.80rem;font-weight:600;z-index:999;transition:transform .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(0,184,148,.09);padding:clamp(22px,3.5vw,36px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:48px;}
+.flogo{font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--acc2);}
+.ftg{font-size:.70rem;color:var(--mu);margin-top:2px;}
+.flinks{display:flex;gap:18px;list-style:none;}
+.flinks a{font-size:.76rem;color:var(--mu);}.flinks a:hover{color:var(--acc);}
+.fcopy{font-size:.68rem;color:var(--mu);}.fcopy span{color:var(--acc);}
+@media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}}
+@media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <div class="nav-r">
+    <a href="ch4.html" class="nbtn">← Ch 4 Overview</a>
+    <a href="ch3-mcq.html" class="nbtn">← Ch 3 MCQ</a>
+  </div>
+</nav>
+
+<div class="streak-bar">
+  <div class="sb-stat"><span>🔥</span>Streak: <span id="streakCount">0</span></div>
+  <div class="sb-stat">Score: <span id="scoreCount">0</span></div>
+  <div class="sb-stat">Level: <span id="levelName">Easy</span></div>
+  <div class="sb-stat">Q: <span id="qProgress">0/10</span></div>
+</div>
+
+<div class="main">
+  <div style="margin-bottom:8px;font-size:.70rem;color:var(--mu);">
+    <a href="vistar10.html" style="color:var(--acc);font-weight:500">Home</a> ›
+    <a href="subjects.html" style="color:var(--acc);font-weight:500">Science</a> ›
+    <a href="ch4.html" style="color:var(--acc);font-weight:500">Chapter 4</a> › MCQ Practice
+  </div>
+
+  <div style="margin-bottom:24px;">
+    <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,184,148,.10);border:1px solid rgba(0,184,148,.22);border-radius:50px;padding:5px 14px;font-size:.70rem;font-weight:700;color:var(--acc2);letter-spacing:.4px;margin-bottom:10px;">🧪 Chemistry · Chapter 4 · Class 10 CBSE</div>
+    <h1 style="font-family:var(--fh);font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.2;margin-bottom:4px;">Carbon &amp; <span style="color:var(--acc)">its Compounds</span></h1>
+    <p style="font-size:.82rem;color:var(--mu);">40 questions · 4 levels · Streaks, hints &amp; achievements</p>
+  </div>
+
+  <div class="achievements">
+    <div class="ach" id="ach-first">⚡ First Strike</div>
+    <div class="ach" id="ach-fire">🔥 On Fire</div>
+    <div class="ach" id="ach-unstop">💥 Unstoppable</div>
+    <div class="ach" id="ach-perfect">🏆 Perfect Score</div>
+    <div class="ach" id="ach-nohint">💡 Hint-Free Hero</div>
+    <div class="ach" id="ach-hard">🔬 Hard Cleared</div>
+    <div class="ach" id="ach-board">📋 Board Ready</div>
+    <div class="ach" id="ach-champ">👑 Carbon Master</div>
+  </div>
+
+  <div class="level-tabs">
+    <button class="ltab" id="tab0" style="--lc:#00B894" onclick="setLevel(0)">🌱 Easy</button>
+    <button class="ltab" id="tab1" style="--lc:#e5a100" onclick="setLevel(1)">⚡ Medium</button>
+    <button class="ltab" id="tab2" style="--lc:#E17055" onclick="setLevel(2)">🔥 Hard</button>
+    <button class="ltab" id="tab3" style="--lc:#6C5CE7" onclick="setLevel(3)">📋 Board Level</button>
+  </div>
+
+  <div id="quizArea"></div>
+  <div class="results" id="results"></div>
+</div>
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch4.html">Ch 4</a></li>
+    <li><a href="ch3-mcq.html">Ch 3 MCQ</a></li>
+  </ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 · © 2026 VISTAR10</div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const LEVELS=[
+  {name:'Easy',emoji:'🌱',pts:10,color:'#00B894',sub:'Definitions, basic structures, and fundamental concepts'},
+  {name:'Medium',emoji:'⚡',pts:15,color:'#e5a100',sub:'Homologous series, functional groups, reactions'},
+  {name:'Hard',emoji:'🔥',pts:20,color:'#E17055',sub:'IUPAC naming, isomers, mechanisms, and comparisons'},
+  {name:'Board Level',emoji:'📋',pts:25,color:'#6C5CE7',sub:'Assertion-Reason, source-based, and application questions'},
+];
+
+const QUESTIONS=[
+  // ── LEVEL 0: EASY ──
+  [
+    {q:'Carbon has atomic number 6. How many valence electrons does a carbon atom have?',opts:['2','4','6','8'],ans:1,hint:'Valence electrons = electrons in the outermost shell.',exp:'Carbon (atomic number 6) has electronic configuration 2,4. It has 4 electrons in its outermost (valence) shell. This means carbon can form 4 covalent bonds — giving it an extraordinary ability to form long chains, rings, and branches.',tip:'Board Tip: Carbon\'s 4 valence electrons and small size are why it forms so many stable compounds. This is the basis of all organic chemistry.'},
+    {q:'The type of bond present between carbon atoms in organic compounds is:',opts:['Ionic bond','Covalent bond','Metallic bond','Hydrogen bond'],ans:1,hint:'Carbon shares electrons — it doesn\'t transfer them.',exp:'Carbon atoms form covalent bonds by sharing electrons. Carbon can share electrons with other carbon atoms (C–C, C=C, C≡C) and with hydrogen, oxygen, nitrogen, halogens etc. Ionic bonding involves electron transfer and occurs between metals and non-metals.',tip:'Board Tip: Organic compounds = covalent compounds. They generally have low melting points, are poor conductors, and are often soluble in organic solvents. These properties distinguish them from ionic compounds.'},
+    {q:'Which of the following is NOT an allotrope of carbon?',opts:['Diamond','Graphite','Buckminsterfullerene','Charcoal'],ans:3,hint:'Allotropes are different structural forms of the same element.',exp:'Diamond, Graphite, and Buckminsterfullerene (C₆₀) are the three main allotropes of carbon — they are different structural forms of pure carbon with vastly different properties. Charcoal is an amorphous (non-crystalline) form of carbon, not technically an allotrope in the strict sense.',tip:'Board Tip: Diamond (hardest, insulator, tetrahedral bonds), Graphite (soft, conductor, layered), Buckminsterfullerene (C₆₀, football shape, used in nanotechnology). All three = pure carbon, different properties.'},
+    {q:'What is the general formula of alkanes?',opts:['CₙH₂ₙ','CₙH₂ₙ₋₂','CₙH₂ₙ₊₂','CₙHₙ'],ans:2,hint:'Alkanes are saturated hydrocarbons — they have the maximum hydrogen possible.',exp:'Alkanes have the general formula CₙH₂ₙ₊₂. Examples: Methane (CH₄, n=1), Ethane (C₂H₆, n=2), Propane (C₃H₈, n=3), Butane (C₄H₁₀, n=4). They are called saturated hydrocarbons because all carbon-carbon bonds are single bonds.',tip:'Board Tip: Alkanes (CₙH₂ₙ₊₂) = saturated, single bonds. Alkenes (CₙH₂ₙ) = one double bond. Alkynes (CₙH₂ₙ₋₂) = one triple bond. All three formulas must be memorised.'},
+    {q:'Ethanol (C₂H₅OH) belongs to which homologous series?',opts:['Alkanes','Alkenes','Alcohols','Carboxylic acids'],ans:2,hint:'Look at the functional group: –OH.',exp:'Ethanol contains the –OH (hydroxyl) functional group, making it an alcohol. The general formula for alcohols is CₙH₂ₙ₊₁OH. Ethanol (C₂H₅OH) is the alcohol in beverages. Methanol (CH₃OH) is highly toxic.',tip:'Board Tip: Functional groups to know: –OH = alcohol, –COOH = carboxylic acid, –CHO = aldehyde, –CO– = ketone, –Cl/Br = haloalkane. The functional group determines the chemical properties of the compound.'},
+    {q:'What is the functional group present in carboxylic acids?',opts:['–OH','–CHO','–COOH','–CO–'],ans:2,hint:'Acetic acid (vinegar) is a carboxylic acid.',exp:'The functional group in carboxylic acids is –COOH (carboxyl group). It consists of both a carbonyl (C=O) and a hydroxyl (–OH) group. Example: Acetic acid (CH₃COOH) — the acid in vinegar. General formula: CₙH₂ₙ₊₁COOH.',tip:'Board Tip: Acetic acid (CH₃COOH) = vinegar. It reacts with NaHCO₃ to give CO₂ (fizzing) — this is the test for carboxylic acid. Ethanoic acid is the IUPAC name of acetic acid.'},
+    {q:'Which of the following hydrocarbons is unsaturated?',opts:['Methane','Ethane','Propane','Ethene'],ans:3,hint:'Unsaturated hydrocarbons contain double or triple bonds.',exp:'Ethene (C₂H₄ = CH₂=CH₂) is an unsaturated hydrocarbon — it contains a C=C double bond. Methane, Ethane, and Propane are alkanes (saturated — only single bonds). Unsaturated hydrocarbons decolourise bromine water, saturated hydrocarbons do not.',tip:'Board Tip: Test for unsaturation: Add bromine water (orange). If it decolourises → unsaturated. If no change → saturated. This is a key practical observation for boards.'},
+    {q:'The process of converting vegetable oils to vegetable ghee (vanaspati) uses which reaction?',opts:['Combustion','Hydrogenation','Oxidation','Saponification'],ans:1,hint:'A gas is added to the oil to make it solid.',exp:'Hydrogenation is the addition of hydrogen (H₂) to unsaturated vegetable oils in the presence of a Ni catalyst. The C=C double bonds in the oil are converted to C–C single bonds, changing the liquid oil to solid fat (vanaspati ghee). This is an addition reaction.',tip:'Board Tip: Hydrogenation of oils: unsaturated oil + H₂ →(Ni catalyst, 150°C)→ saturated fat (vanaspati). Catalyst used = Nickel (Ni). This is an industrial application of addition reactions. Frequently asked in 1-mark questions.'},
+    {q:'What is the IUPAC name of CH₃OH?',opts:['Ethanol','Methanol','Propanol','Butanol'],ans:1,hint:'Count the carbon atoms — CH₃OH has how many carbons?',exp:'CH₃OH has 1 carbon atom → prefix = meth-. It is an alcohol (–OH group) → suffix = -anol. IUPAC name = Methanol. CH₃OH is commonly called wood spirit or wood alcohol. It is highly toxic — even small quantities can cause blindness or death.',tip:'Board Tip: IUPAC naming of alcohols: Count C atoms → meth(1), eth(2), prop(3), but(4), pent(5) → add -anol. Methanol (CH₃OH, 1C), Ethanol (C₂H₅OH, 2C), Propanol (C₃H₇OH, 3C).'},
+    {q:'The reaction of ethanol with sodium produces which gas?',opts:['Oxygen','Carbon dioxide','Hydrogen','Nitrogen'],ans:2,hint:'Metals reacting with alcohols or acids often release the same gas.',exp:'2C₂H₅OH + 2Na → 2C₂H₅ONa + H₂↑. Ethanol reacts with sodium metal to produce sodium ethoxide (C₂H₅ONa) and hydrogen gas (H₂). This shows that alcohols have the ability to react with metals, similar to water (which also releases H₂ with Na).',tip:'Board Tip: Ethanol + Na → H₂↑ + sodium ethoxide. This reaction proves the acidic nature of the –OH group in ethanol (though it is much weaker acid than water). H₂ gas produced → "pop" sound with a burning splint.'},
+  ],
+  // ── LEVEL 1: MEDIUM ──
+  [
+    {q:'What is a homologous series?',opts:['Compounds with the same molecular formula','A series of compounds differing by CH₂, with the same functional group and similar chemical properties','Compounds containing only carbon and hydrogen','Isomers of the same compound'],ans:1,hint:'Each member differs from the next by a specific unit.',exp:'A homologous series is a group of organic compounds that: (1) differ from each other by a –CH₂– unit (14 mass units), (2) have the same general formula, (3) have the same functional group, and (4) show a gradual change in physical properties and similar chemical properties. Examples: alkanes, alkenes, alcohols, carboxylic acids.',tip:'Board Tip: Four features of homologous series must be stated for 2-mark answers: same general formula, differ by CH₂, same functional group, similar chemical properties. Physical properties (m.p., b.p.) change gradually with chain length.'},
+    {q:'Which functional group is present in ethanoic acid (CH₃COOH)?',opts:['–OH','–CHO','–COOH','–CO–'],ans:2,hint:'Ethanoic acid is a carboxylic acid.',exp:'Ethanoic acid (CH₃COOH) contains the carboxyl group –COOH. It is a 2-carbon carboxylic acid (eth = 2 carbons). IUPAC name: ethanoic acid. Common name: acetic acid. It turns blue litmus red, reacts with NaHCO₃ to give CO₂, and reacts with alcohols to give esters.',tip:'Board Tip: CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑. This is the test for carboxylic acid. Ethanoic acid is the acid in vinegar (~5% solution). Its reaction with ethanol (esterification) is a guaranteed board question.'},
+    {q:'What type of reaction occurs when ethanol reacts with ethanoic acid in the presence of concentrated H₂SO₄?',opts:['Addition reaction','Substitution reaction','Esterification','Saponification'],ans:2,hint:'The product is called an ester and has a sweet smell.',exp:'CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O (conc. H₂SO₄, heat). This is esterification — a condensation reaction between a carboxylic acid and an alcohol. The product (ethyl ethanoate) is an ester with a fruity smell. H₂SO₄ acts as a catalyst. The reaction is reversible.',tip:'Board Tip: Esterification equation: acid + alcohol → ester + water. Conc. H₂SO₄ = catalyst + dehydrating agent. Ester has sweet/fruity smell. Used in perfumes, artificial flavours, solvents (nail polish remover). Reverse reaction (ester + water → acid + alcohol) is hydrolysis.'},
+    {q:'Saponification is:',opts:['Burning of oils in oxygen','Hydrogenation of unsaturated fats','Alkaline hydrolysis of ester to give soap and glycerol','Acidic hydrolysis of carbohydrates'],ans:2,hint:'Soap is made from oils and an alkali.',exp:'Saponification is the alkaline hydrolysis of fats/oils (esters) with NaOH or KOH to produce soap (sodium or potassium salt of fatty acid) and glycerol. Example: fat (triglyceride) + NaOH → soap (sodium stearate/palmitate) + glycerol. NaOH gives hard soap; KOH gives soft/liquid soap.',tip:'Board Tip: Saponification = soap making. Ester + NaOH → soap (sodium salt of fatty acid) + glycerol. This is the reverse of esterification (but using a base instead of acid). Saponification is an industrial-scale esterification reversal.'},
+    {q:'Which gas is produced when ethanol undergoes complete combustion?',opts:['CO only','H₂O only','CO₂ and H₂O','CO₂ only'],ans:2,hint:'Complete combustion of any hydrocarbon or alcohol.',exp:'C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O. Complete combustion of ethanol in excess oxygen produces carbon dioxide (CO₂) and water (H₂O) only. If oxygen is limited, incomplete combustion gives CO (toxic) or carbon particles (soot). Alcohol burns with a blue flame.',tip:'Board Tip: Complete combustion (excess O₂) → CO₂ + H₂O (clean). Incomplete combustion (limited O₂) → CO (poisonous) or soot (carbon particles). LPG burns with blue flame (complete), yellow flame = incomplete combustion/soot formation.'},
+    {q:'Bromine water is decolourised when reacted with ethene. This reaction is an example of:',opts:['Substitution reaction','Addition reaction','Combustion reaction','Esterification'],ans:1,hint:'Something is added across the double bond.',exp:'CH₂=CH₂ + Br₂ → CH₂BrCH₂Br (1,2-dibromoethane). Bromine (orange/brown) is added across the C=C double bond of ethene. This is an addition reaction — two molecules combine to form one product. The colour change from orange to colourless is the test for an unsaturated compound.',tip:'Board Tip: Br₂(aq) decolourisation = test for C=C or C≡C (unsaturation). Saturated compounds (alkanes) do NOT decolourise Br₂(aq) under normal conditions. Addition reactions always convert double/triple bonds to single bonds.'},
+    {q:'What is the general formula for alkenes?',opts:['CₙH₂ₙ₊₂','CₙH₂ₙ','CₙH₂ₙ₋₂','CₙH₂ₙ₊₁OH'],ans:1,hint:'Alkenes have one double bond — so they have 2 fewer hydrogens than alkanes.',exp:'Alkenes have the general formula CₙH₂ₙ. The simplest alkene is ethene (C₂H₄). One carbon-carbon double bond means 2 fewer hydrogens compared to the alkane with the same number of carbons. Ethene (C₂H₄), Propene (C₃H₆), Butene (C₄H₈).',tip:'Board Tip: Alkanes CₙH₂ₙ₊₂, Alkenes CₙH₂ₙ, Alkynes CₙH₂ₙ₋₂. Difference from alkane to alkene = 2H fewer. Ethane (C₂H₆) vs Ethene (C₂H₄) — 2 fewer H. This is because one double bond replaces two C–H bonds.'},
+    {q:'The dehydration of ethanol with excess concentrated H₂SO₄ at 170°C gives:',opts:['Ethane','Ethene','Ethanoic acid','Diethyl ether'],ans:1,hint:'Removing water from ethanol.',exp:'C₂H₅OH →(conc. H₂SO₄, 170°C)→ CH₂=CH₂ + H₂O. Excess concentrated H₂SO₄ at 170°C acts as a dehydrating agent, removing a water molecule from ethanol to give ethene. At lower temperature (140°C) with less H₂SO₄, ethanol dehydrates to diethyl ether instead.',tip:'Board Tip: Dehydration of ethanol → ethene (170°C, excess H₂SO₄). Two conditions for the reaction: (1) excess conc. H₂SO₄ and (2) high temperature 170°C. Lower temp gives ether (different product). Temperature determines the product.'},
+    {q:'Which of the following is a saturated hydrocarbon?',opts:['Ethene (C₂H₄)','Propyne (C₃H₄)','Butane (C₄H₁₀)','Benzene (C₆H₆)'],ans:2,hint:'Saturated = only single bonds.',exp:'Butane (C₄H₁₀) is a saturated hydrocarbon — it contains only C–C single bonds. Ethene has a C=C double bond, Propyne has a C≡C triple bond, and Benzene has an alternating double-bond ring structure. Saturated hydrocarbons are less reactive than unsaturated ones.',tip:'Board Tip: Saturated (alkanes: single bonds only) → undergo substitution reactions with Cl₂/Br₂ in light. Unsaturated (alkenes/alkynes: double/triple bonds) → undergo addition reactions. Type of reaction determines type of compound.'},
+    {q:'What type of reaction does methane undergo with chlorine in the presence of sunlight?',opts:['Addition','Substitution','Combustion','Esterification'],ans:1,hint:'A hydrogen in methane is replaced.',exp:'CH₄ + Cl₂ →(sunlight)→ CH₃Cl + HCl. Methane undergoes a substitution reaction with chlorine: one H is replaced (substituted) by Cl. Further substitution gives CH₂Cl₂, CHCl₃, CCl₄. Sunlight provides the energy needed to initiate this reaction (free radical mechanism).',tip:'Board Tip: Saturated hydrocarbons (alkanes) undergo substitution reactions. Unsaturated hydrocarbons (alkenes) undergo addition reactions. This distinction is a key 1-mark concept. Sunlight is essential for CH₄ + Cl₂ reaction.'},
+  ],
+  // ── LEVEL 2: HARD ──
+  [
+    {q:'How many structural isomers does butane (C₄H₁₀) have?',opts:['1','2','3','4'],ans:1,hint:'Draw all possible ways to arrange 4 carbons.',exp:'Butane (C₄H₁₀) has 2 structural isomers: (1) n-Butane: CH₃-CH₂-CH₂-CH₃ (straight chain). (2) Isobutane (2-methylpropane): (CH₃)₃CH (branched). Both have the molecular formula C₄H₁₀ but different structural arrangements. They have different boiling points.',tip:'Board Tip: Isomers = same molecular formula, different structural formula. Butane has 2 isomers (easy to draw in boards). Pentane (C₅H₁₂) has 3 isomers. Drawing isomers is a common 2–3 mark question.'},
+    {q:'What is the IUPAC name of CH₃–CH₂–CH₂–COOH?',opts:['Ethanoic acid','Propanoic acid','Butanoic acid','Pentanoic acid'],ans:2,hint:'Count all carbon atoms including the one in –COOH.',exp:'CH₃–CH₂–CH₂–COOH has 4 carbon atoms (including the COOH carbon). Prefix: but (4 carbons). Suffix: -anoic acid (carboxylic acid). IUPAC name: Butanoic acid. The –COOH carbon is always carbon-1 in numbering.',tip:'Board Tip: For carboxylic acid naming: count ALL carbons including COOH carbon. CH₃COOH = 2C = ethanoic acid. CH₃CH₂COOH = 3C = propanoic acid. CH₃CH₂CH₂COOH = 4C = butanoic acid.'},
+    {q:'Ethanol undergoes oxidation with alkaline KMnO₄ to form:',opts:['Methanol','Ethane','Ethanoic acid','Ethene'],ans:2,hint:'Alcohol → acid is an oxidation.',exp:'C₂H₅OH →(alkaline KMnO₄ or acidic K₂Cr₂O₇)→ CH₃COOH. Ethanol is oxidised to ethanoic acid. This is why KMnO₄ (purple) decolourises in the presence of ethanol. The same conversion also occurs slowly when ethanol is exposed to air (microorganisms oxidise alcohol to vinegar = acetic acid).',tip:'Board Tip: Oxidising agents for alcohols: alkaline KMnO₄, acidified K₂Cr₂O₇. Both convert: alcohol → aldehyde → acid. Ethanol + oxidising agent → ethanoic acid. This reaction is also used in breathalyser tests (colour change of K₂Cr₂O₇).'},
+    {q:'In the structure of diamond, each carbon atom is bonded to:',opts:['2 carbon atoms in a linear arrangement','3 carbon atoms in a planar arrangement','4 carbon atoms in a tetrahedral arrangement','6 carbon atoms in a hexagonal arrangement'],ans:2,hint:'Diamond is the hardest substance — this gives a clue about its bonding.',exp:'In diamond, each carbon atom is covalently bonded to 4 other carbon atoms in a tetrahedral arrangement (bond angle 109.5°). This forms a rigid 3D network lattice extending in all directions. Every C–C bond is a single bond and very strong. This 3D network is why diamond is the hardest natural substance.',tip:'Board Tip: Diamond (4 bonds, 3D tetrahedral network) = hardest, insulator, poor conductor. Graphite (3 bonds, planar hexagonal layers + 1 free e⁻) = conductor, lubricant, softest. The extra free electron in graphite explains both conductivity and softness.'},
+    {q:'What is the IUPAC name of CH₂=CH–CH₃?',opts:['Propane','Propene','Propyne','Butene'],ans:1,hint:'Count the carbons and identify the type of bond.',exp:'CH₂=CH–CH₃ has 3 carbon atoms (prop-) and one C=C double bond (-ene). IUPAC name: Propene (also called propylene). The double bond starts at carbon-1. Propane would be CH₃–CH₂–CH₃ (no double bond). Propyne would be CH≡C–CH₃ (triple bond).',tip:'Board Tip: IUPAC naming: count carbons → choose prefix (meth/eth/prop/but/pent). Single bond → -ane. Double bond → -ene. Triple bond → -yne. –OH → -anol. –COOH → -anoic acid. Functional group suffix takes priority in naming.'},
+    {q:'Why does carbon form a very large number of compounds compared to other elements?',opts:['Carbon has very high atomic mass','Carbon has 4 valence electrons and can form long chains due to catenation','Carbon forms ionic bonds easily','Carbon is the most abundant element on Earth'],ans:1,hint:'Two unique properties of carbon create this versatility.',exp:'Carbon forms an enormous number of compounds due to two unique properties: (1) Catenation — the ability of carbon atoms to bond with each other, forming long chains, branched chains, and rings. (2) Tetravalency — carbon has 4 valence electrons and can form 4 covalent bonds simultaneously with C, H, O, N, halogens etc. No other element shows comparable catenation.',tip:'Board Tip: Two reasons for carbon\'s uniqueness: (1) Catenation (C–C bonding). (2) Tetravalency (4 bonds). These 2 terms MUST be used in the answer. Carbon also forms multiple bonds (C=C, C≡C), adding to the variety.'},
+    {q:'Which of the following pairs are isomers of each other?',opts:['CH₄ and C₂H₄','C₂H₅OH and CH₃OCH₃','C₂H₆ and C₂H₄','CH₃OH and C₂H₅OH'],ans:1,hint:'Isomers have the same molecular formula.',exp:'C₂H₅OH (ethanol) and CH₃OCH₃ (dimethyl ether) are isomers — both have molecular formula C₂H₆O. They have the same formula but different structures (–OH in ethanol vs –O– in dimethyl ether). CH₄ and C₂H₄ have different formulas; C₂H₆ and C₂H₄ have different formulas; CH₃OH and C₂H₅OH have different formulas.',tip:'Board Tip: Isomers: same molecular formula, different structural formula, different physical/chemical properties. Ethanol (C₂H₆O) boils at 78°C; dimethyl ether (C₂H₆O) boils at –24°C — same formula, very different properties.'},
+    {q:'The reaction CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O is:',opts:['Irreversible with NaOH as catalyst','Reversible with conc. H₂SO₄ as catalyst','Irreversible combustion','A substitution reaction'],ans:1,hint:'Esters can be hydrolysed back to acid and alcohol.',exp:'The esterification reaction is reversible (⇌). Conc. H₂SO₄ acts as both catalyst (speeds up the reaction) and dehydrating agent (removes water to shift equilibrium towards ester formation). The reverse reaction is hydrolysis (saponification if done with base). Products: CH₃COOC₂H₅ (ethyl ethanoate, fruity smell) + H₂O.',tip:'Board Tip: Esterification is reversible. Write the equation with ⇌ not →. The reaction conditions: conc. H₂SO₄ + heat (reflux). If NaOH is used for hydrolysis (reverse), the product is a sodium salt of acid (soap) not the free acid.'},
+    {q:'In the homologous series of alkanes, which property increases as the chain length increases?',opts:['Reactivity','Flammability','Boiling point','Viscosity of combustion product'],ans:2,hint:'Longer chains have stronger intermolecular forces.',exp:'Boiling point increases as chain length (number of carbon atoms) increases in alkanes. Longer chains have greater surface area and stronger Van der Waals (London dispersion) forces between molecules, requiring more energy to overcome → higher boiling point. Reactivity of alkanes is generally low and doesn\'t change much.',tip:'Board Tip: In any homologous series, physical properties (b.p., m.p., density) change GRADUALLY with chain length. Chemical properties remain similar (same functional group). This gradual change in physical + similar chemical = key feature of homologous series.'},
+    {q:'Carbon dioxide (CO₂) has the structural formula O=C=O. The bonds in CO₂ are:',opts:['Two single bonds','Two double bonds','One single and one double bond','Two triple bonds'],ans:1,hint:'C has 4 valence electrons; each O needs 2 more.',exp:'In CO₂ (O=C=O), carbon forms two double bonds — one with each oxygen atom. Carbon uses all 4 of its valence electrons (2 for each double bond). Oxygen uses 2 of its 6 valence electrons in each double bond. The molecule is linear with bond angle 180°. CO₂ is non-polar overall despite having polar bonds.',tip:'Board Tip: CO₂ (2 double bonds, linear). CO (triple bond between C and O: C≡O). This difference matters in combustion: complete combustion → CO₂ (2 double bonds formed). Incomplete combustion → CO (more toxic, single/triple bond).'},
+  ],
+  // ── LEVEL 3: BOARD LEVEL ──
+  [
+    {q:'Assertion (A): Graphite is used as a lubricant and as electrodes in electrolysis.\nReason (R): Graphite has free electrons and layers that can slide over each other.',opts:['A true, R true, R explains A','A true, R true, R does not explain A','A true, R false','A false, R true'],ans:0,hint:'Why would a non-metal be used as an electrode?',exp:'Both A and R are true, and R correctly explains A. Graphite has a layered structure: each layer contains hexagonally arranged carbon atoms, each bonded to 3 others. The 4th electron from each carbon is delocalised → free to move across layers = electrical conductivity → used as electrodes. The layers are held by weak forces → they slide easily over each other = lubricant.',tip:'Board Tip: Graphite = slippery (lubricant) because layers slide. Graphite = conducts electricity (free e⁻ between layers). Diamond = insulator (all 4 electrons in bonds, none free). This structural reasoning is a HOTS question pattern.'},
+    {q:'A student found that compound X decolourises bromine water and also gives CO₂ with NaHCO₃. What could X be?',opts:['Ethane','Propene','Ethanoic acid','Propyne + ethanoic acid group combined'],ans:3,hint:'Which single compound can both decolourise Br₂ water AND react with NaHCO₃?',exp:'Decolourising Br₂ water → compound has C=C or C≡C (unsaturated). Reacting with NaHCO₃ to give CO₂ → compound has –COOH (carboxylic acid). A compound with BOTH properties would be an unsaturated carboxylic acid, like propenoic acid (CH₂=CH–COOH, acrylic acid). This is a cross-functional group deduction question.',tip:'Board Tip: NaHCO₃ + acid → CO₂↑ (test for carboxylic acid). Br₂(aq) decolorised → unsaturation (test for C=C or C≡C). A compound can have multiple functional groups. Deducing compound identity from multiple observations is a HOTS skill.'},
+    {q:'Source: The table shows the boiling points of the first four alcohols:\n1C: 64.7°C | 2C: 78.4°C | 3C: 97.2°C | 4C: 117.7°C\nWhich trend is observed, and what explains it?',opts:['Decreasing b.p.; fewer bonds','Increasing b.p.; more carbon atoms increase intermolecular forces','Increasing b.p.; the –OH group reacts with more O₂','Random; no pattern in alcohols'],ans:1,hint:'Larger molecules require more energy to break intermolecular forces.',exp:'Boiling point increases with chain length (number of carbon atoms). Reason: more carbon atoms → longer molecule → greater surface area → stronger Van der Waals (London dispersion) forces between molecules → more energy needed to separate them → higher boiling point. This is a fundamental property of homologous series: gradual change in physical properties.',tip:'Board Tip: Source-based/table questions require you to state the trend AND explain it. "Boiling point increases with chain length because longer chains have stronger Van der Waals forces" earns full marks. Just stating the trend without the reason = half marks.'},
+    {q:'Ethanol is converted to ethanoic acid by oxidation. The same product can be formed naturally. How does this happen in nature?',opts:['Ethanol evaporates to form acid','Microorganisms (bacteria) oxidise ethanol in air over time','Acid rain converts ethanol to acetic acid','Sunlight breaks ethanol into CO₂ and acetic acid'],ans:1,hint:'Think about why wine turns into vinegar.',exp:'When wine (ethanol) is exposed to air, bacteria (Acetobacter species) convert ethanol to acetic acid through oxidation. This is why wine turns sour and becomes vinegar over time. The reaction: C₂H₅OH + O₂ →(bacteria)→ CH₃COOH + H₂O. Vinegar (~5% acetic acid) is produced by this natural oxidation.',tip:'Board Tip: Ethanol → ethanoic acid by (1) chemical oxidation (KMnO₄ or K₂Cr₂O₇) or (2) biological oxidation (Acetobacter bacteria in presence of O₂). Both routes = same product. The biological route = how vinegar is made commercially.'},
+    {q:'Assertion (A): Ethanol has a higher boiling point than ethane despite having a similar molecular mass.\nReason (R): Ethanol can form hydrogen bonds due to its –OH group; ethane cannot.',opts:['A true, R true, R explains A','A true, R true, R does not explain A','A true, R false','A false, R true'],ans:0,hint:'What special force does the –OH group enable?',exp:'Both A and R are true, and R explains A. Ethanol (C₂H₅OH, MW 46, b.p. 78°C) has a much higher boiling point than ethane (C₂H₆, MW 30, b.p. −89°C) despite similar molecular masses. The –OH group in ethanol forms hydrogen bonds (O–H···O) between molecules — these are stronger than Van der Waals forces in ethane. More energy is needed to break hydrogen bonds → higher b.p.',tip:'Board Tip: Hydrogen bonds form when H is bonded to N, O, or F and is attracted to another N, O, or F on a nearby molecule. –OH group in alcohols → hydrogen bonding → high b.p. This is HOTS reasoning that connects structure to physical property.'},
+    {q:'The molecular formula of an organic compound is C₃H₆O. It decolourises Br₂ water but does NOT give CO₂ with NaHCO₃. Which compound is it most likely?',opts:['Propanoic acid','Propanal (CH₃CH₂CHO)','Propan-2-ol','Propenol (CH₂=CH–CH₂OH)'],ans:3,hint:'It has unsaturation AND a non-acidic oxygen group.',exp:'C₃H₆O — decolourises Br₂ water → has C=C (unsaturation). Does NOT react with NaHCO₃ → not a carboxylic acid (no –COOH). The compound must have an –OH alcohol group (not –COOH). Propenol (CH₂=CH–CH₂OH, allyl alcohol) fits: it has one C=C (decolourises Br₂) and one –OH (alcohol, not acid, no CO₂ with NaHCO₃).',tip:'Board Tip: Systematic deduction: (1) Given formula gives degree of unsaturation. (2) Br₂ test → C=C. (3) NaHCO₃ test → –COOH present/absent. (4) Combine clues to identify functional group. This multi-step deduction is a standard HOTS-type board question.'},
+    {q:'During fractional distillation of crude oil, which fraction is collected at the LOWEST temperature?',opts:['Fuel oil','Kerosene','Petrol (gasoline)','Petroleum gas (LPG)'],ans:3,hint:'Lower m.p. and b.p. = collected lower in the column or at lower temperature.',exp:'In fractional distillation, fractions are separated by boiling point. LPG (petroleum gas, C₁–C₄ hydrocarbons) has the lowest boiling points and exits at the TOP of the fractionating column at the lowest temperature. Petrol (C₅–C₁₀) exits next, then kerosene, diesel, and fuel oil at progressively higher temperatures.',tip:'Board Tip: Order of fractions from top (lowest b.p.) to bottom (highest b.p.): LPG → Petrol → Naphtha → Kerosene → Diesel → Fuel oil → Bitumen. Each fraction has different chain lengths and uses. This is a common 2–3 mark question on fossil fuels.'},
+    {q:'Which property of carbon allows it to form millions of compounds but NO other element shows to the same extent?',opts:['High atomic mass','Catenation — the ability to form bonds with other carbon atoms','Having 4 valence electrons only','Being a non-metal'],ans:1,hint:'It\'s a specific term for C–C bonding chains.',exp:'Catenation is the unique ability of carbon to form bonds with other carbon atoms, creating long chains, branched chains, and rings. No other element shows this property to the same extent. Silicon can catenate slightly, but Si–Si bonds are weaker than C–C bonds. Combined with tetravalency, catenation allows carbon to form millions of unique compounds.',tip:'Board Tip: Catenation = C–C bond formation (chains, branches, rings). Tetravalency = 4 bonds. These TWO words are the expected answer for "Why does carbon form so many compounds?" Both must be written to get full marks in a 2-mark answer.'},
+    {q:'An ester CH₃COOC₂H₅ is hydrolysed with dilute H₂SO₄. What are the products?',opts:['Ethanol and methanol','Ethanoic acid and ethanol','Methanoic acid and ethanol','Propanoic acid and methanol'],ans:1,hint:'Hydrolysis is the reverse of esterification.',exp:'CH₃COOC₂H₅ + H₂O →(dilute H₂SO₄, heat)→ CH₃COOH + C₂H₅OH. Ethyl ethanoate (CH₃COOC₂H₅) is an ester formed from ethanoic acid (CH₃COOH) and ethanol (C₂H₅OH). Acid hydrolysis breaks the ester bond: –COO– + H₂O → –COOH + HO–. Products = the original acid + alcohol used to form the ester.',tip:'Board Tip: Hydrolysis of ester: ester + water (dilute acid catalyst) → acid + alcohol. Base hydrolysis (saponification): ester + NaOH → sodium salt of acid + alcohol. Both types of hydrolysis are tested. The acid hydrolysis is reversible; base hydrolysis is not.'},
+    {q:'Assertion (A): Long-chain hydrocarbons (fuel oil, bitumen) cannot be used as petrol in engines.\nReason (R): Long-chain hydrocarbons have very high boiling points and are thick/viscous — they do not vaporise easily for combustion in engines.',opts:['A true, R true, R explains A','A true, R true, R does not explain A','A true, R false','A false, R true'],ans:0,hint:'What property of fuel is needed for efficient combustion in an engine?',exp:'Both A and R are correct, and R explains A. Petrol engines require a volatile fuel (one that vaporises easily) to mix with air and ignite. Long-chain hydrocarbons (C20+) have high boiling points and high viscosity — they cannot vaporise at engine temperatures. This is why crude oil is fractionally distilled: shorter chain fractions (petrol, kerosene) are more volatile and suitable for different engines.',tip:'Board Tip: Shorter chains → lower b.p. → more volatile → useful as petrol/LPG. Longer chains → higher b.p. → less volatile → useful as lubricants, fuel oil, bitumen. The application of each fraction depends directly on its chain length and boiling point.'},
+  ]
+];
+
+let curLevel=0,curQ=0,score=0,streak=0,hintUsed=false,levelScores=[0,0,0,0];
+let achEarned={first:false,fire:false,unstop:false,perfect:false,nohint:true,board:false,hard:false,champ:false};
+
+function setLevel(lv){
+  curLevel=lv;curQ=0;hintUsed=false;
+  ['tab0','tab1','tab2','tab3'].forEach((id,i)=>{
+    document.getElementById(id).classList.toggle('active',i===lv);
+  });
+  document.getElementById('levelName').textContent=LEVELS[lv].name;
+  document.getElementById('results').classList.remove('show');
+  renderQ();
+}
+
+function renderQ(){
+  const lv=LEVELS[curLevel],qs=QUESTIONS[curLevel];
+  if(curQ>=qs.length){showResults();return;}
+  const q=qs[curQ];
+  document.getElementById('qProgress').textContent=`${curQ+1}/10`;
+  const area=document.getElementById('quizArea');
+  const letters=['A','B','C','D'];
+  area.innerHTML=`
+    <div class="level-header">
+      <div class="lh-badge" style="background:${lv.color}22;color:${lv.color}">${lv.emoji} ${lv.name} · ${lv.pts} pts</div>
+      <div class="lh-title">Question ${curQ+1} of 10</div>
+      <div class="lh-sub">${lv.sub}</div>
+    </div>
+    <div class="q-card" id="qcard">
+      <div class="q-num">Chapter 4 · ${lv.name} · Q${curQ+1}</div>
+      <div class="q-text">${q.q.replace(/\n/g,'<br>')}</div>
+      <div class="options" id="opts">
+        ${q.opts.map((o,i)=>`<div class="opt" id="opt${i}" onclick="selectOpt(${i})"><div class="opt-letter">${letters[i]}</div>${o}</div>`).join('')}
+      </div>
+      <button class="hint-btn" id="hintBtn" onclick="showHint()">💡 Show Hint (−5 pts)</button>
+      <div class="hint-box" id="hintBox">💡 ${q.hint}</div>
+      <div class="explanation" id="expBox">
+        <div class="exp-title">✅ Explanation</div>
+        <div class="exp-text">${q.exp}</div>
+        <div class="board-tip"><strong>📋 Board Tip:</strong> ${q.tip}</div>
+      </div>
+      <div class="mistake-banner" id="mistakeBanner">❌ Incorrect. The correct answer is highlighted above. Study the explanation carefully!</div>
+      <button class="btn-next" id="nextBtn" onclick="goNext()"></button>
+    </div>
+  `;
+  hintUsed=false;
+}
+
+function selectOpt(i){
+  const q=QUESTIONS[curLevel][curQ];
+  const opts=document.querySelectorAll('.opt');
+  if(opts[0].classList.contains('disabled'))return;
+  opts.forEach(o=>o.classList.add('disabled'));
+  opts[i].classList.add('selected');
+  const correct=i===q.ans;
+  if(correct){
+    opts[i].classList.add('correct-ans');
+    const pts=LEVELS[curLevel].pts+(hintUsed?0:5);
+    const bonus=streak>=4?10:streak>=2?5:0;
+    score+=pts+bonus;streak++;
+    levelScores[curLevel]+=pts+bonus;
+    document.getElementById('scoreCount').textContent=score;
+    document.getElementById('streakCount').textContent=streak;
+    if(!achEarned.first){achEarned.first=true;earnAch('ach-first','⚡ First Strike!');}
+    if(streak>=3&&!achEarned.fire){achEarned.fire=true;earnAch('ach-fire','🔥 On Fire! 3 streak!');}
+    if(streak>=5&&!achEarned.unstop){achEarned.unstop=true;earnAch('ach-unstop','💥 Unstoppable! 5 streak!');}
+    if(bonus>0)showToast(`🔥 Streak bonus +${bonus} pts!`);
+    else showToast(`✅ Correct! +${pts} pts`);
+  } else {
+    opts[i].classList.add('wrong-ans');
+    opts[q.ans].classList.add('correct-ans');
+    streak=0;
+    document.getElementById('streakCount').textContent=streak;
+    document.getElementById('mistakeBanner').classList.add('show');
+    showToast('❌ Wrong — check the explanation');
+    if(hintUsed)achEarned.nohint=false;
+  }
+  document.getElementById('expBox').classList.add('show');
+  document.getElementById('hintBtn').style.display='none';
+  document.getElementById('hintBox').classList.remove('show');
+  const nb=document.getElementById('nextBtn');
+  nb.textContent=curQ+1<QUESTIONS[curLevel].length?'Next Question →':'See Results 🏁';
+  nb.classList.add('show');
+}
+
+function goNext(){
+  curQ++;
+  if(curQ<QUESTIONS[curLevel].length)renderQ();
+  else showResults();
+}
+
+function showHint(){
+  hintUsed=true;achEarned.nohint=false;
+  document.getElementById('hintBox').classList.add('show');
+  document.getElementById('hintBtn').style.display='none';
+}
+
+function showResults(){
+  document.getElementById('quizArea').innerHTML='';
+  const lv=curLevel,ls=levelScores[lv],qs=QUESTIONS[lv].length;
+  if(lv===2&&!achEarned.hard){achEarned.hard=true;earnAch('ach-hard','🔬 Hard Cleared!');}
+  if(lv===3&&!achEarned.board){achEarned.board=true;earnAch('ach-board','📋 Board Ready!');}
+  if(lv===3&&!achEarned.champ){achEarned.champ=true;earnAch('ach-champ','👑 Carbon Master!');}
+  const maxPts=qs*(LEVELS[lv].pts+5);
+  const pct=Math.round((ls/maxPts)*100);
+  let msg=pct>=90?'🏆 Outstanding! Carbon & Compounds mastered!':pct>=70?'🎯 Great work! Keep it up!':pct>=50?'📖 Good effort — review the explanations and try again.':'💪 Keep practising — every attempt makes you better!';
+  const res=document.getElementById('results');
+  res.innerHTML=`
+    <div class="res-score">${ls} pts</div>
+    <div class="res-sub">${msg}<br><small style="color:var(--mu)">${pct}% of max score · Level: ${LEVELS[lv].name}</small></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="res-btn" onclick="setLevel(${lv})">🔄 Retry Level</button>
+      ${lv<3?`<button class="res-btn" style="background:var(--v)" onclick="setLevel(${lv+1})">Next Level →</button>`:''}
+    </div>
+  `;
+  res.classList.add('show');
+  if(pct>=90&&!achEarned.perfect){achEarned.perfect=true;earnAch('ach-perfect','🏆 Perfect Score!');}
+  if(achEarned.nohint)earnAch('ach-nohint','💡 Hint-Free Hero!');
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function earnAch(id,msg){
+  const el=document.getElementById(id);
+  if(el){el.classList.add('earned');showToast('🏅 Achievement: '+msg);}
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>28),{passive:true});
+setLevel(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VISTAR10 — Study Ch 4 · Carbon &amp; its Compounds</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;--mint:#00CEC9;--peach:#FDAE9A;
+  --green:#00B894;--red:#E17055;--orange:#e5a100;--blue:#0984e3;
+  --text:#1A1A2E;--muted:#6B6B8A;--card:rgba(255,255,255,.88);
+  --cb:rgba(0,184,148,.15);--sh:0 6px 32px rgba(0,184,148,.09);--shh:0 14px 48px rgba(0,184,148,.16);
+  --acc:#00b894;--acc2:#007a5e;
+  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,4vw,5%);--sidebar:260px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px;}
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.13;animation:drift 22s ease-in-out infinite alternate;}
+.b1{width:clamp(200px,40vw,480px);height:clamp(200px,40vw,480px);background:#00b894;top:-10%;left:-6%;}
+.b2{width:clamp(140px,26vw,300px);height:clamp(140px,26vw,300px);background:#A29BFE;bottom:8%;right:-4%;animation-delay:-10s;}
+.b3{width:clamp(100px,20vw,240px);height:clamp(100px,20vw,240px);background:#FDAE9A;top:50%;left:3%;animation-delay:-17s;}
+@keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(20px,-28px);}}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+nav.scrolled{background:rgba(245,244,255,.94);backdrop-filter:blur(22px);border-bottom:1px solid rgba(0,184,148,.12);box-shadow:0 4px 24px rgba(0,184,148,.08);}
+.logo{font-family:var(--fh);font-size:clamp(.9rem,1.8vw,1.2rem);font-weight:800;color:var(--acc2);display:flex;align-items:center;gap:7px;}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,var(--acc),var(--violet));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.nav-right{display:flex;gap:8px;align-items:center;}
+.nav-btn{background:rgba(0,184,148,.10);color:var(--acc2);font-size:.76rem;font-weight:600;padding:6px 14px;border-radius:50px;border:1.5px solid rgba(0,184,148,.22);cursor:pointer;transition:all .22s;white-space:nowrap;}
+.nav-btn:hover{background:var(--acc);color:#fff;}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--violet));z-index:400;width:0%;transition:width .08s;}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:100vh;position:relative;z-index:1;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}}
+.sidebar{position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:28px 0 32px;border-right:1px solid rgba(0,184,148,.10);background:rgba(245,244,255,.6);backdrop-filter:blur(12px);}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sb-title{font-family:var(--fh);font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;padding:0 20px;margin-bottom:14px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 20px;font-size:.76rem;font-weight:500;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:all .22s;line-height:1.3;}
+.sb-item:hover{color:var(--acc2);background:rgba(0,184,148,.05);}
+.sb-item.active{color:var(--acc2);font-weight:600;border-left-color:var(--acc);background:rgba(0,184,148,.07);}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.5;}
+.sb-item.active .sb-dot{opacity:1;}
+.sb-div{height:1px;background:rgba(0,184,148,.10);margin:8px 20px;}
+.sb-sub{padding-left:32px !important;font-size:.70rem !important;}
+.content{padding:clamp(72px,10vh,100px) clamp(20px,4vw,52px) clamp(48px,7vw,72px);}
+.hero{margin-bottom:clamp(32px,5vw,52px);}
+.bc{display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--muted);margin-bottom:14px;flex-wrap:wrap;}
+.bc a{color:var(--acc2);font-weight:500;}.bc a:hover{text-decoration:underline;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(0,184,148,.10);border:1px solid rgba(0,184,148,.22);border-radius:50px;padding:5px 14px;font-size:.66rem;font-weight:700;color:var(--acc2);margin-bottom:12px;letter-spacing:.4px;}
+.hero h1{font-family:var(--fh);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
+.hero h1 span{color:var(--acc);}
+.hero-sub{font-size:clamp(.86rem,1.1vw,.96rem);color:var(--muted);max-width:560px;line-height:1.65;font-weight:300;}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:50px;padding:4px 12px;font-size:.67rem;font-weight:500;color:var(--muted);}
+.pill .d{width:5px;height:5px;border-radius:50%;}
+.sec{margin-bottom:clamp(44px,7vw,68px);scroll-margin-top:78px;}
+.sec-num{font-family:var(--fh);font-size:.62rem;font-weight:700;color:var(--acc);letter-spacing:.8px;text-transform:uppercase;opacity:.8;margin-bottom:5px;}
+.sec-title{font-family:var(--fh);font-size:clamp(1.25rem,2.5vw,1.75rem);font-weight:800;color:var(--text);margin-bottom:5px;line-height:1.2;}
+.sec-hook{font-size:clamp(.88rem,1.1vw,.97rem);color:var(--acc2);font-weight:500;margin-bottom:18px;line-height:1.6;font-style:italic;}
+.divbar{width:38px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--acc),var(--violet));margin-bottom:18px;}
+.prose{font-size:clamp(.86rem,1.04vw,.94rem);color:var(--text);line-height:1.82;margin-bottom:14px;}
+.prose strong{font-weight:600;}
+.kt{background:linear-gradient(135deg,rgba(0,184,148,.12),rgba(0,184,148,.06));border-radius:5px;padding:1px 6px;font-weight:600;color:var(--acc2);}
+.card{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;padding:clamp(16px,2.8vw,24px);box-shadow:var(--sh);margin-bottom:14px;}
+.eq{background:rgba(0,184,148,.05);border:1.5px solid rgba(0,184,148,.15);border-radius:12px;padding:clamp(12px,2.2vw,18px);margin:12px 0;font-family:'Courier New',monospace;font-size:clamp(.80rem,1.1vw,.93rem);line-height:1.7;overflow-x:auto;}
+.eq .r{color:var(--acc);font-weight:700;}.eq .p{color:#6C5CE7;font-weight:700;}.eq .ar{color:var(--orange);font-weight:700;margin:0 5px;}.eq .st{color:var(--muted);font-size:.80em;}.eq .cd{color:var(--orange);font-size:.76em;vertical-align:super;}
+.eqlbl{font-size:.65rem;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px;}
+.obs{font-size:.73rem;color:var(--muted);margin-top:5px;font-style:italic;}
+.callout{border-radius:12px;padding:clamp(11px,2vw,17px);margin:12px 0;display:flex;gap:11px;align-items:flex-start;}
+.ci{font-size:1.05rem;flex-shrink:0;margin-top:1px;}.cb{flex:1;}
+.ct{font-family:var(--fh);font-size:.72rem;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px;}
+.cx{font-size:clamp(.78rem,.94vw,.86rem);line-height:1.65;}
+.callout.tip{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.20);}.callout.tip .ct{color:var(--green);}
+.callout.warn{background:rgba(229,161,0,.07);border:1px solid rgba(229,161,0,.22);}.callout.warn .ct{color:var(--orange);}
+.callout.err{background:rgba(225,112,85,.07);border:1px solid rgba(225,112,85,.22);}.callout.err .ct{color:var(--red);}
+.callout.board{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.20);}.callout.board .ct{color:var(--acc2);}
+.tbl{width:100%;border-collapse:collapse;font-size:clamp(.74rem,.90vw,.82rem);margin:12px 0;border-radius:11px;overflow:hidden;box-shadow:var(--sh);}
+.tbl th{background:rgba(0,184,148,.10);padding:9px 13px;font-family:var(--fh);font-size:.70rem;font-weight:700;color:var(--acc2);text-align:left;letter-spacing:.3px;}
+.tbl td{padding:8px 13px;border-bottom:1px solid rgba(0,184,148,.08);line-height:1.5;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:nth-child(even) td{background:rgba(0,184,148,.03);}
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:14px 0;}
+.flip-card{height:155px;perspective:800px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:13px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:15px;box-shadow:var(--sh);}
+.flip-front{background:var(--card);border:1.5px solid var(--cb);}
+.flip-back{background:linear-gradient(135deg,var(--fc1,var(--acc)),var(--fc2,var(--violet)));color:#fff;transform:rotateY(180deg);}
+.ff-lbl{font-size:.60rem;font-weight:700;color:var(--acc2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.ff-q{font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--text);line-height:1.4;}
+.fb-type{font-family:var(--fh);font-size:.86rem;font-weight:800;margin-bottom:4px;}
+.fb-key{font-size:.72rem;opacity:.92;line-height:1.5;}
+.cc{background:rgba(0,184,148,.04);border:1.5px solid rgba(0,184,148,.12);border-radius:13px;padding:17px;margin:14px 0;}
+.cc-title{font-family:var(--fh);font-size:.77rem;font-weight:700;color:var(--acc2);letter-spacing:.3px;text-transform:uppercase;margin-bottom:11px;}
+.cc-q{font-size:.86rem;color:var(--text);margin-bottom:7px;font-weight:500;}
+.cc-reveal{display:inline-flex;align-items:center;gap:5px;background:rgba(0,184,148,.10);border:1px solid rgba(0,184,148,.17);border-radius:50px;padding:5px 11px;font-size:.72rem;font-weight:600;color:var(--acc2);cursor:pointer;transition:all .22s;margin-bottom:10px;}
+.cc-reveal:hover{background:var(--acc);color:#fff;}
+.cc-ans{display:none;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.16);border-radius:8px;padding:9px 12px;font-size:.80rem;color:var(--text);line-height:1.65;margin-bottom:10px;}
+.cc-ans.show{display:block;}
+.cc-sep{height:1px;background:rgba(0,184,148,.10);margin:8px 0;}
+/* Functional group grid */
+.fg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:14px 0;}
+.fg-card{background:var(--card);border:1.5px solid var(--cb);border-radius:14px;padding:18px;box-shadow:var(--sh);border-top:3px solid var(--fc,var(--acc));transition:transform .25s;}
+.fg-card:hover{transform:translateY(-3px);}
+.fg-sym{font-family:'Courier New',monospace;font-size:1.2rem;font-weight:800;color:var(--fc,var(--acc));margin-bottom:6px;}
+.fg-name{font-family:var(--fh);font-size:.86rem;font-weight:800;margin-bottom:3px;}
+.fg-series{font-size:.72rem;color:var(--muted);margin-bottom:6px;font-weight:500;}
+.fg-formula{font-family:'Courier New',monospace;font-size:.72rem;color:var(--acc2);background:rgba(0,184,148,.06);padding:2px 7px;border-radius:5px;margin-bottom:6px;display:inline-block;}
+.fg-example{font-size:.73rem;color:var(--muted);line-height:1.55;}
+/* Homologous series table */
+.hs-row{background:var(--card);border:1.5px solid var(--cb);border-radius:12px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.hs-n{font-family:var(--fh);font-size:.80rem;font-weight:800;color:var(--acc2);min-width:22px;}
+.hs-name{font-size:.82rem;font-weight:600;min-width:80px;}
+.hs-formula{font-family:'Courier New',monospace;font-size:.80rem;color:var(--text);font-weight:700;min-width:90px;}
+.hs-bp{font-size:.74rem;color:var(--muted);}
+/* Reaction cards */
+.rxn-card{background:var(--card);border:1.5px solid var(--cb);border-radius:16px;padding:clamp(14px,2.5vw,22px);margin-bottom:14px;box-shadow:var(--sh);}
+.rxn-type{display:inline-flex;align-items:center;gap:6px;background:rgba(0,184,148,.10);border:1px solid rgba(0,184,148,.18);border-radius:50px;padding:4px 12px;font-size:.66rem;font-weight:700;color:var(--acc2);letter-spacing:.4px;margin-bottom:10px;}
+.rxn-title{font-family:var(--fh);font-size:.92rem;font-weight:800;margin-bottom:8px;}
+.rxn-desc{font-size:.82rem;color:var(--muted);line-height:1.65;margin-bottom:8px;}
+/* Allotrope visual */
+.allotrope-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:14px 0;}
+.allotrope-card{background:var(--card);border:1.5px solid var(--cb);border-radius:16px;padding:20px;box-shadow:var(--sh);text-align:center;}
+.allo-icon{font-size:2.4rem;margin-bottom:8px;}
+.allo-name{font-family:var(--fh);font-size:1rem;font-weight:800;margin-bottom:5px;}
+.allo-struct{font-size:.76rem;color:var(--acc2);font-weight:600;margin-bottom:8px;}
+.allo-props{font-size:.75rem;color:var(--muted);line-height:1.6;text-align:left;}
+/* Cheat sheet */
+.cheat{background:linear-gradient(135deg,#020e0a,#031a0f,#041a10);border-radius:20px;padding:clamp(22px,4vw,38px);color:#fff;margin-top:18px;}
+.cs-title{font-family:var(--fh);font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:800;margin-bottom:5px;}
+.cs-sub{font-size:.78rem;opacity:.58;margin-bottom:24px;}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:18px;}
+.cs-sec{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:13px;padding:17px;}
+.cs-sec-title{font-family:var(--fh);font-size:.75rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:11px;color:#8effd4;}
+.cs-item{font-size:.76rem;line-height:1.65;opacity:.87;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cs-item:last-child{border-bottom:none;}
+.cs-item strong{color:#8effd4;font-weight:600;}
+.cs-eq{font-family:'Courier New',monospace;font-size:.72rem;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;margin-top:2px;display:block;line-height:1.6;}
+.cs-copy{margin-top:18px;display:inline-flex;align-items:center;gap:6px;background:rgba(142,255,212,.10);border:1px solid rgba(142,255,212,.22);border-radius:50px;padding:8px 16px;font-size:.74rem;font-weight:600;color:#8effd4;cursor:pointer;transition:all .22s;}
+.cs-copy:hover{background:rgba(142,255,212,.18);}
+/* Dark mode */
+body.dark{--bg:#0f0e1a;--text:#e8e6ff;--muted:#9896b0;--card:rgba(20,30,26,.88);--cb:rgba(0,184,148,.16);--sh:0 6px 32px rgba(0,0,0,.3);--shh:0 14px 48px rgba(0,0,0,.4);}
+body.dark nav.scrolled{background:rgba(15,14,26,.94);}
+body.dark .sidebar{background:rgba(15,14,26,.6);}
+body.dark .flip-front{background:rgba(20,30,26,.9);}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+h3.sub{font-family:var(--fh);font-size:.96rem;font-weight:700;margin:18px 0 10px;color:var(--text);}
+footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(0,184,148,.10);padding:clamp(20px,3.5vw,34px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:13px;}
+body.dark footer{background:rgba(15,14,26,.7);}
+.flogo{font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--acc2);}
+.ftg{font-size:.68rem;color:var(--muted);margin-top:2px;}
+.flinks{display:flex;gap:16px;list-style:none;}
+.flinks a{font-size:.74rem;color:var(--muted);}.flinks a:hover{color:var(--acc);}
+.fcopy{font-size:.68rem;color:var(--muted);}.fcopy span{color:var(--acc);}
+@media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}}
+@media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="toggleDark()" id="darkBtn">🌙 Dark</button>
+    <a href="ch4.html" class="nav-btn">← Ch 4 Overview</a>
+  </div>
+</nav>
+
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-title">Chapter 4 · Contents</div>
+  <div class="sb-item active" onclick="goTo('s1')" id="sb-s1"><span class="sb-dot"></span>Carbon — The Wonder Element</div>
+  <div class="sb-item sb-sub" onclick="goTo('s1a')" id="sb-s1a">↳ Catenation &amp; Tetravalency</div>
+  <div class="sb-item sb-sub" onclick="goTo('s1b')" id="sb-s1b">↳ Allotropes of Carbon</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s2')" id="sb-s2"><span class="sb-dot"></span>Hydrocarbons &amp; Homologous Series</div>
+  <div class="sb-item sb-sub" onclick="goTo('s2a')" id="sb-s2a">↳ Alkanes, Alkenes, Alkynes</div>
+  <div class="sb-item sb-sub" onclick="goTo('s2b')" id="sb-s2b">↳ Naming &amp; IUPAC</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s3')" id="sb-s3"><span class="sb-dot"></span>Functional Groups</div>
+  <div class="sb-item" onclick="goTo('s4')" id="sb-s4"><span class="sb-dot"></span>Chemical Reactions</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4a')" id="sb-s4a">↳ Combustion</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4b')" id="sb-s4b">↳ Addition &amp; Substitution</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4c')" id="sb-s4c">↳ Oxidation</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s5')" id="sb-s5"><span class="sb-dot"></span>Ethanol (C₂H₅OH)</div>
+  <div class="sb-item" onclick="goTo('s6')" id="sb-s6"><span class="sb-dot"></span>Ethanoic Acid (CH₃COOH)</div>
+  <div class="sb-item" onclick="goTo('s7')" id="sb-s7"><span class="sb-dot"></span>Soaps &amp; Detergents</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s8')" id="sb-s8"><span class="sb-dot"></span>⭐ Cheat Sheet</div>
+</aside>
+
+<main class="content">
+
+<!-- HERO -->
+<div class="hero reveal">
+  <div class="bc"><a href="vistar10.html">Home</a>›<a href="subjects.html">Science</a>›<a href="ch4.html">Chapter 4</a>›<span>Study Notes</span></div>
+  <div class="hero-badge">🧪 Chapter 4 · Carbon &amp; its Compounds · Class 10 CBSE</div>
+  <h1>Carbon &amp; <span>its Compounds</span></h1>
+  <p class="hero-sub">From covalent bonding to soap chemistry — every concept, reaction, IUPAC name, and board tip you need to score full marks.</p>
+  <div class="pills">
+    <div class="pill"><div class="d" style="background:#00b894"></div>8 Sections</div>
+    <div class="pill"><div class="d" style="background:#6C5CE7"></div>All Key Reactions</div>
+    <div class="pill"><div class="d" style="background:#e5a100"></div>Flip Cards</div>
+    <div class="pill"><div class="d" style="background:#E17055"></div>Board Tips</div>
+    <div class="pill"><div class="d" style="background:#0984e3"></div>Cheat Sheet</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     S1 · CARBON — THE WONDER ELEMENT
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s1">
+  <div class="sec-num">Section 1</div>
+  <div class="sec-title">Carbon — The Wonder Element</div>
+  <div class="sec-hook">Carbon forms more compounds than all other elements combined. Two simple properties explain why.</div>
+  <div class="divbar"></div>
+
+  <p class="prose">Carbon (atomic number 6) has the electronic configuration 2,4 — giving it <span class="kt">4 valence electrons</span>. It neither loses all 4 (too much energy) nor gains 4 to complete the shell (too much electron repulsion). Instead, carbon <em>shares</em> electrons — forming covalent bonds exclusively. This single fact unlocks millions of compounds.</p>
+
+  <section id="s1a" style="scroll-margin-top:78px;">
+  <h3 class="sub">Why Carbon Forms So Many Compounds</h3>
+  <p class="prose">Two unique properties explain carbon's extraordinary chemistry:</p>
+
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--fh);font-size:.88rem;font-weight:800;color:var(--acc2);margin-bottom:8px;">1. Catenation</div>
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.65;">Carbon atoms can bond with <em>each other</em>, forming long chains, branched chains, and rings. No other element shows this to the same extent — Silicon (Si) can catenate slightly, but Si–Si bonds are far weaker than C–C bonds.</p>
+        <div style="margin-top:8px;font-family:'Courier New',monospace;font-size:.76rem;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.12);border-radius:6px;padding:6px 10px;">
+          C–C–C–C (chain) | C(C)–C–C (branch) | ⬡ (ring)
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--fh);font-size:.88rem;font-weight:800;color:var(--acc2);margin-bottom:8px;">2. Tetravalency</div>
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.65;">Carbon has 4 valence electrons and can form 4 bonds simultaneously — with carbon, hydrogen, oxygen, nitrogen, halogens, sulphur, and more. It can also form double bonds (C=C) and triple bonds (C≡C), multiplying variety further.</p>
+        <div style="margin-top:8px;font-family:'Courier New',monospace;font-size:.76rem;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.12);border-radius:6px;padding:6px 10px;">
+          C: 4 bonds → C–H, C–O, C=C, C≡N all possible
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Board Must-Know</div><div class="cx">
+    The answer to "Why does carbon form so many compounds?" must use both words: <strong>Catenation</strong> and <strong>Tetravalency</strong>. Writing only one gets half marks. Catenation = C–C bonding (chains, rings, branches). Tetravalency = 4 bonds possible with many different elements.
+  </div></div></div>
+  </section>
+
+  <section id="s1b" style="scroll-margin-top:78px;margin-top:28px;">
+  <h3 class="sub">Allotropes of Carbon</h3>
+  <p class="prose">Allotropes are different structural forms of the same element. Carbon has three main allotropes — with radically different properties despite being pure carbon.</p>
+
+  <div class="allotrope-grid">
+    <div class="allotrope-card">
+      <div class="allo-icon">💎</div>
+      <div class="allo-name">Diamond</div>
+      <div class="allo-struct">Each C bonded to 4 others (tetrahedral, 3D network)</div>
+      <ul class="allo-props">
+        <li>Hardest natural substance</li>
+        <li>Very high melting point (~3550°C)</li>
+        <li>Does NOT conduct electricity (no free e⁻)</li>
+        <li>Transparent, brilliant lustre</li>
+        <li>Used in: cutting tools, jewellery, drill bits</li>
+        <li>Bond angle: 109.5°</li>
+      </ul>
+    </div>
+    <div class="allotrope-card">
+      <div class="allo-icon">🖤</div>
+      <div class="allo-name">Graphite</div>
+      <div class="allo-struct">Each C bonded to 3 others (hexagonal layers)</div>
+      <ul class="allo-props">
+        <li>Soft, slippery (layers slide easily)</li>
+        <li>Good conductor of electricity (free e⁻ between layers)</li>
+        <li>Dark grey, metallic lustre</li>
+        <li>Used in: pencil lead, lubricant, electrodes</li>
+        <li>4th electron = delocalised (free to move)</li>
+        <li>Only non-metal conductor (exception!)</li>
+      </ul>
+    </div>
+    <div class="allotrope-card">
+      <div class="allo-icon">⚽</div>
+      <div class="allo-name">Buckminsterfullerene</div>
+      <div class="allo-struct">60 C atoms in a football/cage shape (C₆₀)</div>
+      <ul class="allo-props">
+        <li>Spherical molecule — looks like a football</li>
+        <li>20 hexagons + 12 pentagons</li>
+        <li>Used in nanotechnology, drug delivery</li>
+        <li>Also called "Buckyballs"</li>
+        <li>Discovered 1985 (Nobel Prize 1996)</li>
+        <li>Can trap other atoms inside (endofullerenes)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Diamond vs Graphite — Why Such Different Properties?</div><div class="cx">
+    Both are pure carbon. Diamond: every electron in C–C bonds → no free electrons → insulator. Graphite: each C uses only 3 bonds (leaves 1 e⁻ free per atom) → free electrons move between layers → conductor. Graphite layers held by weak forces → slides easily → lubricant. Diamond's 3D network → rigid → hardest.
+  </div></div></div>
+
+  <div class="cc">
+    <div class="cc-title">🧠 Concept Check — Allotropes</div>
+    <div class="cc-q">Q1. Why is graphite used as a lubricant but diamond is not?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Graphite has a layered structure with weak forces between layers, so layers slide over each other easily → acts as lubricant. Diamond has a rigid 3D tetrahedral network where all carbon atoms are strongly bonded in all directions → cannot slide → not a lubricant.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q2. Both diamond and graphite are forms of carbon. Yet diamond is an insulator and graphite is a conductor. Explain.</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">In diamond, each carbon forms 4 bonds, using all 4 valence electrons. No free electrons → cannot conduct electricity. In graphite, each carbon forms only 3 bonds, leaving one electron per carbon delocalised (free) between layers. These free electrons carry charge → graphite conducts electricity.</div>
+  </div>
+  </section>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S2 · HYDROCARBONS & HOMOLOGOUS SERIES
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s2">
+  <div class="sec-num">Section 2</div>
+  <div class="sec-title">Hydrocarbons &amp; Homologous Series</div>
+  <div class="sec-hook">Compounds with only carbon and hydrogen. The pattern of their series is the key to predicting properties.</div>
+  <div class="divbar"></div>
+
+  <p class="prose">A <span class="kt">hydrocarbon</span> is a compound containing only carbon and hydrogen. They are the simplest organic compounds. Hydrocarbons are classified as <strong>saturated</strong> (only single bonds — alkanes) or <strong>unsaturated</strong> (double or triple bonds — alkenes, alkynes).</p>
+
+  <p class="prose">A <span class="kt">homologous series</span> is a group of organic compounds that: (1) share the same general formula, (2) differ from each other by a –CH₂– unit (14 mass units), (3) have the same functional group, and (4) show similar chemical properties with a gradual change in physical properties.</p>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">4 Features of Homologous Series — Must Write All 4</div><div class="cx">
+    <strong>(1)</strong> Same general formula &nbsp;<strong>(2)</strong> Consecutive members differ by –CH₂– (14 u) &nbsp;<strong>(3)</strong> Same functional group &nbsp;<strong>(4)</strong> Similar chemical properties; physical properties change gradually. Missing any one feature loses marks.
+  </div></div></div>
+
+  <section id="s2a" style="scroll-margin-top:78px;margin-top:24px;">
+  <h3 class="sub">Alkanes — Saturated Hydrocarbons (CₙH₂ₙ₊₂)</h3>
+
+  <div style="margin-bottom:8px;">
+    <div class="hs-row"><div class="hs-n">n=1</div><div class="hs-name">Methane</div><div class="hs-formula">CH₄</div><div class="hs-bp">b.p. −161°C · Gas · Used in CNG, cooking gas</div></div>
+    <div class="hs-row"><div class="hs-n">n=2</div><div class="hs-name">Ethane</div><div class="hs-formula">C₂H₆</div><div class="hs-bp">b.p. −89°C · Gas · Component of LPG</div></div>
+    <div class="hs-row"><div class="hs-n">n=3</div><div class="hs-name">Propane</div><div class="hs-formula">C₃H₈</div><div class="hs-bp">b.p. −42°C · Gas · LPG (main component)</div></div>
+    <div class="hs-row"><div class="hs-n">n=4</div><div class="hs-name">Butane</div><div class="hs-formula">C₄H₁₀</div><div class="hs-bp">b.p. −1°C · Gas · Lighter fuel</div></div>
+    <div class="hs-row"><div class="hs-n">n=5</div><div class="hs-name">Pentane</div><div class="hs-formula">C₅H₁₂</div><div class="hs-bp">b.p. 36°C · Liquid · Petrol component</div></div>
+  </div>
+
+  <h3 class="sub" style="margin-top:22px;">Alkenes — One C=C Double Bond (CₙH₂ₙ)</h3>
+  <div style="margin-bottom:8px;">
+    <div class="hs-row"><div class="hs-n">n=2</div><div class="hs-name">Ethene</div><div class="hs-formula">C₂H₄ (CH₂=CH₂)</div><div class="hs-bp">Used in: ripening of fruits, making polythene</div></div>
+    <div class="hs-row"><div class="hs-n">n=3</div><div class="hs-name">Propene</div><div class="hs-formula">C₃H₆</div><div class="hs-bp">Used in: making polypropylene plastics</div></div>
+    <div class="hs-row"><div class="hs-n">n=4</div><div class="hs-name">Butene</div><div class="hs-formula">C₄H₈</div><div class="hs-bp">Various industrial uses</div></div>
+  </div>
+
+  <h3 class="sub" style="margin-top:22px;">Alkynes — One C≡C Triple Bond (CₙH₂ₙ₋₂)</h3>
+  <div>
+    <div class="hs-row"><div class="hs-n">n=2</div><div class="hs-name">Ethyne</div><div class="hs-formula">C₂H₂ (CH≡CH)</div><div class="hs-bp">Used in: oxyacetylene welding (3000°C flame)</div></div>
+    <div class="hs-row"><div class="hs-n">n=3</div><div class="hs-name">Propyne</div><div class="hs-formula">C₃H₄</div><div class="hs-bp">Various industrial uses</div></div>
+  </div>
+
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Saturated vs Unsaturated — The Key Test</div><div class="cx">
+    Add bromine water (orange/brown) to the compound. <strong>Unsaturated</strong> (alkene/alkyne): bromine water decolourises (colour disappears) → Br₂ adds across the double/triple bond. <strong>Saturated</strong> (alkane): no decolourisation. This is the standard practical test for unsaturation in boards.
+  </div></div></div>
+  </section>
+
+  <section id="s2b" style="scroll-margin-top:78px;margin-top:24px;">
+  <h3 class="sub">IUPAC Naming — The Rules</h3>
+  <table class="tbl">
+    <thead><tr><th>No. of Carbons</th><th>Prefix</th><th>Alkane</th><th>Alkene</th><th>Alkyne</th><th>Alcohol</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Meth-</td><td>Methane</td><td>—</td><td>—</td><td>Methanol</td></tr>
+      <tr><td>2</td><td>Eth-</td><td>Ethane</td><td>Ethene</td><td>Ethyne</td><td>Ethanol</td></tr>
+      <tr><td>3</td><td>Prop-</td><td>Propane</td><td>Propene</td><td>Propyne</td><td>Propanol</td></tr>
+      <tr><td>4</td><td>But-</td><td>Butane</td><td>Butene</div></td><td>Butyne</td><td>Butanol</td></tr>
+      <tr><td>5</td><td>Pent-</td><td>Pentane</td><td>Pentene</td><td>Pentyne</td><td>Pentanol</td></tr>
+    </tbody>
+  </table>
+  <p class="prose" style="margin-top:10px;"><strong>Suffix rule:</strong> –ane (single bond) · –ene (double bond C=C) · –yne (triple bond C≡C) · –anol (–OH) · –anoic acid (–COOH) · –anal (–CHO) · –anone (–CO– ketone).</p>
+  <p class="prose"><strong>Counting rule:</strong> Always count the COOH carbon for carboxylic acids. Number the chain from the end nearest the functional group.</p>
+
+  <div class="callout warn"><div class="ci">⚠️</div><div class="cb"><div class="ct">Common IUPAC Mistake</div><div class="cx">
+    CH₃COOH — students often say "2 carbons = ethanoic acid" correctly, but CH₃CH₂COOH has 3 carbons → propanoic acid. Always count <strong>all</strong> carbons including the one in –COOH. The –COOH carbon is carbon-1 by convention.
+  </div></div></div>
+  </section>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S3 · FUNCTIONAL GROUPS
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s3">
+  <div class="sec-num">Section 3</div>
+  <div class="sec-title">Functional Groups</div>
+  <div class="sec-hook">The functional group determines a compound's chemical behaviour. Learn these 6 — they're the grammar of organic chemistry.</div>
+  <div class="divbar"></div>
+
+  <div class="fg-grid">
+    <div class="fg-card" style="--fc:#E17055">
+      <div class="fg-sym">–OH</div>
+      <div class="fg-name">Hydroxyl Group</div>
+      <div class="fg-series">Alcohols</div>
+      <div class="fg-formula">CₙH₂ₙ₊₁OH</div>
+      <div class="fg-example">Methanol (CH₃OH), Ethanol (C₂H₅OH)<br>Properties: reacts with Na (H₂↑), oxidised to acid, dehydrates to alkene</div>
+    </div>
+    <div class="fg-card" style="--fc:#c0392b">
+      <div class="fg-sym">–COOH</div>
+      <div class="fg-name">Carboxyl Group</div>
+      <div class="fg-series">Carboxylic Acids</div>
+      <div class="fg-formula">CₙH₂ₙ₊₁COOH</div>
+      <div class="fg-example">Ethanoic acid (CH₃COOH = vinegar)<br>Properties: turns litmus red, reacts with NaHCO₃ (CO₂↑), esterification</div>
+    </div>
+    <div class="fg-card" style="--fc:#e5a100">
+      <div class="fg-sym">–CHO</div>
+      <div class="fg-name">Aldehyde Group</div>
+      <div class="fg-series">Aldehydes</div>
+      <div class="fg-formula">CₙH₂ₙO</div>
+      <div class="fg-example">Methanal (HCHO = formaldehyde), Ethanal (CH₃CHO)<br>Properties: reducing agents, oxidised to carboxylic acids</div>
+    </div>
+    <div class="fg-card" style="--fc:#6C5CE7">
+      <div class="fg-sym">&gt;C=O</div>
+      <div class="fg-name">Ketone (Carbonyl)</div>
+      <div class="fg-series">Ketones</div>
+      <div class="fg-formula">CₙH₂ₙO</div>
+      <div class="fg-example">Propanone (CH₃COCH₃ = acetone/nail polish remover)<br>Ketone: C=O in the middle of chain (not at end)</div>
+    </div>
+    <div class="fg-card" style="--fc:#0984e3">
+      <div class="fg-sym">–Cl / –Br</div>
+      <div class="fg-name">Haloalkane</div>
+      <div class="fg-series">Haloalkanes</div>
+      <div class="fg-formula">CₙH₂ₙ₊₁X (X = F, Cl, Br, I)</div>
+      <div class="fg-example">Chloromethane (CH₃Cl), Chloroethane (C₂H₅Cl)<br>Used as: refrigerants, solvents, anaesthetics</div>
+    </div>
+    <div class="fg-card" style="--fc:#00B894">
+      <div class="fg-sym">C=C</div>
+      <div class="fg-name">Double Bond</div>
+      <div class="fg-series">Alkenes</div>
+      <div class="fg-formula">CₙH₂ₙ</div>
+      <div class="fg-example">Ethene (CH₂=CH₂), Propene (CH₃CH=CH₂)<br>Undergoes addition reactions; decolourises Br₂ water</div>
+    </div>
+  </div>
+
+  <h3 class="sub">Isomers — Same Formula, Different Structure</h3>
+  <p class="prose"><span class="kt">Isomers</span> are compounds with the same molecular formula but different structural formulae. They have different physical properties (boiling points, melting points) but sometimes similar chemical properties if the functional group is the same.</p>
+
+  <div class="card">
+    <div style="font-family:var(--fh);font-size:.84rem;font-weight:700;margin-bottom:12px;">Examples of Isomers</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:rgba(0,184,148,.05);border:1px solid rgba(0,184,148,.12);border-radius:10px;padding:11px 14px;">
+        <div style="font-size:.70rem;font-weight:700;color:var(--acc2);margin-bottom:5px;">C₄H₁₀ — 2 isomers</div>
+        <div style="font-family:'Courier New',monospace;font-size:.78rem;">n-Butane: CH₃–CH₂–CH₂–CH₃ (b.p. −1°C)</div>
+        <div style="font-family:'Courier New',monospace;font-size:.78rem;">Isobutane: (CH₃)₃CH = 2-methylpropane (b.p. −12°C)</div>
+      </div>
+      <div style="background:rgba(0,184,148,.05);border:1px solid rgba(0,184,148,.12);border-radius:10px;padding:11px 14px;">
+        <div style="font-size:.70rem;font-weight:700;color:var(--acc2);margin-bottom:5px;">C₂H₆O — 2 isomers (different functional groups!)</div>
+        <div style="font-family:'Courier New',monospace;font-size:.78rem;">Ethanol: C₂H₅OH (alcohol, b.p. 78°C)</div>
+        <div style="font-family:'Courier New',monospace;font-size:.78rem;">Dimethyl ether: CH₃–O–CH₃ (ether, b.p. −24°C)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S4 · CHEMICAL REACTIONS
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s4">
+  <div class="sec-num">Section 4</div>
+  <div class="sec-title">Chemical Reactions of Carbon Compounds</div>
+  <div class="sec-hook">Four reaction types dominate this chapter. Know each one's conditions and products cold.</div>
+  <div class="divbar"></div>
+
+  <section id="s4a" style="scroll-margin-top:78px;">
+  <h3 class="sub">1. Combustion</h3>
+  <p class="prose">All carbon compounds burn in oxygen to produce carbon dioxide and water. This is <span class="kt">combustion</span>. The completeness depends on oxygen supply.</p>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🔥 Complete Combustion</div>
+    <div class="rxn-title">Excess oxygen → CO₂ + H₂O (clean blue flame)</div>
+    <div class="eq">
+      <div class="eqlbl">Methane (Natural Gas / CNG)</div>
+      <span class="r">CH₄</span> + 2O₂ <span class="ar">→</span> <span class="p">CO₂</span> + 2H₂O + heat
+    </div>
+    <div class="eq">
+      <div class="eqlbl">Ethanol</div>
+      <span class="r">C₂H₅OH</span> + 3O₂ <span class="ar">→</span> <span class="p">2CO₂</span> + 3H₂O + heat
+    </div>
+    <div class="obs">✅ Blue flame · No soot · Products: CO₂ + H₂O only</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">💨 Incomplete Combustion</div>
+    <div class="rxn-title">Limited oxygen → CO (toxic) and/or soot</div>
+    <div class="eq">
+      <div class="eqlbl">Limited O₂</div>
+      <span class="r">CH₄</span> + 1½O₂ <span class="ar">→</span> <span class="p">CO</span> + 2H₂O &nbsp;(or)&nbsp; CH₄ + O₂ <span class="ar">→</span> <span class="p">C</span> + 2H₂O
+    </div>
+    <div class="obs">⚠️ Yellow/sooty flame · CO is odourless and poisonous · Carbon (soot) deposits</div>
+  </div>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Board Tip: Why Fuels with Long Chains Have Yellow Flames</div><div class="cx">
+    Long-chain hydrocarbons (kerosene, petrol) don't burn cleanly because they need more oxygen per molecule. Without sufficient O₂, incomplete combustion gives a yellow/sooty flame with CO and soot. LPG burns with a blue flame because it's a short-chain (propane/butane) compound requiring less O₂.
+  </div></div></div>
+  </section>
+
+  <section id="s4b" style="scroll-margin-top:78px;margin-top:24px;">
+  <h3 class="sub">2. Addition Reaction (Unsaturated compounds only)</h3>
+  <p class="prose">Unsaturated compounds (alkenes, alkynes) undergo <span class="kt">addition reactions</span>. Two reactant molecules combine to form one product. The double or triple bond is broken and new atoms add across it.</p>
+
+  <div class="rxn-card">
+    <div class="rxn-type">⚗️ Hydrogenation (H₂ addition)</div>
+    <div class="rxn-title">Oil → Vanaspati Ghee</div>
+    <div class="eq">
+      <div class="eqlbl">Vegetable Oil + Hydrogen (Ni catalyst, 150°C)</div>
+      <span class="r">CH₂=CH₂</span> + H₂ <span class="ar">→(Ni, 150°C)→</span> <span class="p">CH₃–CH₃</span>
+    </div>
+    <div class="obs">✅ Unsaturated oil (liquid) → saturated fat (solid vanaspati). Catalyst: Nickel (Ni). Industrial scale.</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">⚗️ Addition of Bromine (Br₂)</div>
+    <div class="rxn-title">Test for Unsaturation</div>
+    <div class="eq">
+      <div class="eqlbl">Ethene + Bromine water</div>
+      <span class="r">CH₂=CH₂</span> + Br₂ <span class="ar">→</span> <span class="p">CH₂Br–CH₂Br</span> &nbsp;<span class="st">(1,2-dibromoethane)</span>
+    </div>
+    <div class="obs">✅ Orange bromine water → colourless. This decolourisation = test for C=C double bond.</div>
+  </div>
+
+  <h3 class="sub" style="margin-top:24px;">3. Substitution Reaction (Saturated compounds only)</h3>
+  <p class="prose">Saturated hydrocarbons (alkanes) cannot undergo addition. Instead, they undergo <span class="kt">substitution</span> — one atom (usually H) is replaced by another (usually a halogen). Requires sunlight to initiate.</p>
+
+  <div class="rxn-card">
+    <div class="rxn-type">☀️ Chlorination of Methane</div>
+    <div class="rxn-title">H replaced by Cl (in sunlight)</div>
+    <div class="eq">
+      <div class="eqlbl">Step 1 — monosubstitution</div>
+      <span class="r">CH₄</span> + Cl₂ <span class="ar">→(sunlight)→</span> <span class="p">CH₃Cl</span> + HCl &nbsp;<span class="st">(chloromethane)</span>
+    </div>
+    <div class="eq">
+      <div class="eqlbl">Step 2 — further substitution possible</div>
+      CH₃Cl → CH₂Cl₂ → CHCl₃ → <span class="p">CCl₄</span> &nbsp;<span class="st">(chloroform → carbon tetrachloride)</span>
+    </div>
+    <div class="obs">⚠️ Sunlight is essential. This is a free-radical chain reaction.</div>
+  </div>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Addition vs Substitution — The Classic Distinction</div><div class="cx">
+    <strong>Unsaturated (alkene/alkyne)</strong> → Addition reaction (Br₂ adds across double bond).<br>
+    <strong>Saturated (alkane)</strong> → Substitution reaction (H replaced by Cl/Br, needs sunlight).<br>
+    This is a direct 1-mark question every year: "What type of reaction does ethene undergo with Br₂?" → Addition.
+  </div></div></div>
+  </section>
+
+  <section id="s4c" style="scroll-margin-top:78px;margin-top:24px;">
+  <h3 class="sub">4. Oxidation Reactions</h3>
+  <p class="prose">Carbon compounds can be oxidised using alkaline KMnO₄ or acidified K₂Cr₂O₇. Alcohols are oxidised to aldehydes and then to carboxylic acids. This is also the basis of the breathalyser test.</p>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🔬 Oxidation of Ethanol</div>
+    <div class="rxn-title">Alcohol → Acid (KMnO₄ or K₂Cr₂O₇)</div>
+    <div class="eq">
+      <span class="r">C₂H₅OH</span> <span class="ar">→(alk. KMnO₄ or K₂Cr₂O₇)→</span> <span class="p">CH₃COOH</span>
+    </div>
+    <div class="obs">✅ Ethanol (alcohol) oxidised to ethanoic acid. Same reaction happens naturally when wine is exposed to air (bacteria oxidise it → vinegar).</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🌿 Esterification (Condensation)</div>
+    <div class="rxn-title">Alcohol + Acid → Ester + Water</div>
+    <div class="eq">
+      <div class="eqlbl">Ethanol + Ethanoic acid (conc. H₂SO₄, heat)</div>
+      <span class="r">CH₃COOH</span> + <span class="r">C₂H₅OH</span> ⇌ <span class="p">CH₃COOC₂H₅</span> + H₂O
+    </div>
+    <div class="obs">✅ Ethyl ethanoate (fruity smell, used in perfumes, nail polish remover). Reaction is REVERSIBLE (⇌). H₂SO₄ = catalyst + dehydrating agent.</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🧼 Saponification</div>
+    <div class="rxn-title">Ester + NaOH → Soap (sodium salt) + Glycerol</div>
+    <div class="eq">
+      <div class="eqlbl">Hydrolysis of fat/oil with NaOH</div>
+      <span class="r">Fat (triglyceride)</span> + 3NaOH <span class="ar">→</span> <span class="p">Soap (3 sodium fatty acid salts)</span> + Glycerol
+    </div>
+    <div class="obs">✅ NaOH → hard soap. KOH → soft/liquid soap. This is BASE HYDROLYSIS of an ester. NOT reversible (unlike esterification).</div>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Reaction Type</div><div class="ff-q">Ethene + H₂ →(Ni, 150°C)→ ?</div><div style="font-size:.64rem;color:var(--muted);margin-top:8px;">Click to reveal</div></div>
+        <div class="flip-back" style="--fc1:#00b894;--fc2:#007a5e"><div class="fb-type">Addition (Hydrogenation)</div><div class="fb-key">Ethane (C₂H₆). H₂ adds across C=C. Used industrially to make vanaspati ghee from vegetable oils (Ni catalyst).</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Reaction Type</div><div class="ff-q">CH₄ + Cl₂ →(sunlight)→ ?</div><div style="font-size:.64rem;color:var(--muted);margin-top:8px;">Click to reveal</div></div>
+        <div class="flip-back" style="--fc1:#E17055;--fc2:#c0392b"><div class="fb-type">Substitution</div><div class="fb-key">CH₃Cl + HCl. Sunlight essential. Only alkanes (saturated) undergo substitution. Further substitution gives CH₂Cl₂, CHCl₃, CCl₄.</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Reaction Type</div><div class="ff-q">CH₃COOH + C₂H₅OH →(H₂SO₄)→ ?</div><div style="font-size:.64rem;color:var(--muted);margin-top:8px;">Click to reveal</div></div>
+        <div class="flip-back" style="--fc1:#6C5CE7;--fc2:#4834c4"><div class="fb-type">Esterification</div><div class="fb-key">CH₃COOC₂H₅ + H₂O. Fruity smell. REVERSIBLE (⇌). H₂SO₄ = catalyst. Used in perfumes, flavours, solvents.</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">What type?</div><div class="ff-q">Ethene + Br₂(aq) → colourless product?</div><div style="font-size:.64rem;color:var(--muted);margin-top:8px;">Click to reveal</div></div>
+        <div class="flip-back" style="--fc1:#e5a100;--fc2:#b37800"><div class="fb-type">Addition</div><div class="fb-key">CH₂BrCH₂Br (1,2-dibromoethane). Orange Br₂ → colourless = test for unsaturation. Only alkenes/alkynes decolourise Br₂(aq).</div></div>
+      </div>
+    </div>
+  </div>
+  </section>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S5 · ETHANOL
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s5">
+  <div class="sec-num">Section 5</div>
+  <div class="sec-title">Ethanol (C₂H₅OH)</div>
+  <div class="sec-hook">The most important alcohol in the syllabus — and the most tested. Know all its reactions cold.</div>
+  <div class="divbar"></div>
+
+  <p class="prose"><span class="kt">Ethanol</span> (common name: ethyl alcohol) is a colourless liquid with a characteristic smell. Molecular formula: C₂H₅OH. It is the alcohol present in alcoholic beverages (produced by fermentation of sugars/starch).</p>
+
+  <table class="tbl">
+    <thead><tr><th>Property</th><th>Value / Details</th></tr></thead>
+    <tbody>
+      <tr><td>IUPAC Name</td><td>Ethanol</td></tr>
+      <tr><td>Molecular Formula</td><td>C₂H₅OH (or C₂H₆O)</td></tr>
+      <tr><td>Boiling Point</td><td>78.4°C (higher than ethane due to H-bonding via –OH)</td></tr>
+      <tr><td>Solubility</td><td>Completely miscible with water (–OH group)</td></tr>
+      <tr><td>State at room temp</td><td>Liquid</td></tr>
+      <tr><td>Smell</td><td>Pleasant, characteristic</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">Key Reactions of Ethanol</h3>
+
+  <div class="rxn-card">
+    <div class="rxn-type">⚗️ With Sodium Metal</div>
+    <div class="rxn-title">Ethanol + Na → Hydrogen gas</div>
+    <div class="eq">2C₂H₅OH + 2Na <span class="ar">→</span> <span class="p">2C₂H₅ONa</span> + H₂↑</div>
+    <div class="obs">✅ Sodium ethoxide formed. H₂ gives "pop" with burning splint. Proves –OH group has weak acidic character.</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🌡️ Dehydration (Elimination)</div>
+    <div class="rxn-title">Ethanol → Ethene (remove H₂O)</div>
+    <div class="eq">C₂H₅OH <span class="ar">→(conc. H₂SO₄, 170°C)→</span> <span class="p">CH₂=CH₂</span> + H₂O</div>
+    <div class="obs">⚠️ Excess H₂SO₄ + high temp (170°C) = ethene. At lower temp (140°C) with less H₂SO₄ = diethyl ether. Temperature determines product!</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🔬 Oxidation</div>
+    <div class="rxn-title">Ethanol → Ethanoic Acid</div>
+    <div class="eq">C₂H₅OH <span class="ar">→(alk. KMnO₄ or K₂Cr₂O₇)→</span> <span class="p">CH₃COOH</span></div>
+    <div class="obs">✅ KMnO₄ (purple) decolourises. Also happens naturally: wine + bacteria + O₂ → vinegar (5% ethanoic acid).</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🔥 Combustion</div>
+    <div class="rxn-title">Burns with blue flame</div>
+    <div class="eq">C₂H₅OH + 3O₂ <span class="ar">→</span> <span class="p">2CO₂</span> + 3H₂O + heat &nbsp;<span class="st">(complete combustion)</span></div>
+    <div class="obs">✅ Blue flame. Ethanol is used as a fuel (spirit lamps) and is blended with petrol.</div>
+  </div>
+
+  <div class="callout err"><div class="ci">❌</div><div class="cb"><div class="ct">Methanol vs Ethanol — Critical Safety Difference</div><div class="cx">
+    <strong>Ethanol (C₂H₅OH)</strong>: present in alcoholic beverages. Safe in moderate quantities.<br>
+    <strong>Methanol (CH₃OH)</strong>: EXTREMELY TOXIC. Even 10 mL can cause permanent blindness; 30 mL can be fatal. It is converted to formaldehyde in the body. This is why illicit liquor (hooch) made with methanol causes mass casualties. Always in boards.
+  </div></div></div>
+
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Fermentation — How Ethanol is Made</div><div class="cx">
+    C₆H₁₂O₆ →(yeast, anaerobic)→ 2C₂H₅OH + 2CO₂<br>
+    Glucose is converted to ethanol + CO₂ by yeast enzymes (zymase) in the absence of oxygen (anaerobic). Temperature must be 25–30°C. Above 40°C, yeast dies. Below 15°C, reaction is too slow.
+  </div></div></div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S6 · ETHANOIC ACID
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s6">
+  <div class="sec-num">Section 6</div>
+  <div class="sec-title">Ethanoic Acid (CH₃COOH)</div>
+  <div class="sec-hook">The acid in vinegar — and one of the most tested compounds in this chapter.</div>
+  <div class="divbar"></div>
+
+  <p class="prose"><span class="kt">Ethanoic acid</span> (common name: acetic acid) is a carboxylic acid. Molecular formula: CH₃COOH. Dilute solution (~5%) is vinegar. Pure ethanoic acid is called <strong>glacial acetic acid</strong> — it freezes at 16.6°C (just below room temperature) forming ice-like crystals.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Property</th><th>Value / Details</th></tr></thead>
+    <tbody>
+      <tr><td>IUPAC Name</td><td>Ethanoic acid</td></tr>
+      <tr><td>Molecular Formula</td><td>CH₃COOH (or C₂H₄O₂)</td></tr>
+      <tr><td>Boiling Point</td><td>118°C (very high — strong H-bonding + dimerisation)</td></tr>
+      <tr><td>Melting Point</td><td>16.6°C (solid at winter temps → "glacial acetic acid")</td></tr>
+      <tr><td>Smell</td><td>Pungent, vinegar-like</td></tr>
+      <tr><td>pH</td><td>&lt; 7 (weak acid)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">Key Reactions of Ethanoic Acid</h3>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🧪 With NaHCO₃ (Test for –COOH)</div>
+    <div class="rxn-title">CO₂ gas with fizzing — diagnostic test</div>
+    <div class="eq">CH₃COOH + NaHCO₃ <span class="ar">→</span> <span class="p">CH₃COONa</span> + H₂O + <span class="p">CO₂↑</span></div>
+    <div class="obs">✅ Brisk effervescence. CO₂ turns lime water milky. Ethanol does NOT react with NaHCO₃ (not acidic enough). This is the key test to distinguish acid from alcohol.</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🧪 With Na₂CO₃</div>
+    <div class="rxn-title">Also gives CO₂</div>
+    <div class="eq">2CH₃COOH + Na₂CO₃ <span class="ar">→</span> <span class="p">2CH₃COONa</span> + H₂O + <span class="p">CO₂↑</span></div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🌸 Esterification</div>
+    <div class="rxn-title">With ethanol → fruity ester</div>
+    <div class="eq">CH₃COOH + C₂H₅OH ⇌ <span class="p">CH₃COOC₂H₅</span> + H₂O &nbsp;<span class="st">(conc. H₂SO₄, heat)</span></div>
+    <div class="obs">✅ Ethyl ethanoate — fruity smell. Reversible. Conc. H₂SO₄ = catalyst. Used in perfumes, nail polish remover, artificial fruit flavours.</div>
+  </div>
+
+  <div class="rxn-card">
+    <div class="rxn-type">🧼 With NaOH (Neutralisation)</div>
+    <div class="rxn-title">Acid + Base → Salt + Water</div>
+    <div class="eq">CH₃COOH + NaOH <span class="ar">→</span> <span class="p">CH₃COONa</span> + H₂O</div>
+    <div class="obs">✅ Sodium ethanoate (sodium acetate) formed. Solution turns basic (pH > 7) — sodium ethanoate is a salt of a weak acid and strong base.</div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-title">🧠 Concept Check — Ethanol vs Ethanoic Acid</div>
+    <div class="cc-q">Q. Both ethanol and ethanoic acid contain –OH. Why does only ethanoic acid react with NaHCO₃?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Ethanoic acid has a carboxyl group (–COOH) which is strongly acidic — it can donate H⁺ ions readily enough to react with NaHCO₃ (a weak base) to give CO₂. Ethanol has a hydroxyl group (–OH) which is only very weakly acidic — it cannot donate H⁺ strongly enough to react with NaHCO₃. This distinguishes alcohols from carboxylic acids.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q. What is glacial acetic acid? Why is it called "glacial"?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Glacial acetic acid is pure, undiluted ethanoic acid (100% concentration). It is called "glacial" because it freezes at 16.6°C — just below room temperature in cold weather — forming ice-like (glacial) crystals. Vinegar is only ~5% ethanoic acid in water.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S7 · SOAPS & DETERGENTS
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s7">
+  <div class="sec-num">Section 7</div>
+  <div class="sec-title">Soaps &amp; Detergents</div>
+  <div class="sec-hook">How a molecule with two different ends can remove dirt from both water and oil.</div>
+  <div class="divbar"></div>
+
+  <p class="prose">Soaps are sodium or potassium salts of long-chain fatty acids. They are made by <span class="kt">saponification</span> — alkaline hydrolysis of fats/oils with NaOH or KOH.</p>
+
+  <div class="card">
+    <div style="font-family:var(--fh);font-size:.88rem;font-weight:800;color:var(--acc2);margin-bottom:12px;">🧼 Structure of Soap Molecule</div>
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+      <div style="background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.14);border-radius:10px;padding:12px 16px;flex:1;min-width:200px;">
+        <div style="font-size:.72rem;font-weight:700;color:var(--acc2);margin-bottom:5px;">HYDROPHILIC HEAD (–COO⁻Na⁺)</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Ionic, polar, water-loving end. Attracted to water molecules.</div>
+      </div>
+      <div style="font-size:1.2rem;color:var(--acc2);">⟷</div>
+      <div style="background:rgba(225,112,85,.06);border:1px solid rgba(225,112,85,.14);border-radius:10px;padding:12px 16px;flex:1;min-width:200px;">
+        <div style="font-size:.72rem;font-weight:700;color:#c0392b;margin-bottom:5px;">HYDROPHOBIC TAIL (–CH₂–CH₂– chain)</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;">Non-polar, water-hating, oil-loving end. Repels water, attracted to grease/dirt.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">How Soap Cleans — Micelle Formation</h3>
+  <p class="prose">When soap is added to water with greasy dirt:</p>
+
+  <div class="card">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--fh);font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+        <div style="font-size:.82rem;color:var(--text);line-height:1.6;">The <strong>hydrophobic tail</strong> buries itself into the grease/oil droplet (like with like).</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--fh);font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+        <div style="font-size:.82rem;color:var(--text);line-height:1.6;">The <strong>hydrophilic head</strong> points outward into the water.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--fh);font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+        <div style="font-size:.82rem;color:var(--text);line-height:1.6;">A <strong>micelle</strong> forms — a spherical cluster with grease trapped inside. The charged outer surface keeps micelles suspended in water (emulsification).</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--fh);font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+        <div style="font-size:.82rem;color:var(--text);line-height:1.6;">Rinsing with water washes the micelles (+ enclosed grease/dirt) away.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Soaps vs Detergents</h3>
+  <table class="tbl">
+    <thead><tr><th>Feature</th><th>Soaps</th><th>Detergents</th></tr></thead>
+    <tbody>
+      <tr><td>Made from</td><td>Natural fats/oils + NaOH</td><td>Petroleum-based synthetic compounds</td></tr>
+      <tr><td>Hard water</td><td>Forms scum (insoluble calcium/magnesium salts) — doesn't lather well</td><td>Works well in hard water (no scum)</td></tr>
+      <tr><td>Soft water</td><td>Works well, good lather</td><td>Works in both hard and soft water</td></tr>
+      <tr><td>Biodegradable</td><td>Yes — environmentally friendly</td><td>Some are non-biodegradable — cause water pollution</td></tr>
+      <tr><td>pH</td><td>Basic (alkaline)</td><td>Can be acidic, neutral, or basic</td></tr>
+      <tr><td>Examples</td><td>Toilet soap, washing soap (NaOH → hard; KOH → soft)</td><td>Washing powder, shampoo, dish wash liquid</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Why Soaps Don't Work in Hard Water</div><div class="cx">
+    Hard water contains Ca²⁺ and Mg²⁺ ions. These react with soap (sodium stearate): 2C₁₇H₃₅COONa + CaCl₂ → (C₁₇H₃₅COO)₂Ca↓ + 2NaCl. The calcium/magnesium soap is insoluble → forms a grey scum. No micelles form → no cleaning. Detergents have branched hydrophobic chains that don't react with Ca²⁺/Mg²⁺.
+  </div></div></div>
+
+  <div class="cc">
+    <div class="cc-title">🧠 Concept Check — Soaps &amp; Detergents</div>
+    <div class="cc-q">Q. What is a micelle? Why is it important in the cleaning action of soap?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">A micelle is a spherical cluster formed by soap molecules in water, where the hydrophobic tails are directed inward (surrounding and trapping grease/oil) and the hydrophilic ionic heads face outward into the water. The charged outer surface gives the micelle a negative charge — causing micelles to repel each other and remain suspended in water as a stable emulsion. When rinsed, the micelles carry the grease away with them — this is how soap cleans.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q. A student used soap to wash clothes but found it didn't lather well and left a grey scum. Explain.</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">The student used hard water, which contains dissolved Ca²⁺ and Mg²⁺ ions. These react with soap molecules to form insoluble calcium/magnesium salts (scum). The soap is "used up" reacting with these ions instead of cleaning the clothes. Since no micelles form, the cleaning action is poor. Detergents should be used in hard water instead, as they don't react with Ca²⁺/Mg²⁺.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S8 · CHEAT SHEET
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s8">
+  <div class="sec-num">Section 8</div>
+  <div class="sec-title">⭐ Cheat Sheet</div>
+  <div class="sec-hook">Everything you need for the last night before boards — all in one place.</div>
+  <div class="divbar"></div>
+
+  <div class="cheat" id="cheatSheet">
+    <div class="cs-title">Chapter 4 — Carbon &amp; its Compounds</div>
+    <div class="cs-sub">Quick revision · All key facts · Board-ready</div>
+    <div class="cs-grid">
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Carbon Basics</div>
+        <div class="cs-item"><strong>Atomic no.:</strong> 6 · Configuration: 2,4 · Valence e⁻: 4</div>
+        <div class="cs-item"><strong>Catenation:</strong> C–C bonding (chains, rings, branches)</div>
+        <div class="cs-item"><strong>Tetravalency:</strong> forms 4 covalent bonds</div>
+        <div class="cs-item"><strong>Bonds:</strong> C–C (single), C=C (double), C≡C (triple)</div>
+        <div class="cs-item"><strong>Diamond:</strong> 4 bonds, 3D tetrahedral, hardest, insulator</div>
+        <div class="cs-item"><strong>Graphite:</strong> 3 bonds, layered, conductor, lubricant</div>
+        <div class="cs-item"><strong>Fullerene:</strong> C₆₀, football shape, nanotechnology</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">General Formulae</div>
+        <div class="cs-item"><strong>Alkanes (saturated):</strong> CₙH₂ₙ₊₂</div>
+        <div class="cs-item"><strong>Alkenes (1 double bond):</strong> CₙH₂ₙ</div>
+        <div class="cs-item"><strong>Alkynes (1 triple bond):</strong> CₙH₂ₙ₋₂</div>
+        <div class="cs-item"><strong>Alcohols:</strong> CₙH₂ₙ₊₁OH</div>
+        <div class="cs-item"><strong>Carboxylic acids:</strong> CₙH₂ₙ₊₁COOH</div>
+        <div class="cs-item">Methane CH₄ · Ethane C₂H₆ · Propane C₃H₈ · Butane C₄H₁₀</div>
+        <div class="cs-item">Ethene C₂H₄ · Propene C₃H₆ · Ethyne C₂H₂</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Functional Groups</div>
+        <div class="cs-item"><strong>–OH:</strong> Alcohol (hydroxyl)</div>
+        <div class="cs-item"><strong>–COOH:</strong> Carboxylic acid (carboxyl)</div>
+        <div class="cs-item"><strong>–CHO:</strong> Aldehyde</div>
+        <div class="cs-item"><strong>&gt;C=O:</strong> Ketone (middle of chain)</div>
+        <div class="cs-item"><strong>–Cl/–Br:</strong> Haloalkane</div>
+        <div class="cs-item">IUPAC suffix: -ane, -ene, -yne, -anol, -anoic acid</div>
+        <div class="cs-item">Isomers = same mol. formula, diff. structure</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Key Reactions</div>
+        <div class="cs-item"><strong>Combustion (complete):</strong> fuel + O₂ → CO₂ + H₂O</div>
+        <div class="cs-item"><strong>Combustion (incomplete):</strong> → CO (toxic) + soot</div>
+        <div class="cs-item"><strong>Hydrogenation:</strong> C=C + H₂ →(Ni, 150°C)→ C–C (oil → ghee)</div>
+        <div class="cs-item"><strong>Substitution:</strong> CH₄ + Cl₂ →(sunlight)→ CH₃Cl + HCl</div>
+        <div class="cs-item"><strong>Addition (Br₂):</strong> CH₂=CH₂ + Br₂ → CH₂BrCH₂Br</div>
+        <div class="cs-item"><strong>Oxidation:</strong> C₂H₅OH →(KMnO₄)→ CH₃COOH</div>
+        <div class="cs-item"><strong>Dehydration:</strong> C₂H₅OH →(H₂SO₄, 170°C)→ CH₂=CH₂ + H₂O</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Ethanol (C₂H₅OH)</div>
+        <div class="cs-item">b.p. 78°C · colourless · miscible with water</div>
+        <div class="cs-item"><strong>+ Na:</strong> 2C₂H₅OH + 2Na → 2C₂H₅ONa + H₂↑</div>
+        <div class="cs-item"><strong>Dehydration (170°C):</strong> → Ethene + H₂O</div>
+        <div class="cs-item"><strong>Oxidation:</strong> → Ethanoic acid</div>
+        <div class="cs-item"><strong>Esterification:</strong> + CH₃COOH → ester</div>
+        <div class="cs-item"><strong>Fermentation:</strong> C₆H₁₂O₆ →(yeast)→ 2C₂H₅OH + 2CO₂</div>
+        <div class="cs-item"><strong>Methanol:</strong> TOXIC — 10 mL → blindness</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Ethanoic Acid (CH₃COOH)</div>
+        <div class="cs-item">b.p. 118°C · m.p. 16.6°C · glacial acetic acid = pure</div>
+        <div class="cs-item"><strong>+ NaHCO₃:</strong> → CH₃COONa + H₂O + CO₂↑ (test for –COOH)</div>
+        <div class="cs-item"><strong>Esterification:</strong> + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O (reversible!)</div>
+        <div class="cs-item"><strong>+ NaOH:</strong> → CH₃COONa + H₂O</div>
+        <div class="cs-item">Vinegar = 5% ethanoic acid in water</div>
+        <div class="cs-item">Ethyl ethanoate = fruity smell, used in perfumes</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Soaps &amp; Detergents</div>
+        <div class="cs-item"><strong>Soap =</strong> sodium/potassium salt of fatty acid</div>
+        <div class="cs-item"><strong>Saponification:</strong> fat + NaOH → soap + glycerol</div>
+        <div class="cs-item">NaOH → hard soap · KOH → soft/liquid soap</div>
+        <div class="cs-item"><strong>Micelle:</strong> hydrophobic tail in grease, hydrophilic head in water</div>
+        <div class="cs-item"><strong>Hard water scum:</strong> Ca²⁺/Mg²⁺ + soap → insoluble salts</div>
+        <div class="cs-item">Detergents: work in hard water, some non-biodegradable</div>
+        <div class="cs-item"><strong>Cleansing:</strong> micelle formation → grease suspended in water</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Board Common Mistakes</div>
+        <div class="cs-item">❌ Writing "C" reduces Fe₂O₃ → correct: CO is reducing agent</div>
+        <div class="cs-item">❌ Esterification written with → instead of ⇌</div>
+        <div class="cs-item">❌ Forgetting sunlight condition for CH₄ + Cl₂</div>
+        <div class="cs-item">❌ Saying alkanes decolourise Br₂ water — only alkenes do</div>
+        <div class="cs-item">❌ Confusing aldehyde (–CHO at end) with ketone (C=O in middle)</div>
+        <div class="cs-item">❌ Writing CH₃CH₂COOH as ethanoic acid — it's propanoic acid (3C)</div>
+        <div class="cs-item">❌ Saponification = esterification — NO, saponification uses base (NaOH), not acid</div>
+      </div>
+
+    </div>
+    <button class="cs-copy" onclick="copyCheat()">📋 Copy Cheat Sheet Text</button>
+  </div>
+</section>
+
+</main>
+</div><!-- end layout -->
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch4.html">Ch 4</a></li>
+    <li><a href="ch4-mcq.html">MCQ</a></li>
+    <li><a href="ch4-pyq.html">PYQ</a></li>
+  </ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 · © 2026 VISTAR10</div>
+</footer>
+
+<script>
+// Progress bar
+const progBar=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  progBar.style.width=pct+'%';
+},{passive:true});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>28),{passive:true});
+
+// Dark mode
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent=document.body.classList.contains('dark')?'☀️ Light':'🌙 Dark';
+}
+
+// Sidebar + scroll spy
+const sections=['s1','s1a','s1b','s2','s2a','s2b','s3','s4','s4a','s4b','s4c','s5','s6','s7','s8'];
+function goTo(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      sections.forEach(s=>{
+        const sb=document.getElementById('sb-'+s);
+        if(sb)sb.classList.toggle('active',s===e.target.id);
+      });
+    }
+  });
+},{threshold:0.15,rootMargin:'-60px 0px -40% 0px'});
+sections.forEach(s=>{const el=document.getElementById(s);if(el)io.observe(el);});
+
+// Reveal on scroll
+const revIO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(el=>revIO.observe(el));
+
+// Concept check reveal
+function revCC(btn){
+  const ans=btn.nextElementSibling;
+  if(ans&&ans.classList.contains('cc-ans')){
+    const showing=ans.classList.toggle('show');
+    btn.textContent=showing?'Hide Answer':'Show Answer';
+  }
+}
+
+// Copy cheat sheet
+function copyCheat(){
+  const items=document.querySelectorAll('#cheatSheet .cs-item');
+  const text=Array.from(items).map(i=>i.textContent.trim()).join('\n');
+  navigator.clipboard.writeText('=== VISTAR10 Ch4 Cheat Sheet ===\n\n'+text).then(()=>{
+    const btn=document.querySelector('.cs-copy');
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Cheat Sheet Text',2000);
+  });
+}
+</script>
+</body>
+</html>

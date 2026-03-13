@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VISTAR10 — Ch 4: Carbon &amp; its Compounds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;
+      --acc:#00b894;--acc2:#007a5e;--acl:rgba(0,184,148,.14);
+      --text:#1A1A2E;--muted:#6B6B8A;
+      --card:rgba(255,255,255,.85);
+      --sh:0 8px 40px rgba(0,184,148,.09);--shh:0 18px 60px rgba(0,184,148,.17);
+      --r:18px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1.2rem,5vw,7%);
+      --green:#00B894;--orange:#e5a100;--mint:#00CEC9;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px;}
+    .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+    .blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:.20;animation:drift 20s ease-in-out infinite alternate;}
+    .b1{width:clamp(200px,40vw,460px);height:clamp(200px,40vw,460px);background:#00b894;top:-10%;left:-8%;animation-duration:22s;}
+    .b2{width:clamp(150px,28vw,320px);height:clamp(150px,28vw,320px);background:#A29BFE;top:40%;right:-5%;animation-duration:17s;animation-delay:-6s;}
+    .b3{width:clamp(100px,20vw,240px);height:clamp(100px,20vw,240px);background:#FDAE9A;bottom:10%;left:10%;animation-duration:24s;animation-delay:-12s;}
+    @keyframes drift{0%{transform:translate(0,0) scale(1);}50%{transform:translate(24px,-32px) scale(1.04);}100%{transform:translate(-16px,20px) scale(0.97);}}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px var(--px);transition:background .4s,box-shadow .4s;}
+    nav.scrolled{background:rgba(245,244,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,184,148,.10);box-shadow:0 4px 28px rgba(0,184,148,.07);}
+    .logo{font-family:var(--fh);font-size:clamp(1.1rem,2.2vw,1.45rem);font-weight:800;color:var(--acc2);display:flex;align-items:center;gap:9px;flex-shrink:0;}
+    .logo-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--acc),var(--violet));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;animation:spin 7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .nav-links{display:flex;gap:clamp(14px,2.2vw,28px);list-style:none;}
+    .nav-links a{font-size:.88rem;font-weight:500;color:var(--muted);position:relative;transition:color .2s;}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--acc);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+    .nav-links a:hover{color:var(--acc2);}.nav-links a:hover::after{transform:scaleX(1);}
+    .nav-back{background:rgba(0,184,148,.10);color:var(--acc2);font-size:.86rem;font-weight:600;padding:9px 20px;border-radius:50px;border:1.5px solid rgba(0,184,148,.22);cursor:pointer;transition:all .25s;white-space:nowrap;}
+    .nav-back:hover{background:var(--acc);color:#fff;}
+    .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+    .ham span{display:block;width:22px;height:2px;background:var(--acc2);border-radius:2px;transition:transform .35s,opacity .25s;}
+    .ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .ham.open span:nth-child(2){opacity:0;}
+    .ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mob-menu{position:fixed;inset:0;background:rgba(245,244,255,.97);backdrop-filter:blur(22px);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transform:translateX(100%);transition:transform .42s cubic-bezier(.77,0,.175,1);}
+    .mob-menu.open{transform:translateX(0);}
+    .mob-menu a{font-family:var(--fh);font-size:clamp(1.2rem,4vw,1.6rem);font-weight:700;color:var(--text);transition:color .2s;}
+    .mob-menu a:hover{color:var(--acc2);}
+    .page-hero{position:relative;z-index:1;padding:clamp(96px,13vh,130px) var(--px) clamp(20px,3vh,28px);}
+    .breadcrumb{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--muted);margin-bottom:16px;flex-wrap:wrap;}
+    .breadcrumb a{color:var(--acc2);font-weight:500;}.breadcrumb a:hover{text-decoration:underline;}
+    .ch-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,184,148,.10);border:1px solid rgba(0,184,148,.24);border-radius:50px;padding:6px 16px;font-size:.72rem;font-weight:600;color:var(--acc2);margin-bottom:16px;letter-spacing:.5px;}
+    .page-title{font-family:var(--fh);font-size:clamp(1.8rem,5vw,3.4rem);font-weight:800;line-height:1.12;margin-bottom:14px;}
+    .page-title .acc{color:var(--acc);}
+    .page-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+    .meta-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.80);border:1px solid var(--acl);border-radius:50px;padding:5px 13px;font-size:.74rem;font-weight:500;color:var(--muted);}
+    .meta-pill .dot{width:6px;height:6px;border-radius:50%;}
+    .hero-stats{display:flex;gap:12px;flex-wrap:wrap;}
+    .hstat{background:rgba(255,255,255,.80);border:1px solid var(--acl);border-radius:14px;padding:12px 18px;text-align:center;min-width:80px;}
+    .hstat-n{font-family:var(--fh);font-size:1.3rem;font-weight:800;color:var(--acc2);}
+    .hstat-l{font-size:.62rem;color:var(--muted);margin-top:2px;}
+    .ch-nav{position:relative;z-index:1;padding:clamp(18px,2.5vw,28px) var(--px);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .chn-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.80);border:1.5px solid var(--acl);border-radius:50px;padding:8px 18px;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .25s;}
+    .chn-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc);}
+    .chn-btn.dim{opacity:.35;pointer-events:none;}
+    .chn-sep{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,184,148,.18),transparent);}
+    .quick-bar{position:relative;z-index:1;padding:0 var(--px) clamp(24px,3.5vw,36px);display:flex;gap:8px;flex-wrap:wrap;}
+    .qlink{display:inline-flex;align-items:center;gap:6px;border-radius:50px;padding:9px 20px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .25s;}
+    .qlink-mcq{background:rgba(108,92,231,.12);color:#6C5CE7;border:1.5px solid rgba(108,92,231,.22);}
+    .qlink-mcq:hover{background:#6C5CE7;color:#fff;}
+    .qlink-pyq{background:rgba(229,161,0,.12);color:#a37c00;border:1.5px solid rgba(229,161,0,.22);}
+    .qlink-pyq:hover{background:#e5a100;color:#fff;}
+    .qlink-study{background:rgba(0,184,148,.12);color:var(--acc2);border:1.5px solid rgba(0,184,148,.22);}
+    .qlink-study:hover{background:var(--acc);color:#fff;}
+    .summary-section{position:relative;z-index:1;padding:0 var(--px) clamp(28px,4vw,44px);}
+    .section-label{display:block;font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--acc2);margin-bottom:10px;}
+    .summary-card{background:var(--card);border:1px solid var(--acl);border-radius:24px;padding:clamp(24px,3.5vw,36px) clamp(20px,3vw,32px);backdrop-filter:blur(12px);box-shadow:var(--sh);}
+    .summary-intro{font-size:clamp(.88rem,1.1vw,.98rem);color:var(--text);line-height:1.78;margin-bottom:24px;border-left:3px solid var(--acc);padding-left:16px;}
+    .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;}
+    .summary-topic{background:rgba(0,184,148,.04);border:1px solid rgba(0,184,148,.11);border-radius:14px;padding:16px 18px;transition:border-color .2s;}
+    .summary-topic:hover{border-color:rgba(0,184,148,.28);}
+    .st-head{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+    .st-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+    .st-title{font-family:var(--fh);font-size:.88rem;font-weight:700;}
+    .st-body{font-size:.80rem;color:var(--muted);line-height:1.6;}
+    .key-eqs{margin-top:22px;padding-top:22px;border-top:1px solid rgba(0,184,148,.12);}
+    .key-eqs-title{font-family:var(--fh);font-size:.84rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .eq-list{display:flex;flex-direction:column;gap:8px;}
+    .eq-item{background:rgba(255,255,255,.90);border:1px solid rgba(0,184,148,.10);border-radius:10px;padding:10px 14px;display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+    .eq-type{font-size:.60rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:20px;color:#fff;white-space:nowrap;margin-top:2px;flex-shrink:0;}
+    .eq-text{font-family:'Courier New',monospace;font-size:clamp(.70rem,.88vw,.82rem);color:var(--text);line-height:1.55;}
+    .tips-section{position:relative;z-index:1;padding:0 var(--px) clamp(28px,4vw,44px);}
+    .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;}
+    .tip-card{background:rgba(229,161,0,.06);border:1px solid rgba(229,161,0,.18);border-radius:14px;padding:16px 18px;}
+    .tip-head{font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a5c00;margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+    .tip-body{font-size:.79rem;color:var(--muted);line-height:1.6;}
+    .nav-section{position:relative;z-index:1;padding:0 var(--px) clamp(28px,4vw,44px);}
+    .nav-sec-title{font-family:var(--fh);font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:800;margin-bottom:6px;}
+    .nav-sec-sub{font-size:clamp(.82rem,1vw,.9rem);color:var(--muted);margin-bottom:24px;}
+    .nav-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:clamp(12px,2vw,18px);}
+    .nav-card{background:var(--card);border:1.5px solid var(--acl);border-radius:var(--r);padding:clamp(20px,2.8vw,28px) clamp(16px,2.2vw,22px);backdrop-filter:blur(12px);box-shadow:var(--sh);cursor:pointer;display:block;transition:all .3s;position:relative;overflow:hidden;}
+    .nav-card:not(.wip-card):hover{transform:translateY(-6px);box-shadow:var(--shh);border-color:var(--nc,rgba(0,184,148,.4));}
+    .nav-card.wip-card{opacity:.55;cursor:not-allowed;}
+    .nav-card.wip-card:hover{transform:none;}
+    .nc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    .nc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+    .nc-badge{font-size:.60rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.5px;}
+    .nc-title{font-family:var(--fh);font-size:clamp(.92rem,1.2vw,1.04rem);font-weight:700;margin-bottom:6px;}
+    .nc-desc{font-size:clamp(.76rem,.9vw,.82rem);color:var(--muted);line-height:1.55;}
+    .nc-arrow{position:absolute;bottom:18px;right:18px;font-size:.82rem;color:var(--muted);transition:transform .25s,color .25s;}
+    .nav-card:not(.wip-card):hover .nc-arrow{transform:translateX(4px);color:var(--nc,var(--acc2));}
+    .wip-tag{position:absolute;top:12px;right:12px;background:rgba(107,107,138,.12);color:var(--muted);font-size:.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;}
+    footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(0,184,148,.09);padding:clamp(24px,4vw,40px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:clamp(20px,3vw,36px);}
+    .flogo{font-family:var(--fh);font-size:1.1rem;font-weight:800;color:var(--acc2);}
+    .ftag{font-size:.76rem;color:var(--muted);margin-top:2px;}
+    .flinks{display:flex;gap:clamp(12px,2vw,22px);list-style:none;flex-wrap:wrap;}
+    .flinks a{font-size:.80rem;color:var(--muted);transition:color .2s;}.flinks a:hover{color:var(--acc2);}
+    .fcopy{font-size:.72rem;color:var(--muted);}.fcopy span{color:var(--acc2);}
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s;}
+    .reveal.vis{opacity:1;transform:translateY(0);}
+    @media(max-width:720px){.nav-links{display:none;}.ham{display:flex;}.hero-stats{gap:8px;}.chn-sep{display:none;}}
+    @media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+  </style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <ul class="nav-links">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch4-mcq.html">MCQ</a></li>
+    <li><a href="ch4-pyq.html">Question Bank</a></li>
+    <li><a href="ch4-study.html">Study</a></li>
+  </ul>
+  <a href="subjects.html" class="nav-back">← Subjects</a>
+  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-menu" id="mob">
+  <a href="vistar10.html" onclick="closeMob()">Home</a>
+  <a href="subjects.html" onclick="closeMob()">Subjects</a>
+  <a href="ch4-mcq.html" onclick="closeMob()">MCQ Practice</a>
+  <a href="ch4-pyq.html" onclick="closeMob()">Question Bank</a>
+  <a href="ch4-study.html" onclick="closeMob()">Study Notes</a>
+</div>
+
+<!-- Hero -->
+<section class="page-hero">
+  <div class="breadcrumb reveal"><a href="vistar10.html">Home</a><span>›</span><a href="subjects.html">Science</a><span>›</span><span>Chapter 4</span></div>
+  <div class="ch-badge reveal">🧪 &nbsp; Chemistry · Chapter 4 · Class 10 CBSE</div>
+  <h1 class="page-title reveal">Carbon &amp; its<br><span class="acc">Compounds</span></h1>
+  <div class="page-meta reveal">
+    <div class="meta-pill"><div class="dot" style="background:#00b894"></div>NCERT Chapter 4</div>
+    <div class="meta-pill"><div class="dot" style="background:#6C5CE7"></div>High Weightage ⭐</div>
+    <div class="meta-pill"><div class="dot" style="background:#FDAE9A"></div>Chemistry</div>
+    <div class="meta-pill"><div class="dot" style="background:#e5a100"></div>Board Favourite</div>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><div class="hstat-n">40</div><div class="hstat-l">MCQ Qs</div></div>
+    <div class="hstat"><div class="hstat-n">110</div><div class="hstat-l">PYQ Bank</div></div>
+    <div class="hstat"><div class="hstat-n">8</div><div class="hstat-l">Study Topics</div></div>
+    <div class="hstat"><div class="hstat-n">10+</div><div class="hstat-l">Key Reactions</div></div>
+    <div class="hstat"><div class="hstat-n">2013–24</div><div class="hstat-l">PYQ Years</div></div>
+  </div>
+</section>
+
+<!-- Chapter nav -->
+<div class="ch-nav reveal">
+  <a href="ch3.html" class="chn-btn">← Ch 3: Metals &amp; Non-metals</a>
+  <div class="chn-sep"></div>
+  <a href="subjects.html" class="chn-btn">All Chapters ↑</a>
+  <div class="chn-sep"></div>
+  <span class="chn-btn dim">Ch 5: Life Processes →</span>
+</div>
+
+<!-- Quick links -->
+<div class="quick-bar reveal">
+  <a href="ch4-mcq.html" class="qlink qlink-mcq">🎯 MCQ Practice</a>
+  <a href="ch4-pyq.html" class="qlink qlink-pyq">📅 Question Bank · 110 Qs</a>
+  <a href="ch4-study.html" class="qlink qlink-study">📚 Study Notes ⭐</a>
+</div>
+
+<!-- Chapter Summary -->
+<section class="summary-section">
+  <span class="section-label reveal">Chapter Overview</span>
+  <div class="summary-card reveal">
+    <p class="summary-intro">Chapter 4 is one of the largest and most consistently tested chapters in Class 10 boards — carrying 8–12 marks every year. It introduces the unique chemistry of carbon: catenation, tetravalency, allotropes, homologous series, functional groups, naming conventions, and all major reactions of organic compounds. Ethanol and ethanoic acid properties, esterification, saponification, and the cleansing action of soaps are guaranteed board topics.</p>
+    <div class="summary-grid">
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(0,184,148,.12)">⚛️</div><div class="st-title">Bonding in Carbon</div></div>
+        <div class="st-body">Carbon always forms covalent bonds (sharing electrons). Tetravalency = 4 bonds with C, H, O, N, halogens. Catenation = C–C bond formation (chains, branches, rings). Both properties together = millions of organic compounds.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(108,92,231,.12)">💎</div><div class="st-title">Allotropes of Carbon</div></div>
+        <div class="st-body">Diamond: 4 bonds per C, 3D tetrahedral, hardest, insulator. Graphite: 3 bonds per C, layered hexagonal, conductor, soft lubricant. Fullerene (C₆₀): spherical cage, 20 hexagons + 12 pentagons, nanotechnology applications.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(229,161,0,.12)">📊</div><div class="st-title">Homologous Series</div></div>
+        <div class="st-body">Same general formula, same functional group, differ by –CH₂– (14u), similar chemical properties. Series: Alkanes CₙH₂ₙ₊₂ · Alkenes CₙH₂ₙ · Alkynes CₙH₂ₙ₋₂ · Alcohols CₙH₂ₙ₊₁OH · Carboxylic acids CₙH₂ₙ₊₁COOH.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(225,112,85,.12)">🔗</div><div class="st-title">Functional Groups</div></div>
+        <div class="st-body">–OH (alcohol) · –COOH (carboxylic acid) · –CHO (aldehyde) · –CO– (ketone) · C=C (alkene) · –Cl/–Br (haloalkane). The functional group determines the chemical behaviour of the compound.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(0,184,148,.10)">🔥</div><div class="st-title">Chemical Reactions</div></div>
+        <div class="st-body">Combustion (CO₂ + H₂O) · Addition (unsaturated, e.g. Br₂ decolourises) · Substitution (saturated + Cl₂ in sunlight) · Oxidation (ethanol → ethanoic acid via KMnO₄/K₂Cr₂O₇) · Esterification (acid + alcohol ⇌ ester + water).</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(162,155,254,.20)">🍶</div><div class="st-title">Ethanol</div></div>
+        <div class="st-body">C₂H₅OH. Made by fermentation (C₆H₁₂O₆ →(yeast)→ 2C₂H₅OH + 2CO₂). Reacts with Na (H₂↑), dehydrates at 170°C (→ ethene) or 140°C (→ ether), oxidises to CH₃COOH. Used in beverages, fuel, solvent. Methanol (CH₃OH) is toxic.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(229,161,0,.12)">🍋</div><div class="st-title">Ethanoic Acid</div></div>
+        <div class="st-body">CH₃COOH. Glacial = pure, freezes at 16.6°C. Vinegar = 5% solution. Reacts with NaHCO₃ (CO₂↑), NaOH, Na₂CO₃, and undergoes esterification. Turns litmus red. The –COOH group test = CO₂ with NaHCO₃.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(253,174,154,.25)">🧼</div><div class="st-title">Soaps &amp; Detergents</div></div>
+        <div class="st-body">Soap: saponification of fat with NaOH (hard) or KOH (soft). Structure: hydrophobic tail + hydrophilic head. Micelle formation cleans grease. Soaps fail in hard water (scum). Detergents work in hard water but some are non-biodegradable.</div>
+      </div>
+    </div>
+
+    <!-- Key equations -->
+    <div class="key-eqs">
+      <div class="key-eqs-title">⚗️ Must-Know Equations</div>
+      <div class="eq-list">
+        <div class="eq-item"><div class="eq-type" style="background:#00b894">Fermentation</div><div class="eq-text">C₆H₁₂O₆ →(yeast, 25-30°C, anaerobic)→ 2C₂H₅OH + 2CO₂</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#007a5e">Esterification</div><div class="eq-text">CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O &nbsp;(conc. H₂SO₄, heat)</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#6C5CE7">Saponification</div><div class="eq-text">Fat + 3NaOH → 3 Soap (sodium fatty acid salt) + Glycerol</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#e5a100">Dehydration</div><div class="eq-text">C₂H₅OH →(excess conc. H₂SO₄, 170°C)→ CH₂=CH₂ + H₂O</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#E17055">Oxidation</div><div class="eq-text">C₂H₅OH →(alk. KMnO₄ or K₂Cr₂O₇)→ CH₃COOH (ethanoic acid)</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#0984e3">Addition</div><div class="eq-text">CH₂=CH₂ + H₂ →(Ni, 150°C)→ CH₃–CH₃ &nbsp;|&nbsp; CH₂=CH₂ + Br₂ → CH₂BrCH₂Br</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#A29BFE">Substitution</div><div class="eq-text">CH₄ + Cl₂ →(sunlight)→ CH₃Cl + HCl</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#c0392b">NaHCO₃ test</div><div class="eq-text">CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑ (brisk effervescence)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Board Tips -->
+<section class="tips-section">
+  <span class="section-label reveal">📋 Top Board Tips</span>
+  <div class="tips-grid reveal">
+    <div class="tip-card">
+      <div class="tip-head">💡 Sat. vs Unsat.: The Golden Rule</div>
+      <div class="tip-body"><strong>Saturated → Substitution.</strong> Alkanes (all single bonds) undergo substitution reactions (e.g. CH₄ + Cl₂ in sunlight). <strong>Unsaturated → Addition.</strong> Alkenes/Alkynes (have π bond) undergo addition (e.g. + H₂, + Br₂). This distinction is tested as MCQ every 2–3 years.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Esterification: Two Common Errors</div>
+      <div class="tip-body">Error 1: Writing → instead of ⇌. Esterification IS reversible — always use ⇌. Error 2: Writing only "catalyst" for H₂SO₄. It is BOTH a catalyst AND a dehydrating agent — state both for full marks. These two errors together lose 2 marks every time.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Test for –COOH vs –OH</div>
+      <div class="tip-body">Ethanoic acid + NaHCO₃ → CO₂↑ (brisk effervescence, turns lime water milky). Ethanol + NaHCO₃ → no reaction. This is the test that distinguishes carboxylic acids from alcohols. Litmus test also works: acid turns blue → red; alcohol = no change.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Diamond vs Graphite: Always Explain Structurally</div>
+      <div class="tip-body">Never say "graphite is soft" without saying WHY. Correct: "Graphite has layered structure; layers held by weak forces → slide easily → soft." Same for conductivity: "Graphite has delocalised electrons between layers → conducts electricity." Structure → property chains score full marks.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Dehydration Temperature Matters</div>
+      <div class="tip-body">C₂H₅OH + excess conc. H₂SO₄ at <strong>170°C → Ethene</strong>. Same reaction at <strong>140°C → Diethyl ether</strong>. The temperature determines the product. This condition-product distinction is directly asked in boards as both MCQ and 2-mark questions.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Count the –COOH Carbon in Naming</div>
+      <div class="tip-body">When naming carboxylic acids, always count the –COOH carbon as C1. CH₃COOH = 2C = ethanoic acid (not methanoic). Many students name only the alkyl part and forget to count the carbonyl carbon. This error costs 1 mark in every naming question.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Practice Navigation -->
+<section class="nav-section reveal" id="practice">
+  <div class="nav-sec-title">Ready to Practice?</div>
+  <div class="nav-sec-sub">All three modes are live — dive into MCQ, question bank, or full study notes.</div>
+  <div class="nav-cards-grid">
+    <a href="ch4-mcq.html" class="nav-card" style="--nc:#6C5CE7">
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(108,92,231,.12)">🎯</div><div class="nc-badge" style="background:rgba(108,92,231,.12);color:#6C5CE7">LIVE</div></div>
+      <div class="nc-title">MCQ Practice</div>
+      <div class="nc-desc">40 questions across Easy, Medium, Hard &amp; Board levels. Hints, streaks &amp; achievements included.</div>
+      <span class="nc-arrow">→</span>
+    </a>
+    <a href="ch4-pyq.html" class="nav-card" style="--nc:#e5a100">
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(229,161,0,.12)">📅</div><div class="nc-badge" style="background:rgba(229,161,0,.12);color:#a37c00">LIVE</div></div>
+      <div class="nc-title">Question Bank</div>
+      <div class="nc-desc">110 questions from CBSE 2013–2024. MCQ, VSA, SA I &amp; II, LA, Case Based. Click to reveal answers.</div>
+      <span class="nc-arrow">→</span>
+    </a>
+    <a href="ch4-study.html" class="nav-card" style="--nc:#00b894">
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(0,184,148,.12)">📚</div><div class="nc-badge" style="background:rgba(0,184,148,.12);color:#007a5e">LIVE ⭐ IMP</div></div>
+      <div class="nc-title">Study the Chapter</div>
+      <div class="nc-desc">Full NCERT notes — allotropes, homologous series, functional groups, reactions, ethanol, ethanoic acid, soaps &amp; cheat sheet.</div>
+      <span class="nc-arrow">→</span>
+    </a>
+    <div class="nav-card wip-card">
+      <div class="wip-tag">Coming Soon</div>
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(0,184,148,.10)">📋</div></div>
+      <div class="nc-title">Case Based Questions</div>
+      <div class="nc-desc">Passage-based questions in the new CBSE pattern. Apply concepts to real-world chemistry scenarios.</div>
+    </div>
+    <div class="nav-card wip-card">
+      <div class="wip-tag">Coming Soon</div>
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(253,174,154,.20)">🧩</div></div>
+      <div class="nc-title">Competency Based Questions</div>
+      <div class="nc-desc">Application and analysis-level questions testing deeper understanding of carbon chemistry.</div>
+    </div>
+    <div class="nav-card wip-card">
+      <div class="wip-tag">Coming Soon</div>
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(255,234,167,.35)">✍️</div></div>
+      <div class="nc-title">VSA / Short / Long Questions</div>
+      <div class="nc-desc">1-mark to 5-mark structured questions with model answers across all question types.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftag">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch4-mcq.html">MCQ</a></li>
+    <li><a href="ch4-pyq.html">PYQ</a></li>
+    <li><a href="ch4-study.html">Study</a></li>
+  </ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 students &nbsp;·&nbsp; © 2026 VISTAR10</div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>28),{passive:true});
+  const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+  ham.addEventListener('click',()=>{const o=mob.classList.toggle('open');ham.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
+  function closeMob(){mob.classList.remove('open');ham.classList.remove('open');document.body.style.overflow='';}
+  const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

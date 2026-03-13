@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>VISTAR10 — Ch 3: Metals &amp; Non-metals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;
+      --acc:#E17055;--acc2:#c0392b;--acl:rgba(225,112,85,.14);
+      --text:#1A1A2E;--muted:#6B6B8A;
+      --card:rgba(255,255,255,.85);
+      --sh:0 8px 40px rgba(225,112,85,.09);--shh:0 18px 60px rgba(225,112,85,.17);
+      --r:18px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1.2rem,5vw,7%);
+      --green:#00B894;--orange:#e5a100;--mint:#00CEC9;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    a{text-decoration:none;color:inherit;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px;}
+
+    /* ── Blobs ── */
+    .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+    .blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:.20;animation:drift 20s ease-in-out infinite alternate;}
+    .b1{width:clamp(200px,40vw,460px);height:clamp(200px,40vw,460px);background:#E17055;top:-10%;left:-8%;animation-duration:22s;}
+    .b2{width:clamp(150px,28vw,320px);height:clamp(150px,28vw,320px);background:#A29BFE;top:40%;right:-5%;animation-duration:17s;animation-delay:-6s;}
+    .b3{width:clamp(100px,20vw,240px);height:clamp(100px,20vw,240px);background:#FDAE9A;bottom:10%;left:10%;animation-duration:24s;animation-delay:-12s;}
+    @keyframes drift{0%{transform:translate(0,0) scale(1);}50%{transform:translate(24px,-32px) scale(1.04);}100%{transform:translate(-16px,20px) scale(0.97);}}
+
+    /* ── Nav ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px var(--px);transition:background .4s,box-shadow .4s;}
+    nav.scrolled{background:rgba(245,244,255,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(225,112,85,.10);box-shadow:0 4px 28px rgba(225,112,85,.07);}
+    .logo{font-family:var(--fh);font-size:clamp(1.1rem,2.2vw,1.45rem);font-weight:800;color:var(--acc2);display:flex;align-items:center;gap:9px;flex-shrink:0;}
+    .logo-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--acc),var(--violet));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;animation:spin 7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .nav-links{display:flex;gap:clamp(14px,2.2vw,28px);list-style:none;}
+    .nav-links a{font-size:.88rem;font-weight:500;color:var(--muted);position:relative;transition:color .2s;}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--acc);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .25s;}
+    .nav-links a:hover{color:var(--acc2);}
+    .nav-links a:hover::after{transform:scaleX(1);}
+    .nav-back{background:rgba(225,112,85,.10);color:var(--acc2);font-size:.86rem;font-weight:600;padding:9px 20px;border-radius:50px;border:1.5px solid rgba(225,112,85,.22);cursor:pointer;transition:all .25s;white-space:nowrap;}
+    .nav-back:hover{background:var(--acc);color:#fff;}
+    .ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+    .ham span{display:block;width:22px;height:2px;background:var(--acc2);border-radius:2px;transition:transform .35s,opacity .25s;}
+    .ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .ham.open span:nth-child(2){opacity:0;}
+    .ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mob-menu{position:fixed;inset:0;background:rgba(245,244,255,.97);backdrop-filter:blur(22px);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transform:translateX(100%);transition:transform .42s cubic-bezier(.77,0,.175,1);}
+    .mob-menu.open{transform:translateX(0);}
+    .mob-menu a{font-family:var(--fh);font-size:clamp(1.2rem,4vw,1.6rem);font-weight:700;color:var(--text);transition:color .2s;}
+    .mob-menu a:hover{color:var(--acc2);}
+
+    /* ── Hero ── */
+    .page-hero{position:relative;z-index:1;padding:clamp(96px,13vh,130px) var(--px) clamp(20px,3vh,28px);}
+    .breadcrumb{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--muted);margin-bottom:16px;flex-wrap:wrap;}
+    .breadcrumb a{color:var(--acc2);font-weight:500;}
+    .breadcrumb a:hover{text-decoration:underline;}
+    .ch-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(225,112,85,.10);border:1px solid rgba(225,112,85,.24);border-radius:50px;padding:6px 16px;font-size:.72rem;font-weight:600;color:var(--acc2);margin-bottom:16px;letter-spacing:.5px;}
+    .page-title{font-family:var(--fh);font-size:clamp(1.8rem,5vw,3.4rem);font-weight:800;line-height:1.12;margin-bottom:14px;}
+    .page-title .acc{color:var(--acc);}
+    .page-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+    .meta-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.80);border:1px solid var(--acl);border-radius:50px;padding:5px 13px;font-size:.74rem;font-weight:500;color:var(--muted);}
+    .meta-pill .dot{width:6px;height:6px;border-radius:50%;}
+    .hero-stats{display:flex;gap:12px;flex-wrap:wrap;}
+    .hstat{background:rgba(255,255,255,.80);border:1px solid var(--acl);border-radius:14px;padding:12px 18px;text-align:center;min-width:80px;}
+    .hstat-n{font-family:var(--fh);font-size:1.3rem;font-weight:800;color:var(--acc2);}
+    .hstat-l{font-size:.62rem;color:var(--muted);margin-top:2px;}
+
+    /* ── Chapter nav ── */
+    .ch-nav{position:relative;z-index:1;padding:clamp(18px,2.5vw,28px) var(--px);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .chn-btn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.80);border:1.5px solid var(--acl);border-radius:50px;padding:8px 18px;font-size:.76rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .25s;}
+    .chn-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc);}
+    .chn-btn.dim{opacity:.35;pointer-events:none;}
+    .chn-sep{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(225,112,85,.18),transparent);}
+
+    /* ── Quick links ── */
+    .quick-bar{position:relative;z-index:1;padding:0 var(--px) clamp(24px,3.5vw,36px);display:flex;gap:8px;flex-wrap:wrap;}
+    .qlink{display:inline-flex;align-items:center;gap:6px;border-radius:50px;padding:9px 20px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .25s;}
+    .qlink-mcq{background:rgba(108,92,231,.12);color:#6C5CE7;border:1.5px solid rgba(108,92,231,.22);}
+    .qlink-mcq:hover{background:#6C5CE7;color:#fff;}
+    .qlink-pyq{background:rgba(229,161,0,.12);color:#a37c00;border:1.5px solid rgba(229,161,0,.22);}
+    .qlink-pyq:hover{background:#e5a100;color:#fff;}
+    .qlink-study{background:rgba(225,112,85,.12);color:var(--acc2);border:1.5px solid rgba(225,112,85,.22);}
+    .qlink-study:hover{background:var(--acc);color:#fff;}
+
+    /* ── Summary ── */
+    .summary-section{position:relative;z-index:1;padding:0 var(--px) clamp(28px,4vw,44px);}
+    .section-label{display:block;font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--acc2);margin-bottom:10px;}
+    .summary-card{background:var(--card);border:1px solid var(--acl);border-radius:24px;padding:clamp(24px,3.5vw,36px) clamp(20px,3vw,32px);backdrop-filter:blur(12px);box-shadow:var(--sh);}
+    .summary-intro{font-size:clamp(.88rem,1.1vw,.98rem);color:var(--text);line-height:1.78;margin-bottom:24px;border-left:3px solid var(--acc);padding-left:16px;}
+    .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;}
+    .summary-topic{background:rgba(225,112,85,.04);border:1px solid rgba(225,112,85,.11);border-radius:14px;padding:16px 18px;transition:border-color .2s;}
+    .summary-topic:hover{border-color:rgba(225,112,85,.28);}
+    .st-head{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+    .st-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+    .st-title{font-family:var(--fh);font-size:.88rem;font-weight:700;}
+    .st-body{font-size:.80rem;color:var(--muted);line-height:1.6;}
+
+    /* ── Key equations ── */
+    .key-eqs{margin-top:22px;padding-top:22px;border-top:1px solid rgba(225,112,85,.12);}
+    .key-eqs-title{font-family:var(--fh);font-size:.84rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .eq-list{display:flex;flex-direction:column;gap:8px;}
+    .eq-item{background:rgba(255,255,255,.90);border:1px solid rgba(225,112,85,.10);border-radius:10px;padding:10px 14px;display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+    .eq-type{font-size:.60rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:20px;color:#fff;white-space:nowrap;margin-top:2px;flex-shrink:0;}
+    .eq-text{font-family:'Courier New',monospace;font-size:clamp(.70rem,.88vw,.82rem);color:var(--text);line-height:1.55;}
+
+    /* ── Board Tips ── */
+    .tips-section{position:relative;z-index:1;padding:0 var(--px) clamp(28px,4vw,44px);}
+    .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;}
+    .tip-card{background:rgba(229,161,0,.06);border:1px solid rgba(229,161,0,.18);border-radius:14px;padding:16px 18px;}
+    .tip-head{font-family:var(--fh);font-size:.82rem;font-weight:700;color:#7a5c00;margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+    .tip-body{font-size:.79rem;color:var(--muted);line-height:1.6;}
+
+    /* ── Practice cards ── */
+    .nav-section{position:relative;z-index:1;padding:0 var(--px) clamp(28px,4vw,44px);}
+    .nav-sec-title{font-family:var(--fh);font-size:clamp(1.1rem,2.2vw,1.5rem);font-weight:800;margin-bottom:6px;}
+    .nav-sec-sub{font-size:clamp(.82rem,1vw,.9rem);color:var(--muted);margin-bottom:24px;}
+    .nav-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:clamp(12px,2vw,18px);}
+    .nav-card{background:var(--card);border:1.5px solid var(--acl);border-radius:var(--r);padding:clamp(20px,2.8vw,28px) clamp(16px,2.2vw,22px);backdrop-filter:blur(12px);box-shadow:var(--sh);cursor:pointer;display:block;transition:all .3s;position:relative;overflow:hidden;}
+    .nav-card:not(.wip-card):hover{transform:translateY(-6px);box-shadow:var(--shh);border-color:var(--nc,rgba(225,112,85,.4));}
+    .nav-card.wip-card{opacity:.55;cursor:not-allowed;}
+    .nav-card.wip-card:hover{transform:none;}
+    .nc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    .nc-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+    .nc-badge{font-size:.60rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.5px;}
+    .nc-title{font-family:var(--fh);font-size:clamp(.92rem,1.2vw,1.04rem);font-weight:700;margin-bottom:6px;}
+    .nc-desc{font-size:clamp(.76rem,.9vw,.82rem);color:var(--muted);line-height:1.55;}
+    .nc-arrow{position:absolute;bottom:18px;right:18px;font-size:.82rem;color:var(--muted);transition:transform .25s,color .25s;}
+    .nav-card:not(.wip-card):hover .nc-arrow{transform:translateX(4px);color:var(--nc,var(--acc2));}
+    .wip-tag{position:absolute;top:12px;right:12px;background:rgba(107,107,138,.12);color:var(--muted);font-size:.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;}
+
+    /* ── Footer ── */
+    footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(225,112,85,.09);padding:clamp(24px,4vw,40px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:clamp(20px,3vw,36px);}
+    .flogo{font-family:var(--fh);font-size:1.1rem;font-weight:800;color:var(--acc2);}
+    .ftag{font-size:.76rem;color:var(--muted);margin-top:2px;}
+    .flinks{display:flex;gap:clamp(12px,2vw,22px);list-style:none;flex-wrap:wrap;}
+    .flinks a{font-size:.80rem;color:var(--muted);transition:color .2s;}
+    .flinks a:hover{color:var(--acc2);}
+    .fcopy{font-size:.72rem;color:var(--muted);}
+    .fcopy span{color:var(--acc2);}
+
+    /* ── Reveal ── */
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s;}
+    .reveal.vis{opacity:1;transform:translateY(0);}
+
+    @media(max-width:720px){.nav-links{display:none;}.ham{display:flex;}.hero-stats{gap:8px;}.chn-sep{display:none;}}
+    @media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+  </style>
+</head>
+<body>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <ul class="nav-links">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch3-mcq.html">MCQ</a></li>
+    <li><a href="ch3-pyq.html">Question Bank</a></li>
+    <li><a href="ch3-study.html">Study</a></li>
+  </ul>
+  <a href="subjects.html" class="nav-back">← Subjects</a>
+  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-menu" id="mob">
+  <a href="vistar10.html" onclick="closeMob()">Home</a>
+  <a href="subjects.html" onclick="closeMob()">Subjects</a>
+  <a href="ch3-mcq.html" onclick="closeMob()">MCQ Practice</a>
+  <a href="ch3-pyq.html" onclick="closeMob()">Question Bank</a>
+  <a href="ch3-study.html" onclick="closeMob()">Study Notes</a>
+</div>
+
+<!-- ── Hero ── -->
+<section class="page-hero">
+  <div class="breadcrumb reveal"><a href="vistar10.html">Home</a><span>›</span><a href="subjects.html">Science</a><span>›</span><span>Chapter 3</span></div>
+  <div class="ch-badge reveal">🔩 &nbsp; Chemistry · Chapter 3 · Class 10 CBSE</div>
+  <h1 class="page-title reveal">Metals &amp;<br><span class="acc">Non-metals</span></h1>
+  <div class="page-meta reveal">
+    <div class="meta-pill"><div class="dot" style="background:#E17055"></div>NCERT Chapter 3</div>
+    <div class="meta-pill"><div class="dot" style="background:#6C5CE7"></div>High Weightage ⭐</div>
+    <div class="meta-pill"><div class="dot" style="background:#FDAE9A"></div>Chemistry</div>
+    <div class="meta-pill"><div class="dot" style="background:#00B894"></div>Board Favourite</div>
+  </div>
+  <div class="hero-stats reveal">
+    <div class="hstat"><div class="hstat-n">40</div><div class="hstat-l">MCQ Qs</div></div>
+    <div class="hstat"><div class="hstat-n">110</div><div class="hstat-l">PYQ Bank</div></div>
+    <div class="hstat"><div class="hstat-n">8</div><div class="hstat-l">Study Topics</div></div>
+    <div class="hstat"><div class="hstat-n">8+</div><div class="hstat-l">Key Reactions</div></div>
+    <div class="hstat"><div class="hstat-n">2013–24</div><div class="hstat-l">PYQ Years</div></div>
+  </div>
+</section>
+
+<!-- ── Chapter nav ── -->
+<div class="ch-nav reveal">
+  <a href="ch2.html" class="chn-btn">← Ch 2: Acids, Bases &amp; Salts</a>
+  <div class="chn-sep"></div>
+  <a href="subjects.html" class="chn-btn">All Chapters ↑</a>
+  <div class="chn-sep"></div>
+  <span class="chn-btn dim">Ch 4: Carbon Compounds →</span>
+</div>
+
+<!-- ── Quick links ── -->
+<div class="quick-bar reveal">
+  <a href="ch3-mcq.html" class="qlink qlink-mcq">🎯 MCQ Practice</a>
+  <a href="ch3-pyq.html" class="qlink qlink-pyq">📅 Question Bank · 110 Qs</a>
+  <a href="ch3-study.html" class="qlink qlink-study">📚 Study Notes ⭐</a>
+</div>
+
+<!-- ── Chapter Summary ── -->
+<section class="summary-section">
+  <span class="section-label reveal">Chapter Overview</span>
+  <div class="summary-card reveal">
+    <p class="summary-intro">Chapter 3 is one of the most consistently tested chapters in Class 10 boards — carrying 7–10 marks every year. It covers physical and chemical properties of metals and non-metals, the reactivity series, ionic bonding, full metallurgy (ore → refined metal), corrosion, and alloys. Mastering extraction processes, all key equations, and the reactivity series is essential for scoring full marks.</p>
+    <div class="summary-grid">
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(225,112,85,.12)">🔧</div><div class="st-title">Physical Properties</div></div>
+        <div class="st-body">Metals: shiny, malleable, ductile, conductors, high m.p. Non-metals: dull, brittle, insulators, low m.p. Exceptions: Hg (liquid metal), Graphite (conducts), Iodine (lustrous), Diamond (hard non-metal).</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(108,92,231,.12)">⚡</div><div class="st-title">Chemical Properties</div></div>
+        <div class="st-body">Reactions with O₂, H₂O, dilute acids. Metals → basic oxides. Non-metals → acidic oxides. Exceptions: Al₂O₃, ZnO = amphoteric. Na/K react violently with cold water. Cu, Ag, Au — no reaction with acid.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(0,184,148,.12)">📊</div><div class="st-title">Reactivity Series</div></div>
+        <div class="st-body">K &gt; Na &gt; Ca &gt; Mg &gt; Al &gt; Zn &gt; Fe &gt; Pb &gt; (H) &gt; Cu &gt; Ag &gt; Au &gt; Pt. Determines extraction method, displacement reactions, reaction with water and acids. Core of entire chapter.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(229,161,0,.12)">🔗</div><div class="st-title">Ionic Bonding</div></div>
+        <div class="st-body">Complete transfer of electrons. Metal → cation (+). Non-metal → anion (−). Electrostatic attraction = ionic bond. High m.p., conducts in molten/solution, soluble in water, insoluble in organic solvents.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(0,206,201,.12)">🏭</div><div class="st-title">Metallurgy</div></div>
+        <div class="st-body">4 steps: Concentration → Oxide formation (roasting/calcination) → Reduction (C or electrolysis) → Refining. Blast furnace (Fe), Hall-Héroult (Al), Downs cell (Na). Electrolytic refining for Cu.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(225,112,85,.10)">🌧️</div><div class="st-title">Corrosion</div></div>
+        <div class="st-body">Rusting = Fe + O₂ + H₂O → Fe₂O₃·xH₂O. Rust: porous, flaky, not protective. Al₂O₃: hard, impervious, protective (passivation). Prevention: galvanisation, painting, alloying, electroplating, sacrificial protection.</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(162,155,254,.20)">⚗️</div><div class="st-title">Alloys</div></div>
+        <div class="st-body">Homogeneous mixture of metals (or metal + non-metal). Brass (Cu+Zn), Bronze (Cu+Sn), Steel (Fe+C), Stainless steel (Fe+Cr+Ni), Solder (Pb+Sn), Duralumin (Al+Cu+Mg+Mn), Amalgam (Hg+Ag+Sn).</div>
+      </div>
+      <div class="summary-topic">
+        <div class="st-head"><div class="st-icon" style="background:rgba(253,174,154,.25)">🪨</div><div class="st-title">Ores &amp; Minerals</div></div>
+        <div class="st-body">Ore = mineral from which metal extracted profitably. Gangue = impurities. Flux removes gangue → slag. Important ores: Bauxite (Al), Haematite (Fe), ZnS (Zn), Galena (Pb), Cinnabar (Hg), Rock salt (Na).</div>
+      </div>
+    </div>
+
+    <!-- Key equations -->
+    <div class="key-eqs">
+      <div class="key-eqs-title">⚗️ Must-Know Equations</div>
+      <div class="eq-list">
+        <div class="eq-item"><div class="eq-type" style="background:#E17055">Fe + Steam</div><div class="eq-text">3Fe + 4H₂O(steam) → Fe₃O₄ + 4H₂↑ &nbsp;|&nbsp; Ca + 2H₂O → Ca(OH)₂ + H₂↑ (milky)</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#c0392b">Displacement</div><div class="eq-text">Fe + CuSO₄ → FeSO₄ + Cu &nbsp;|&nbsp; Fe₂O₃ + 2Al → Al₂O₃ + 2Fe (Thermite)</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#6C5CE7">Blast Furnace</div><div class="eq-text">Fe₂O₃ + 3CO → 2Fe + 3CO₂ &nbsp;|&nbsp; CaO + SiO₂ → CaSiO₃ (slag)</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#00A8A8">Roasting</div><div class="eq-text">2ZnS + 3O₂ → 2ZnO + 2SO₂↑ &nbsp;|&nbsp; ZnO + C → Zn + CO↑</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#e5a100">Amphoteric</div><div class="eq-text">Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O &nbsp;|&nbsp; Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#00B894">Electrolysis</div><div class="eq-text">Al³⁺ + 3e⁻ → Al (cathode) &nbsp;|&nbsp; 2NaCl(l) → 2Na + Cl₂ (Downs cell)</div></div>
+        <div class="eq-item"><div class="eq-type" style="background:#A29BFE">Rusting</div><div class="eq-text">4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O &nbsp;|&nbsp; 2Ag + H₂S → Ag₂S (black) + H₂</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Board Tips ── -->
+<section class="tips-section">
+  <span class="section-label reveal">📋 Top Board Tips</span>
+  <div class="tips-grid reveal">
+    <div class="tip-card">
+      <div class="tip-head">💡 Reactivity Series: Memorise the Order</div>
+      <div class="tip-body">Mnemonic: <strong>P</strong>lease <strong>S</strong>top <strong>C</strong>alling <strong>M</strong>e <strong>A</strong> <strong>Z</strong>any <strong>I</strong>ron <strong>P</strong>erson <strong>C</strong>an <strong>S</strong>ave <strong>G</strong>old <strong>P</strong>latinum (K, Na, Ca, Mg, Al, Zn, Fe, Pb, Cu, Ag, Au, Pt). Position determines extraction method + displacement ability.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Rust Formula: Always Write ·xH₂O</div>
+      <div class="tip-body">The correct formula is Fe₂O₃·xH₂O — not just Fe₂O₃. Missing the ·xH₂O will cost you marks every time. Also: both O₂ AND H₂O are needed for rusting — neither alone causes rust.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Ionic Conduction: The Key Rule</div>
+      <div class="tip-body">Ionic solid → does NOT conduct (ions fixed in lattice). Ionic molten/solution → DOES conduct (ions free to move). Sugar solution = no conduction (no ions formed). This distinction appears in MCQs and case-based questions every year.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Galvanised vs Tin-Plated</div>
+      <div class="tip-body">Zn &gt; Fe: galvanised iron has sacrificial protection even after scratching. Sn &lt; Fe: tin-plated iron corrodes FASTER when scratched (Fe becomes anode). This comparison is asked almost every 2 years.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Blast Furnace: CO is the Reducing Agent</div>
+      <div class="tip-body">Many students write "carbon reduces iron ore" — but the actual reducing agent is CO, not C directly. C burns to CO₂, then CO₂ + C → 2CO, and it's CO that reduces Fe₂O₃. This is the most common MCQ trap in this chapter.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-head">💡 Alloys: Name, Composition, Use</div>
+      <div class="tip-body">Always give all three: name + composition + use. Brass (Cu+Zn) ≠ Bronze (Cu+Sn) — most confused pair. Solder (Pb+Sn) has LOWER m.p. than either pure metal (eutectic mixture). German silver has NO silver (Cu+Zn+Ni).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Practice Navigation ── -->
+<section class="nav-section reveal" id="practice">
+  <div class="nav-sec-title">Ready to Practice?</div>
+  <div class="nav-sec-sub">All three modes are live — MCQ, full question bank, and comprehensive study notes.</div>
+  <div class="nav-cards-grid">
+    <a href="ch3-mcq.html" class="nav-card" style="--nc:#6C5CE7">
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(108,92,231,.12)">🎯</div><div class="nc-badge" style="background:rgba(108,92,231,.12);color:#6C5CE7">LIVE</div></div>
+      <div class="nc-title">MCQ Practice</div>
+      <div class="nc-desc">40 questions across Easy, Medium, Hard &amp; Board levels. Hints, streaks &amp; achievements included.</div>
+      <span class="nc-arrow">→</span>
+    </a>
+    <a href="ch3-pyq.html" class="nav-card" style="--nc:#e5a100">
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(229,161,0,.12)">📅</div><div class="nc-badge" style="background:rgba(229,161,0,.12);color:#a37c00">LIVE</div></div>
+      <div class="nc-title">Question Bank</div>
+      <div class="nc-desc">110 questions from CBSE 2013–2024. MCQ, VSA, SA I &amp; II, LA, Case Based. Click to reveal answers.</div>
+      <span class="nc-arrow">→</span>
+    </a>
+    <a href="ch3-study.html" class="nav-card" style="--nc:#E17055">
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(225,112,85,.12)">📚</div><div class="nc-badge" style="background:rgba(225,112,85,.12);color:#c0392b">LIVE ⭐ IMP</div></div>
+      <div class="nc-title">Study the Chapter</div>
+      <div class="nc-desc">Full NCERT notes — physical &amp; chemical properties, reactivity series, metallurgy, corrosion, alloys, and cheat sheet.</div>
+      <span class="nc-arrow">→</span>
+    </a>
+    <div class="nav-card wip-card">
+      <div class="wip-tag">Coming Soon</div>
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(225,112,85,.10)">📋</div></div>
+      <div class="nc-title">Case Based Questions</div>
+      <div class="nc-desc">Passage-based questions in the new CBSE pattern. Apply concepts to real scenarios.</div>
+    </div>
+    <div class="nav-card wip-card">
+      <div class="wip-tag">Coming Soon</div>
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(253,174,154,.20)">🧩</div></div>
+      <div class="nc-title">Competency Based Questions</div>
+      <div class="nc-desc">Application and analysis-level questions that test deeper understanding of metals and extraction.</div>
+    </div>
+    <div class="nav-card wip-card">
+      <div class="wip-tag">Coming Soon</div>
+      <div class="nc-top"><div class="nc-icon" style="background:rgba(255,234,167,.35)">✍️</div></div>
+      <div class="nc-title">VSA / Short / Long Questions</div>
+      <div class="nc-desc">1-mark to 5-mark structured questions with model answers for all question types.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftag">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch3-mcq.html">MCQ</a></li>
+    <li><a href="ch3-pyq.html">PYQ</a></li>
+    <li><a href="ch3-study.html">Study</a></li>
+  </ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 students &nbsp;·&nbsp; © 2026 VISTAR10</div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>28),{passive:true});
+  const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+  ham.addEventListener('click',()=>{const o=mob.classList.toggle('open');ham.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
+  function closeMob(){mob.classList.remove('open');ham.classList.remove('open');document.body.style.overflow='';}
+  const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VISTAR10 — Study Ch 3 · Metals &amp; Non-metals</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;--mint:#00CEC9;--peach:#FDAE9A;
+  --green:#00B894;--red:#E17055;--orange:#e5a100;--blue:#0984e3;
+  --text:#1A1A2E;--muted:#6B6B8A;--card:rgba(255,255,255,.88);
+  --cb:rgba(225,112,85,.15);--sh:0 6px 32px rgba(225,112,85,.09);--shh:0 14px 48px rgba(225,112,85,.16);
+  --acc:#E17055;--acc2:#c0392b;
+  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,4vw,5%);--sidebar:260px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px;}
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.13;animation:drift 22s ease-in-out infinite alternate;}
+.b1{width:clamp(200px,40vw,480px);height:clamp(200px,40vw,480px);background:#E17055;top:-10%;left:-6%;}
+.b2{width:clamp(140px,26vw,300px);height:clamp(140px,26vw,300px);background:#A29BFE;bottom:8%;right:-4%;animation-delay:-10s;}
+.b3{width:clamp(100px,20vw,240px);height:clamp(100px,20vw,240px);background:#00CEC9;top:50%;left:3%;animation-delay:-17s;}
+@keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(20px,-28px);}}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+nav.scrolled{background:rgba(245,244,255,.94);backdrop-filter:blur(22px);border-bottom:1px solid rgba(225,112,85,.12);box-shadow:0 4px 24px rgba(225,112,85,.08);}
+.logo{font-family:var(--fh);font-size:clamp(.9rem,1.8vw,1.2rem);font-weight:800;color:var(--acc2);display:flex;align-items:center;gap:7px;}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,var(--acc),var(--violet));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.nav-right{display:flex;gap:8px;align-items:center;}
+.nav-btn{background:rgba(225,112,85,.10);color:var(--acc2);font-size:.76rem;font-weight:600;padding:6px 14px;border-radius:50px;border:1.5px solid rgba(225,112,85,.22);cursor:pointer;transition:all .22s;white-space:nowrap;}
+.nav-btn:hover{background:var(--acc);color:#fff;}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--acc),var(--violet));z-index:400;width:0%;transition:width .08s;}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:100vh;position:relative;z-index:1;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}}
+.sidebar{position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:28px 0 32px;border-right:1px solid rgba(225,112,85,.10);background:rgba(245,244,255,.6);backdrop-filter:blur(12px);}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sb-title{font-family:var(--fh);font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;padding:0 20px;margin-bottom:14px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 20px;font-size:.76rem;font-weight:500;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:all .22s;line-height:1.3;}
+.sb-item:hover{color:var(--acc2);background:rgba(225,112,85,.05);}
+.sb-item.active{color:var(--acc2);font-weight:600;border-left-color:var(--acc);background:rgba(225,112,85,.07);}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.5;}
+.sb-item.active .sb-dot{opacity:1;}
+.sb-div{height:1px;background:rgba(225,112,85,.10);margin:8px 20px;}
+.sb-sub{padding-left:32px !important;font-size:.70rem !important;}
+.content{padding:clamp(72px,10vh,100px) clamp(20px,4vw,52px) clamp(48px,7vw,72px);}
+.hero{margin-bottom:clamp(32px,5vw,52px);}
+.bc{display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--muted);margin-bottom:14px;flex-wrap:wrap;}
+.bc a{color:var(--acc2);font-weight:500;}.bc a:hover{text-decoration:underline;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(225,112,85,.10);border:1px solid rgba(225,112,85,.22);border-radius:50px;padding:5px 14px;font-size:.66rem;font-weight:700;color:var(--acc2);margin-bottom:12px;letter-spacing:.4px;}
+.hero h1{font-family:var(--fh);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
+.hero h1 span{color:var(--acc);}
+.hero-sub{font-size:clamp(.86rem,1.1vw,.96rem);color:var(--muted);max-width:560px;line-height:1.65;font-weight:300;}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:50px;padding:4px 12px;font-size:.67rem;font-weight:500;color:var(--muted);}
+.pill .d{width:5px;height:5px;border-radius:50%;}
+.sec{margin-bottom:clamp(44px,7vw,68px);scroll-margin-top:78px;}
+.sec-num{font-family:var(--fh);font-size:.62rem;font-weight:700;color:var(--acc);letter-spacing:.8px;text-transform:uppercase;opacity:.8;margin-bottom:5px;}
+.sec-title{font-family:var(--fh);font-size:clamp(1.25rem,2.5vw,1.75rem);font-weight:800;color:var(--text);margin-bottom:5px;line-height:1.2;}
+.sec-hook{font-size:clamp(.88rem,1.1vw,.97rem);color:var(--acc2);font-weight:500;margin-bottom:18px;line-height:1.6;font-style:italic;}
+.divbar{width:38px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--acc),var(--violet));margin-bottom:18px;}
+.prose{font-size:clamp(.86rem,1.04vw,.94rem);color:var(--text);line-height:1.82;margin-bottom:14px;}
+.prose strong{font-weight:600;}
+.kt{background:linear-gradient(135deg,rgba(225,112,85,.12),rgba(225,112,85,.06));border-radius:5px;padding:1px 6px;font-weight:600;color:var(--acc2);}
+.card{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;padding:clamp(16px,2.8vw,24px);box-shadow:var(--sh);margin-bottom:14px;}
+.eq{background:rgba(225,112,85,.05);border:1.5px solid rgba(225,112,85,.15);border-radius:12px;padding:clamp(12px,2.2vw,18px);margin:12px 0;font-family:'Courier New',monospace;font-size:clamp(.80rem,1.1vw,.93rem);line-height:1.7;overflow-x:auto;}
+.eq .r{color:var(--acc);font-weight:700;}.eq .p{color:#00B894;font-weight:700;}.eq .ar{color:var(--orange);font-weight:700;margin:0 5px;}.eq .st{color:var(--muted);font-size:.80em;}.eq .cd{color:var(--orange);font-size:.76em;vertical-align:super;}
+.eqlbl{font-size:.65rem;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px;}
+.obs{font-size:.73rem;color:var(--muted);margin-top:5px;font-style:italic;}
+.callout{border-radius:12px;padding:clamp(11px,2vw,17px);margin:12px 0;display:flex;gap:11px;align-items:flex-start;}
+.ci{font-size:1.05rem;flex-shrink:0;margin-top:1px;}.cb{flex:1;}
+.ct{font-family:var(--fh);font-size:.72rem;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px;}
+.cx{font-size:clamp(.78rem,.94vw,.86rem);line-height:1.65;}
+.callout.tip{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.20);}.callout.tip .ct{color:var(--green);}
+.callout.warn{background:rgba(229,161,0,.07);border:1px solid rgba(229,161,0,.22);}.callout.warn .ct{color:var(--orange);}
+.callout.err{background:rgba(225,112,85,.07);border:1px solid rgba(225,112,85,.22);}.callout.err .ct{color:var(--red);}
+.callout.board{background:rgba(225,112,85,.07);border:1px solid rgba(225,112,85,.20);}.callout.board .ct{color:var(--acc2);}
+.tbl{width:100%;border-collapse:collapse;font-size:clamp(.74rem,.90vw,.82rem);margin:12px 0;border-radius:11px;overflow:hidden;box-shadow:var(--sh);}
+.tbl th{background:rgba(225,112,85,.10);padding:9px 13px;font-family:var(--fh);font-size:.70rem;font-weight:700;color:var(--acc2);text-align:left;letter-spacing:.3px;}
+.tbl td{padding:8px 13px;border-bottom:1px solid rgba(225,112,85,.08);line-height:1.5;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:nth-child(even) td{background:rgba(225,112,85,.03);}
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:14px 0;}
+.flip-card{height:155px;perspective:800px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:13px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:15px;box-shadow:var(--sh);}
+.flip-front{background:var(--card);border:1.5px solid var(--cb);}
+.flip-back{background:linear-gradient(135deg,var(--fc1,var(--acc)),var(--fc2,var(--violet)));color:#fff;transform:rotateY(180deg);}
+.ff-lbl{font-size:.60rem;font-weight:700;color:var(--acc2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.ff-eq{font-family:'Courier New',monospace;font-size:.78rem;color:var(--text);font-weight:700;line-height:1.5;}
+.fb-type{font-family:var(--fh);font-size:.86rem;font-weight:800;margin-bottom:4px;}
+.fb-key{font-size:.72rem;opacity:.92;line-height:1.5;}
+.cc{background:rgba(225,112,85,.04);border:1.5px solid rgba(225,112,85,.12);border-radius:13px;padding:17px;margin:14px 0;}
+.cc-title{font-family:var(--fh);font-size:.77rem;font-weight:700;color:var(--acc2);letter-spacing:.3px;text-transform:uppercase;margin-bottom:11px;}
+.cc-q{font-size:.86rem;color:var(--text);margin-bottom:7px;font-weight:500;}
+.cc-reveal{display:inline-flex;align-items:center;gap:5px;background:rgba(225,112,85,.10);border:1px solid rgba(225,112,85,.17);border-radius:50px;padding:5px 11px;font-size:.72rem;font-weight:600;color:var(--acc2);cursor:pointer;transition:all .22s;margin-bottom:10px;}
+.cc-reveal:hover{background:var(--acc);color:#fff;}
+.cc-ans{display:none;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.16);border-radius:8px;padding:9px 12px;font-size:.80rem;color:var(--text);line-height:1.65;margin-bottom:10px;}
+.cc-ans.show{display:block;}
+.cc-sep{height:1px;background:rgba(225,112,85,.10);margin:8px 0;}
+/* Reactivity scale */
+.react-scale{border-radius:14px;overflow:hidden;margin:14px 0;box-shadow:var(--sh);}
+.rs-row{display:flex;align-items:center;gap:0;transition:transform .2s;}
+.rs-row:hover{transform:translateX(4px);}
+.rs-pos{width:32px;height:36px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:.68rem;font-weight:800;color:#fff;flex-shrink:0;}
+.rs-metal{flex:1;height:36px;display:flex;align-items:center;padding:0 12px;font-family:var(--fh);font-size:.78rem;font-weight:700;}
+.rs-sym{width:44px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:.75rem;font-weight:800;color:#fff;}
+.rs-note{flex:2;height:36px;display:flex;align-items:center;padding:0 10px;font-size:.68rem;color:var(--muted);}
+/* Props grid */
+.props-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:14px 0;}
+.prop-card{background:var(--card);border:1.5px solid var(--cb);border-radius:14px;padding:16px;box-shadow:var(--sh);border-top:3px solid var(--pc,var(--acc));}
+.prop-icon{font-size:1.4rem;margin-bottom:8px;}
+.prop-title{font-family:var(--fh);font-size:.84rem;font-weight:800;margin-bottom:5px;}
+.prop-body{font-size:.76rem;color:var(--muted);line-height:1.6;}
+.prop-eg{font-size:.68rem;color:var(--acc2);font-weight:600;margin-top:5px;}
+/* Extraction steps */
+.steps{display:flex;flex-direction:column;gap:0;margin:14px 0;}
+.step{display:flex;gap:0;align-items:stretch;}
+.step-num{width:36px;display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.step-circle{width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;font-family:var(--fh);font-size:.80rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-line{flex:1;width:2px;background:rgba(225,112,85,.20);margin:0 auto;}
+.step:last-child .step-line{display:none;}
+.step-body{flex:1;padding:0 0 20px 14px;}
+.step-title{font-family:var(--fh);font-size:.88rem;font-weight:700;margin-bottom:5px;color:var(--text);}
+.step-desc{font-size:.80rem;color:var(--muted);line-height:1.65;}
+.step-eq{font-family:'Courier New',monospace;font-size:.74rem;background:rgba(225,112,85,.06);border:1px solid rgba(225,112,85,.14);border-radius:6px;padding:4px 8px;margin-top:6px;display:inline-block;}
+/* Alloy cards */
+.alloy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:14px 0;}
+.alloy-card{background:var(--card);border:1.5px solid var(--cb);border-radius:14px;padding:16px;box-shadow:var(--sh);transition:transform .25s;}
+.alloy-card:hover{transform:translateY(-3px);}
+.alloy-name{font-family:var(--fh);font-size:.90rem;font-weight:800;margin-bottom:4px;}
+.alloy-comp{font-family:'Courier New',monospace;font-size:.74rem;color:var(--acc2);font-weight:700;margin-bottom:6px;}
+.alloy-use{font-size:.74rem;color:var(--muted);line-height:1.55;}
+/* Cheat sheet */
+.cheat{background:linear-gradient(135deg,#1a0a0a,#2d0d0d,#200f0f);border-radius:20px;padding:clamp(22px,4vw,38px);color:#fff;margin-top:18px;}
+.cs-title{font-family:var(--fh);font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:800;margin-bottom:5px;}
+.cs-sub{font-size:.78rem;opacity:.58;margin-bottom:24px;}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:18px;}
+.cs-sec{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:13px;padding:17px;}
+.cs-sec-title{font-family:var(--fh);font-size:.75rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:11px;color:#ffb8a0;}
+.cs-item{font-size:.76rem;line-height:1.65;opacity:.87;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cs-item:last-child{border-bottom:none;}
+.cs-item strong{color:#ffb8a0;font-weight:600;}
+.cs-eq{font-family:'Courier New',monospace;font-size:.72rem;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;margin-top:2px;display:block;line-height:1.6;}
+.cs-copy{margin-top:18px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,184,160,.10);border:1px solid rgba(255,184,160,.22);border-radius:50px;padding:8px 16px;font-size:.74rem;font-weight:600;color:#ffb8a0;cursor:pointer;transition:all .22s;}
+.cs-copy:hover{background:rgba(255,184,160,.18);}
+/* Dark mode */
+body.dark{--bg:#0f0e1a;--text:#e8e6ff;--muted:#9896b0;--card:rgba(30,28,55,.88);--cb:rgba(225,112,85,.16);--sh:0 6px 32px rgba(0,0,0,.3);--shh:0 14px 48px rgba(0,0,0,.4);}
+body.dark nav.scrolled{background:rgba(15,14,26,.94);}
+body.dark .sidebar{background:rgba(15,14,26,.6);}
+body.dark .flip-front{background:rgba(30,28,55,.9);}
+body.dark .cheat{background:linear-gradient(135deg,#0e0404,#1a0808,#120505);}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+h3.sub{font-family:var(--fh);font-size:.96rem;font-weight:700;margin:18px 0 10px;color:var(--text);}
+footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(225,112,85,.10);padding:clamp(20px,3.5vw,34px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:13px;}
+body.dark footer{background:rgba(15,14,26,.7);}
+.flogo{font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--acc2);}
+.ftg{font-size:.68rem;color:var(--muted);margin-top:2px;}
+.flinks{display:flex;gap:16px;list-style:none;}
+.flinks a{font-size:.74rem;color:var(--muted);}.flinks a:hover{color:var(--acc);}
+.fcopy{font-size:.68rem;color:var(--muted);}
+.fcopy span{color:var(--acc);}
+@media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}}
+@media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="toggleDark()" id="darkBtn">🌙 Dark</button>
+    <a href="ch3.html" class="nav-btn">← Ch 3 Overview</a>
+  </div>
+</nav>
+
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-title">Chapter 3 · Contents</div>
+  <div class="sb-item active" onclick="goTo('s1')" id="sb-s1"><span class="sb-dot"></span>Physical Properties</div>
+  <div class="sb-item" onclick="goTo('s2')" id="sb-s2"><span class="sb-dot"></span>Chemical Properties</div>
+  <div class="sb-item sb-sub" onclick="goTo('s2a')" id="sb-s2a">↳ Reaction with O₂</div>
+  <div class="sb-item sb-sub" onclick="goTo('s2b')" id="sb-s2b">↳ Reaction with Water</div>
+  <div class="sb-item sb-sub" onclick="goTo('s2c')" id="sb-s2c">↳ Reaction with Acids</div>
+  <div class="sb-item sb-sub" onclick="goTo('s2d')" id="sb-s2d">↳ Displacement Reactions</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s3')" id="sb-s3"><span class="sb-dot"></span>Reactivity Series</div>
+  <div class="sb-item" onclick="goTo('s4')" id="sb-s4"><span class="sb-dot"></span>Ionic Bonding</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s5')" id="sb-s5"><span class="sb-dot"></span>Metallurgy & Extraction</div>
+  <div class="sb-item sb-sub" onclick="goTo('s5a')" id="sb-s5a">↳ Steps of Extraction</div>
+  <div class="sb-item sb-sub" onclick="goTo('s5b')" id="sb-s5b">↳ Refining</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s6')" id="sb-s6"><span class="sb-dot"></span>Corrosion & Prevention</div>
+  <div class="sb-item" onclick="goTo('s7')" id="sb-s7"><span class="sb-dot"></span>Alloys</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s8')" id="sb-s8"><span class="sb-dot"></span>⭐ Cheat Sheet</div>
+</aside>
+
+<main class="content">
+
+<!-- HERO -->
+<div class="hero reveal">
+  <div class="bc"><a href="vistar10.html">Home</a>›<a href="subjects.html">Science</a>›<a href="ch3.html">Chapter 3</a>›<span>Study Notes</span></div>
+  <div class="hero-badge">🔩 Chapter 3 · Metals &amp; Non-metals · Class 10 CBSE</div>
+  <h1>Metals &amp; <span>Non-metals</span></h1>
+  <p class="hero-sub">From reactivity series to blast furnaces — master every concept, reaction, and board question in this chapter.</p>
+  <div class="pills">
+    <div class="pill"><div class="d" style="background:#E17055"></div>8 Sections</div>
+    <div class="pill"><div class="d" style="background:#6C5CE7"></div>All Key Reactions</div>
+    <div class="pill"><div class="d" style="background:#00B894"></div>Flip Cards</div>
+    <div class="pill"><div class="d" style="background:#e5a100"></div>Board Tips</div>
+    <div class="pill"><div class="d" style="background:#0984e3"></div>Cheat Sheet</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     S1 · PHYSICAL PROPERTIES
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s1">
+  <div class="sec-num">Section 1</div>
+  <div class="sec-title">Physical Properties of Metals &amp; Non-metals</div>
+  <div class="sec-hook">Most metals are hard, shiny, and good conductors — but there are important exceptions every board paper tests.</div>
+  <div class="divbar"></div>
+
+  <div class="props-grid">
+    <div class="prop-card" style="--pc:#E17055">
+      <div class="prop-icon">🔨</div>
+      <div class="prop-title">Malleability</div>
+      <div class="prop-body">Metals can be beaten into thin sheets without breaking. Non-metals are brittle and shatter.</div>
+      <div class="prop-eg">Most malleable: Gold (Au). Gold foil = 0.0001 mm thin.</div>
+    </div>
+    <div class="prop-card" style="--pc:#6C5CE7">
+      <div class="prop-icon">🪡</div>
+      <div class="prop-title">Ductility</div>
+      <div class="prop-body">Metals can be drawn into thin wires. 1g of gold = 2 km wire. Non-metals break.</div>
+      <div class="prop-eg">Most ductile: Gold. Used in: copper wiring, aluminium cables.</div>
+    </div>
+    <div class="prop-card" style="--pc:#e5a100">
+      <div class="prop-icon">✨</div>
+      <div class="prop-title">Lustre</div>
+      <div class="prop-body">Metals have a shiny surface. Non-metals are generally dull.</div>
+      <div class="prop-eg">Exception: Iodine (non-metal) has metallic lustre. Graphite also shines.</div>
+    </div>
+    <div class="prop-card" style="--pc:#00B894">
+      <div class="prop-icon">⚡</div>
+      <div class="prop-title">Conductivity</div>
+      <div class="prop-body">Metals conduct heat and electricity due to free electrons. Non-metals generally don't.</div>
+      <div class="prop-eg">Exception: Graphite (non-metal) conducts electricity. Best conductor: Silver (Ag).</div>
+    </div>
+    <div class="prop-card" style="--pc:#0984e3">
+      <div class="prop-icon">🔔</div>
+      <div class="prop-title">Sonority</div>
+      <div class="prop-body">Metals produce a ringing sound when struck — they are sonorous. Non-metals are not.</div>
+      <div class="prop-eg">Used in: school bells, musical instruments.</div>
+    </div>
+    <div class="prop-card" style="--pc:#E17055">
+      <div class="prop-icon">🌡️</div>
+      <div class="prop-title">Melting & Boiling Points</div>
+      <div class="prop-body">Most metals have high melting points. Exceptions: Mercury (liquid at room temp), Gallium (melts in hand).</div>
+      <div class="prop-eg">Highest m.p.: Tungsten (W) at 3422°C. Used in bulb filaments.</div>
+    </div>
+  </div>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Critical Exceptions — Always Tested!</div><div class="cx">
+    <strong>Liquid metals:</strong> Mercury (Hg) — only liquid metal at room temp.<br>
+    <strong>Liquid non-metal:</strong> Bromine (Br₂) — only liquid non-metal at room temp.<br>
+    <strong>Best conductor of electricity:</strong> Silver (Ag) → Copper (Cu) → Gold (Au).<br>
+    <strong>Non-metal conductor:</strong> Graphite (form of carbon) — used in electrodes.<br>
+    <strong>Lustrous non-metal:</strong> Iodine (I₂) — has metallic lustre.<br>
+    <strong>Hardest natural substance:</strong> Diamond (form of carbon, non-metal).
+  </div></div></div>
+
+  <table class="tbl">
+    <thead><tr><th>Property</th><th>Metals</th><th>Non-metals</th></tr></thead>
+    <tbody>
+      <tr><td>State at room temp</td><td>Mostly solid (except Hg)</td><td>Solid, liquid (Br₂), or gas</td></tr>
+      <tr><td>Lustre</td><td>Shiny</td><td>Dull (except I₂, graphite)</td></tr>
+      <tr><td>Malleability</td><td>Malleable</td><td>Brittle (except graphite which is layered)</td></tr>
+      <tr><td>Ductility</td><td>Ductile</td><td>Not ductile</td></tr>
+      <tr><td>Conductivity</td><td>Good conductors</td><td>Poor conductors (except graphite)</td></tr>
+      <tr><td>Melting point</td><td>High (except K, Na, Hg)</td><td>Low (except diamond, graphite)</td></tr>
+      <tr><td>Density</td><td>High</td><td>Low</td></tr>
+      <tr><td>Sonority</td><td>Sonorous</td><td>Non-sonorous</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S2 · CHEMICAL PROPERTIES
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s2">
+  <div class="sec-num">Section 2</div>
+  <div class="sec-title">Chemical Properties of Metals</div>
+  <div class="sec-hook">Metals react differently with oxygen, water, and acids — the pattern of reactivity is the key to understanding this entire chapter.</div>
+  <div class="divbar"></div>
+
+  <h3 class="sub" id="s2a">🔥 2A — Reaction with Oxygen</h3>
+  <div class="prose">Most metals react with oxygen to form <strong>metal oxides</strong> (basic). Non-metals react with oxygen to form <strong>non-metal oxides</strong> (acidic).</div>
+
+  <div class="eqlbl">Metal + Oxygen → Metal Oxide (basic)</div>
+  <div class="eq">
+    <span class="r">2Mg</span> + <span class="r">O₂</span> <span class="ar">→</span> <span class="p">2MgO</span> <span class="st">(white powder, burns with brilliant white light)</span><br>
+    <span class="r">4Na</span> + <span class="r">O₂</span> <span class="ar">→</span> <span class="p">2Na₂O</span> <span class="st">(sodium oxide — very reactive)</span><br>
+    <span class="r">2Cu</span> + <span class="r">O₂</span> <span class="ar">→<span class="cd">heat</span></span> <span class="p">2CuO</span> <span class="st">(black copper oxide)</span><br>
+    <span class="r">4Al</span> + <span class="r">3O₂</span> <span class="ar">→</span> <span class="p">2Al₂O₃</span> <span class="st">(forms protective layer — passivation)</span>
+  </div>
+  <div class="eqlbl">Non-metal + Oxygen → Non-metal Oxide (acidic)</div>
+  <div class="eq">
+    <span class="r">C</span> + <span class="r">O₂</span> <span class="ar">→</span> <span class="p">CO₂</span> <span class="st">(acidic gas)</span><br>
+    <span class="r">S</span> + <span class="r">O₂</span> <span class="ar">→</span> <span class="p">SO₂</span> <span class="st">(acidic, causes acid rain)</span>
+  </div>
+
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Amphoteric Oxides</div><div class="cx">Al₂O₃ and ZnO react with BOTH acids and bases. Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O (acts like acid). Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O (acts like base). <strong>Board Tip:</strong> Amphoteric = reacts with both. Gold (Au) and Platinum (Pt) do not react with oxygen even on heating.</div></div></div>
+
+  <h3 class="sub" id="s2b">💧 2B — Reaction with Water</h3>
+  <div class="prose">Reactivity with water follows the same order as the reactivity series. Most reactive metals react explosively; least reactive metals don't react at all.</div>
+
+  <table class="tbl">
+    <thead><tr><th>Metal</th><th>Condition</th><th>Reaction</th><th>Products</th></tr></thead>
+    <tbody>
+      <tr><td>K (Potassium)</td><td>Cold water</td><td>Violent, catches fire</td><td>KOH + H₂↑ (yellow flame from K vapour)</td></tr>
+      <tr><td>Na (Sodium)</td><td>Cold water</td><td>Vigorous, may catch fire</td><td>NaOH + H₂↑</td></tr>
+      <tr><td>Ca (Calcium)</td><td>Cold water</td><td>Vigorous, no fire</td><td>Ca(OH)₂ (milky) + H₂↑</td></tr>
+      <tr><td>Mg (Magnesium)</td><td>Hot water / steam</td><td>Slow with hot water; reacts with steam</td><td>MgO + H₂↑</td></tr>
+      <tr><td>Al, Zn, Fe</td><td>Steam only</td><td>Moderate; need high temperature</td><td>Metal oxide + H₂↑</td></tr>
+      <tr><td>Cu, Ag, Au</td><td>No reaction</td><td>No reaction even with steam</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="eq">
+    <span class="r">2Na</span> + <span class="r">2H₂O</span> <span class="ar">→</span> <span class="p">2NaOH</span> + <span class="p">H₂↑</span> <span class="st">(vigorous, may catch fire)</span><br>
+    <span class="r">Ca</span> + <span class="r">2H₂O</span> <span class="ar">→</span> <span class="p">Ca(OH)₂</span> + <span class="p">H₂↑</span> <span class="st">(milky solution, no fire)</span><br>
+    <span class="r">3Fe</span> + <span class="r">4H₂O</span> <span class="ar">→<span class="cd">steam</span></span> <span class="p">Fe₃O₄</span> + <span class="p">4H₂↑</span> <span class="st">(steam only)</span>
+  </div>
+
+  <h3 class="sub" id="s2c">🧪 2C — Reaction with Dilute Acids</h3>
+  <div class="prose">Metals above hydrogen in the reactivity series displace H₂ from dilute acids. Metals below hydrogen (Cu, Ag, Au) do NOT react with dilute acids.</div>
+  <div class="eqlbl">Metal + Dilute Acid → Salt + Hydrogen ↑</div>
+  <div class="eq">
+    <span class="r">Zn</span> + <span class="r">H₂SO₄</span> <span class="ar">→</span> <span class="p">ZnSO₄</span> + <span class="p">H₂↑</span><br>
+    <span class="r">Fe</span> + <span class="r">2HCl</span> <span class="ar">→</span> <span class="p">FeCl₂</span> + <span class="p">H₂↑</span><br>
+    <span class="r">Mg</span> + <span class="r">2HCl</span> <span class="ar">→</span> <span class="p">MgCl₂</span> + <span class="p">H₂↑</span>
+  </div>
+  <div class="callout warn"><div class="ci">⚠️</div><div class="cb"><div class="ct">Copper Does NOT React with Dilute Acids</div><div class="cx">Cu is below H in the reactivity series, so it cannot displace H₂. However, Cu does dissolve in concentrated HNO₃ (oxidising acid). This is a common board trap — beware of options saying Cu + HCl → reaction.</div></div></div>
+
+  <h3 class="sub" id="s2d">🔄 2D — Displacement Reactions</h3>
+  <div class="prose">A <strong>more reactive metal</strong> can displace a <strong>less reactive metal</strong> from its salt solution in water. This is a key application of the reactivity series.</div>
+  <div class="eq">
+    <span class="r">Fe</span> + <span class="r">CuSO₄(aq)</span> <span class="ar">→</span> <span class="p">FeSO₄(aq)</span> + <span class="p">Cu↓</span> <span class="st">(iron nail turns copper-coloured, blue solution fades)</span><br>
+    <span class="r">Zn</span> + <span class="r">CuSO₄(aq)</span> <span class="ar">→</span> <span class="p">ZnSO₄(aq)</span> + <span class="p">Cu↓</span><br>
+    <span class="r">Cu</span> + <span class="r">AgNO₃(aq)</span> <span class="ar">→</span> <span class="p">Cu(NO₃)₂(aq)</span> + <span class="p">2Ag↓</span> <span class="st">(copper wire turns silvery)</span>
+  </div>
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Observation-Based Board Questions</div><div class="cx">Iron nail in CuSO₄: nail turns brown/copper-coloured; blue solution turns pale green (FeSO₄). <br>Copper wire in AgNO₃: wire turns silvery; colourless solution turns blue (Cu(NO₃)₂). <br>These observations are commonly asked in 3-mark experiment questions.</div></div></div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S3 · REACTIVITY SERIES
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s3">
+  <div class="sec-num">Section 3</div>
+  <div class="sec-title">The Reactivity Series</div>
+  <div class="sec-hook">The single most important tool in this chapter — it determines how metals react, how they're extracted, and how they're stored.</div>
+  <div class="divbar"></div>
+
+  <div class="react-scale">
+    <div class="rs-row"><div class="rs-pos" style="background:#c0392b">1</div><div class="rs-metal" style="background:#ffeaea;color:#c0392b">Potassium</div><div class="rs-sym" style="background:#c0392b">K</div><div class="rs-note">Most reactive · Catches fire with cold water · Stored in kerosene</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#e17055">2</div><div class="rs-metal" style="background:#fff0ec;color:#c0392b">Sodium</div><div class="rs-sym" style="background:#e17055">Na</div><div class="rs-note">Reacts vigorously with cold water · May catch fire · Stored in kerosene</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#e17055">3</div><div class="rs-metal" style="background:#fff0ec;color:#c0392b">Calcium</div><div class="rs-sym" style="background:#e17055">Ca</div><div class="rs-note">Reacts with cold water · No fire · Milky Ca(OH)₂ forms</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#e5a100">4</div><div class="rs-metal" style="background:#fffae8;color:#a37c00">Magnesium</div><div class="rs-sym" style="background:#e5a100">Mg</div><div class="rs-note">Reacts with hot water / steam · Burns brilliantly in air (white)</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#e5a100">5</div><div class="rs-metal" style="background:#fffae8;color:#a37c00">Aluminium</div><div class="rs-sym" style="background:#e5a100">Al</div><div class="rs-note">Reacts with steam · Protected by Al₂O₃ layer · Extracted by electrolysis</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#00B894">6</div><div class="rs-metal" style="background:#e8fff8;color:#007a58">Zinc</div><div class="rs-sym" style="background:#00B894">Zn</div><div class="rs-note">Reacts with steam & dilute acids · Extracted by carbon reduction · Galvanises iron</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#00B894">7</div><div class="rs-metal" style="background:#e8fff8;color:#007a58">Iron</div><div class="rs-sym" style="background:#00B894">Fe</div><div class="rs-note">Reacts with steam & dilute acids · Blast furnace · Rusts with O₂ + H₂O</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#00B894">8</div><div class="rs-metal" style="background:#e8fff8;color:#007a58">Lead</div><div class="rs-sym" style="background:#00B894">Pb</div><div class="rs-note">Reacts with dilute acids slowly · Below iron</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#6B6B8A">H</div><div class="rs-metal" style="background:#f5f5ff;color:#6B6B8A">Hydrogen</div><div class="rs-sym" style="background:#9896b0">H₂</div><div class="rs-note">Reference point — metals above H displace it from acids</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#0984e3">9</div><div class="rs-metal" style="background:#e8f4ff;color:#0662b0">Copper</div><div class="rs-sym" style="background:#0984e3">Cu</div><div class="rs-note">Below H · Does NOT react with dilute acids · Displaced by Fe/Zn · Thermal decomposition of Cu₂O</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#0984e3">10</div><div class="rs-metal" style="background:#e8f4ff;color:#0662b0">Silver</div><div class="rs-sym" style="background:#0984e3">Ag</div><div class="rs-note">Low reactivity · Found sometimes in free state · Occurs as Ag₂S ore</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#A29BFE">11</div><div class="rs-metal" style="background:#f0eeff;color:#5a4bd1">Gold</div><div class="rs-sym" style="background:#A29BFE">Au</div><div class="rs-note">Least reactive common metal · Found FREE in nature · Only dissolves in aqua regia</div></div>
+    <div class="rs-row"><div class="rs-pos" style="background:#A29BFE">12</div><div class="rs-metal" style="background:#f0eeff;color:#5a4bd1">Platinum</div><div class="rs-sym" style="background:#A29BFE">Pt</div><div class="rs-note">Very low reactivity · Found FREE in nature · Used as catalyst · Dissolves in aqua regia</div></div>
+  </div>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Mnemonic for Reactivity Series</div><div class="cx">
+    <strong>K Na Ca Mg Al Zn Fe Pb (H) Cu Ag Au Pt</strong><br>
+    "Please Stop Calling Me A Zany Iron Person Can Save Gold Platinum"<br>
+    Or: "<strong>K</strong>ings <strong>Na</strong>turally <strong>Ca</strong>re, <strong>Mg</strong>hty <strong>Al</strong>ways, <strong>Zn</strong>c <strong>Fe</strong>els <strong>Pb</strong>ad. <strong>H</strong>. <strong>Cu</strong>te <strong>Ag</strong>ents <strong>Au</strong>tomatically <strong>Pt</strong>."
+  </div></div></div>
+
+  <div class="cc">
+    <div class="cc-title">🧠 Concept Check — Reactivity Series</div>
+    <div class="cc-q">Q1: Which metal displaces iron from iron(II) sulphate solution?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Zinc or Magnesium (any metal more reactive than iron in the reactivity series). Zn + FeSO₄ → ZnSO₄ + Fe. Copper CANNOT displace iron because Cu is less reactive than Fe.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q2: A metal X does not react with cold water but reacts vigorously with steam. Where does X lie in the reactivity series?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">X lies between Ca (reacts with cold water) and Cu (does not react with steam). It is likely Mg, Al, Zn, or Fe — metals in the middle of the series that react with steam only.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q3: Why is gold found in free (native) state in nature?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Gold is at the bottom of the reactivity series — it is extremely unreactive. It does not combine with oxygen, water, or dilute acids, so it remains in the uncombined (elemental/native) state in nature.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S4 · IONIC BONDING
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s4">
+  <div class="sec-num">Section 4</div>
+  <div class="sec-title">Ionic Compounds &amp; Bonding</div>
+  <div class="sec-hook">Metals and non-metals react by transferring electrons — creating ionic compounds with unique properties.</div>
+  <div class="divbar"></div>
+
+  <div class="prose">When a metal reacts with a non-metal, the metal <strong>loses electrons</strong> to form a positively charged cation, and the non-metal <strong>gains electrons</strong> to form a negatively charged anion. The electrostatic attraction between cation and anion is the <span class="kt">ionic bond</span>.</div>
+
+  <div class="card">
+    <h3 class="sub" style="margin-top:0">Example: Formation of NaCl (Sodium Chloride)</h3>
+    <div class="eq">
+      Na (2,8,1) <span class="ar">→</span> Na⁺ (2,8) + e⁻ <span class="st">(loses 1 electron → stable octet)</span><br>
+      Cl (2,8,7) + e⁻ <span class="ar">→</span> Cl⁻ (2,8,8) <span class="st">(gains 1 electron → stable octet)</span><br>
+      Na⁺ + Cl⁻ <span class="ar">→</span> NaCl <span class="st">(ionic bond by electrostatic attraction)</span>
+    </div>
+    <div class="obs">Similarly: MgO forms when Mg (2,8,2) loses 2e⁻ → Mg²⁺ and O (2,6) gains 2e⁻ → O²⁻.</div>
+  </div>
+
+  <h3 class="sub">Properties of Ionic Compounds</h3>
+  <table class="tbl">
+    <thead><tr><th>Property</th><th>Ionic Compounds</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>Physical state</td><td>Solid at room temperature</td><td>Strong electrostatic forces between ions in lattice</td></tr>
+      <tr><td>Melting/Boiling point</td><td>High</td><td>Large energy needed to break ionic lattice</td></tr>
+      <tr><td>Solubility</td><td>Generally soluble in water</td><td>Polar water molecules surround and separate ions</td></tr>
+      <tr><td>Electrical conductivity (solid)</td><td>Do NOT conduct</td><td>Ions are fixed in lattice, not free to move</td></tr>
+      <tr><td>Electrical conductivity (molten/solution)</td><td>DO conduct</td><td>Ions are free to move and carry charge</td></tr>
+      <tr><td>Solubility in organic solvents</td><td>Generally insoluble</td><td>Non-polar solvents cannot break ionic lattice</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Most Common Board Question on Ionic Compounds</div><div class="cx">
+    "Ionic compounds do not conduct electricity in solid state but conduct in molten state or in aqueous solution." <br>
+    <strong>Reason:</strong> In solid state, ions are held in fixed positions in the crystal lattice. In molten state or solution, ions become free to move and carry electric current. This is asked every 2–3 years.
+  </div></div></div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S5 · METALLURGY & EXTRACTION
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s5">
+  <div class="sec-num">Section 5</div>
+  <div class="sec-title">Metallurgy &amp; Extraction of Metals</div>
+  <div class="sec-hook">Different metals need different extraction methods — the reactivity of the metal determines the process.</div>
+  <div class="divbar"></div>
+
+  <div class="prose"><span class="kt">Ore</span> = mineral from which a metal can be <em>profitably</em> extracted. <span class="kt">Mineral</span> = any naturally occurring compound of a metal. <span class="kt">Gangue</span> = earthy impurities mixed with the ore. <span class="kt">Flux</span> = substance added to remove gangue as slag.</div>
+
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Ore vs Mineral — The Key Distinction</div><div class="cx">All ores are minerals, but NOT all minerals are ores. Bauxite (Al₂O₃·2H₂O) is an ore of aluminium. Clay also contains aluminium compounds, but extraction from clay is not economical — so clay is a mineral, not an ore. This distinction is guaranteed 1 mark.</div></div></div>
+
+  <h3 class="sub">Common Ores to Know</h3>
+  <table class="tbl">
+    <thead><tr><th>Metal</th><th>Ore Name</th><th>Formula</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Aluminium</td><td>Bauxite</td><td>Al₂O₃·2H₂O</td><td>Oxide</td></tr>
+      <tr><td>Iron</td><td>Haematite</td><td>Fe₂O₃</td><td>Oxide</td></tr>
+      <tr><td>Iron</td><td>Magnetite</td><td>Fe₃O₄</td><td>Oxide</td></tr>
+      <tr><td>Copper</td><td>Copper pyrites</td><td>CuFeS₂</td><td>Sulphide</td></tr>
+      <tr><td>Zinc</td><td>Zinc blende</td><td>ZnS</td><td>Sulphide</td></tr>
+      <tr><td>Sodium</td><td>Rock salt</td><td>NaCl</td><td>Chloride</td></tr>
+      <tr><td>Mercury</td><td>Cinnabar</td><td>HgS</td><td>Sulphide</td></tr>
+      <tr><td>Lead</td><td>Galena</td><td>PbS</td><td>Sulphide</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub" id="s5a">🔧 Steps in Extraction of Metals</h3>
+  <div class="prose">The extraction method depends on the position of the metal in the reactivity series:</div>
+  <table class="tbl">
+    <thead><tr><th>Reactivity</th><th>Examples</th><th>Method</th></tr></thead>
+    <tbody>
+      <tr><td>Highly reactive (top)</td><td>K, Na, Ca, Mg, Al</td><td>Electrolysis of molten chloride/oxide</td></tr>
+      <tr><td>Medium reactivity (middle)</td><td>Zn, Fe, Sn, Pb, Cu</td><td>Reduction with coke (carbon) or CO</td></tr>
+      <tr><td>Low reactivity (bottom)</td><td>Hg, Ag, Au, Pt</td><td>Occur naturally or obtained by heating alone</td></tr>
+    </tbody>
+  </table>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num"><div class="step-circle">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Concentration of Ore (Beneficiation)</div>
+        <div class="step-desc">Remove gangue (earthy impurities) from the ore. Methods: Gravity separation, froth flotation (for sulphide ores), magnetic separation (for magnetic ores like Fe₃O₄), leaching (for Al from bauxite).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num"><div class="step-circle">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Conversion to Metal Oxide</div>
+        <div class="step-desc">Oxide ores are directly used. Sulphide ores → <strong>Roasting</strong> (heated in air). Carbonate ores → <strong>Calcination</strong> (heated without air).</div>
+        <div class="step-eq">Roasting: 2ZnS + 3O₂ → 2ZnO + 2SO₂↑</div>
+        <div class="step-eq">Calcination: ZnCO₃ → ZnO + CO₂↑</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num"><div class="step-circle">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Reduction to Metal</div>
+        <div class="step-desc">For medium-reactivity metals: reduction with coke (C) or CO. Highly reactive metals: electrolysis.</div>
+        <div class="step-eq">ZnO + C → Zn + CO↑ (carbon reduction)</div>
+        <div class="step-eq">Fe₂O₃ + 3CO → 2Fe + 3CO₂ (in blast furnace)</div>
+        <div class="step-eq">2Al₂O₃ →(electrolysis)→ 4Al + 3O₂ (Hall-Héroult)</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num"><div class="step-circle">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Refining (Purification)</div>
+        <div class="step-desc">The crude metal is purified. Most pure method: electrolytic refining (for Cu, Ag, Au, Ni). Other methods: liquation, distillation, zone refining.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn"><div class="ci">⚠️</div><div class="cb"><div class="ct">Roasting vs Calcination — Don't Confuse!</div><div class="cx">
+    <strong>Roasting</strong> = heating in excess AIR/O₂. Used for sulphide ores. Produces metal oxide + SO₂.<br>
+    <strong>Calcination</strong> = heating without air (or limited air). Used for carbonate/hydroxide ores. Produces metal oxide + CO₂ (or H₂O).<br>
+    Both convert the ore into the oxide form, which is then reduced. This is a 1-mark question almost every year.
+  </div></div></div>
+
+  <h3 class="sub">🏭 Blast Furnace (Extraction of Iron)</h3>
+  <div class="prose">Iron is extracted from haematite (Fe₂O₃) using a blast furnace. Coke (carbon) is both the fuel and the reducing agent.</div>
+  <div class="card">
+    <h3 class="sub" style="margin-top:0">Reactions inside the Blast Furnace</h3>
+    <div class="eq">
+      <span class="st">Zone 1 (combustion — hottest):</span><br>
+      <span class="r">C</span> + <span class="r">O₂</span> <span class="ar">→</span> <span class="p">CO₂</span><br><br>
+      <span class="st">Zone 2 (CO formation):</span><br>
+      <span class="r">CO₂</span> + <span class="r">C</span> <span class="ar">→</span> <span class="p">2CO</span> <span class="st">(carbon monoxide = main reducing agent)</span><br><br>
+      <span class="st">Zone 3 (reduction of iron ore):</span><br>
+      <span class="r">Fe₂O₃</span> + <span class="r">3CO</span> <span class="ar">→</span> <span class="p">2Fe</span> + <span class="p">3CO₂</span> <span class="st">(iron melts and flows to bottom)</span><br><br>
+      <span class="st">Zone 4 (slag formation — flux removes gangue):</span><br>
+      <span class="r">CaCO₃</span> <span class="ar">→</span> <span class="p">CaO</span> + <span class="p">CO₂</span> <span class="st">(flux decomposes)</span><br>
+      <span class="r">CaO</span> + <span class="r">SiO₂</span> <span class="ar">→</span> <span class="p">CaSiO₃</span> <span class="st">(slag = calcium silicate, floats on molten iron)</span>
+    </div>
+  </div>
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Board Tip — Blast Furnace</div><div class="cx">The main reducing agent in the blast furnace is <strong>CO (carbon monoxide)</strong>, not C directly. Limestone (CaCO₃) is added as flux. It forms slag (CaSiO₃) which floats on molten iron and is removed. The iron collected is called pig iron — it contains ~4% carbon and is brittle. Pig iron is converted to wrought iron (purest) or steel by removing excess carbon.</div></div></div>
+
+  <h3 class="sub">⚗️ Extraction of Aluminium (Hall-Héroult Process)</h3>
+  <div class="prose">Aluminium is very reactive — it cannot be reduced by carbon. It is extracted by <span class="kt">electrolysis</span> of molten alumina (Al₂O₃) dissolved in cryolite.</div>
+  <div class="eq">
+    <span class="st">At cathode (reduction):</span> Al³⁺ + 3e⁻ <span class="ar">→</span> <span class="p">Al</span> <span class="st">(aluminium metal deposited)</span><br>
+    <span class="st">At anode (oxidation):</span> 2O²⁻ <span class="ar">→</span> <span class="p">O₂</span> + 4e⁻ <span class="st">(O₂ burns carbon anode → CO₂)</span>
+  </div>
+  <div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Why Cryolite?</div><div class="cx">Pure Al₂O₃ melts at ~2000°C — too high for practical electrolysis. Cryolite (Na₃AlF₆) is added to lower the melting point to ~950°C and increase electrical conductivity. Fluorspar (CaF₂) is also added. Carbon anodes are gradually consumed by the O₂ produced and must be replaced periodically.</div></div></div>
+
+  <h3 class="sub" id="s5b">⚡ Electrolytic Refining</h3>
+  <div class="prose">The most effective method of purifying metals. Used for copper, silver, gold, nickel.</div>
+  <div class="card">
+    <table class="tbl" style="margin:0">
+      <thead><tr><th>Component</th><th>Material</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Anode</strong></td><td>Impure metal (e.g., impure Cu)</td><td>Dissolves into solution (oxidation)</td></tr>
+        <tr><td><strong>Cathode</strong></td><td>Pure metal (thin strip of pure Cu)</td><td>Pure metal deposits on it (reduction)</td></tr>
+        <tr><td><strong>Electrolyte</strong></td><td>Salt solution of the metal (e.g., CuSO₄)</td><td>Cu²⁺ ions migrate from anode to cathode</td></tr>
+        <tr><td><strong>Anode mud</strong></td><td>Impurities (Ag, Au, Pt, Fe, Zn)</td><td>Settle below anode — precious metals recovered</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Thermite Reaction</div><div class="ff-eq">Fe₂O₃ + 2Al → Al₂O₃ + 2Fe + Heat (~2500°C)</div><div style="font-size:.68rem;color:var(--muted);margin-top:6px">Tap to reveal key facts</div></div>
+        <div class="flip-back" style="--fc1:#e17055;--fc2:#c0392b"><div class="fb-type">Aluminothermic Reduction</div><div class="fb-key">Al reduces Fe₂O₃. Used in thermite welding of railway tracks. Highly exothermic — produces molten iron. Also an example of displacement reaction.</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Extraction of Zinc</div><div class="ff-eq">2ZnS + 3O₂ → 2ZnO + 2SO₂<br>ZnO + C → Zn + CO</div><div style="font-size:.68rem;color:var(--muted);margin-top:6px">Tap for full process</div></div>
+        <div class="flip-back" style="--fc1:#00B894;--fc2:#007a58"><div class="fb-type">Zinc Extraction</div><div class="fb-key">Ore: Zinc blende (ZnS). Step 1: Roast → ZnO + SO₂. Step 2: Reduce with carbon → Zn + CO. SO₂ is a pollutant — must be captured.</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Sodium Extraction (Downs Cell)</div><div class="ff-eq">2NaCl(l) →(electrolysis)→ 2Na + Cl₂</div><div style="font-size:.68rem;color:var(--muted);margin-top:6px">Tap to see why molten?</div></div>
+        <div class="flip-back" style="--fc1:#6C5CE7;--fc2:#A29BFE"><div class="fb-type">Why Molten NaCl?</div><div class="fb-key">In aqueous NaCl, H₂ forms at cathode (not Na) because H⁺ is preferentially discharged. In molten NaCl, no water → Na⁺ is discharged → Na metal forms at cathode. Cl₂ forms at anode.</div></div>
+      </div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front"><div class="ff-lbl">Al Passivation</div><div class="ff-eq">4Al + 3O₂ → 2Al₂O₃ (protective layer)</div><div style="font-size:.68rem;color:var(--muted);margin-top:6px">Tap to understand</div></div>
+        <div class="flip-back" style="--fc1:#e5a100;--fc2:#a37c00"><div class="fb-type">Why Al Seems Unreactive</div><div class="fb-key">Al is actually reactive, but Al₂O₃ layer is hard, impervious, and sticks firmly. It prevents further corrosion. Iron's rust (Fe₂O₃·xH₂O) is porous and flaky — does NOT protect iron.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S6 · CORROSION & PREVENTION
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s6">
+  <div class="sec-num">Section 6</div>
+  <div class="sec-title">Corrosion &amp; Prevention</div>
+  <div class="sec-hook">Corrosion costs industries billions every year — understanding it and preventing it is a real-world application of this chapter.</div>
+  <div class="divbar"></div>
+
+  <div class="prose"><span class="kt">Corrosion</span> = deterioration of a metal due to reaction with its environment (O₂, H₂O, CO₂, acids). <span class="kt">Rusting</span> = specific corrosion of iron forming hydrated iron(III) oxide.</div>
+
+  <div class="card">
+    <h3 class="sub" style="margin-top:0">Rusting of Iron</h3>
+    <div class="eq">
+      <span class="r">4Fe</span> + <span class="r">3O₂</span> + <span class="r">xH₂O</span> <span class="ar">→</span> <span class="p">2Fe₂O₃·xH₂O</span>
+    </div>
+    <div class="obs">Rust = hydrated iron(III) oxide (Fe₂O₃·xH₂O). Reddish-brown, porous, flaky. Rusting requires BOTH O₂ AND H₂O — neither alone causes rusting.</div>
+  </div>
+
+  <div class="callout err"><div class="ci">❌</div><div class="cb"><div class="ct">Why Rust Does NOT Protect Iron</div><div class="cx">Rust (Fe₂O₃·xH₂O) is porous and flaky. It keeps falling off, exposing fresh iron to further rusting. Contrast this with Al₂O₃ (aluminium oxide) which is hard, impervious, and sticks firmly — it actually protects aluminium. This distinction is key to HOTS questions.</div></div></div>
+
+  <h3 class="sub">Methods of Preventing Corrosion</h3>
+  <div class="props-grid">
+    <div class="prop-card" style="--pc:#E17055">
+      <div class="prop-icon">🎨</div>
+      <div class="prop-title">Painting / Oiling</div>
+      <div class="prop-body">Barriers prevent contact with air and moisture. Used on iron gates, bridges, machinery.</div>
+      <div class="prop-eg">Limitation: protects only as long as coating is intact. Scratches expose metal.</div>
+    </div>
+    <div class="prop-card" style="--pc:#00B894">
+      <div class="prop-icon">🔩</div>
+      <div class="prop-title">Galvanisation</div>
+      <div class="prop-body">Iron coated with zinc (Zn). Zinc is more reactive — acts as sacrificial anode, corrodes preferentially.</div>
+      <div class="prop-eg">Advantage: protects even when scratched (Zn corrodes, Fe is safe). Used in roofing, buckets.</div>
+    </div>
+    <div class="prop-card" style="--pc:#6C5CE7">
+      <div class="prop-icon">⚡</div>
+      <div class="prop-title">Electroplating</div>
+      <div class="prop-body">Deposit a protective metal layer (Cr, Ni, Sn) by electrolysis. Used on bicycle parts, car bumpers.</div>
+      <div class="prop-eg">Chromium plating = shiny + hard + corrosion-resistant. Tin plating = food cans (tin is non-toxic).</div>
+    </div>
+    <div class="prop-card" style="--pc:#e5a100">
+      <div class="prop-icon">🔬</div>
+      <div class="prop-title">Alloying</div>
+      <div class="prop-body">Mixing metals to create alloys with better corrosion resistance. E.g., stainless steel (Fe + Cr + Ni).</div>
+      <div class="prop-eg">Stainless steel does not rust. Used in kitchen utensils, surgical instruments.</div>
+    </div>
+    <div class="prop-card" style="--pc:#0984e3">
+      <div class="prop-icon">🛡️</div>
+      <div class="prop-title">Cathodic Protection</div>
+      <div class="prop-body">Attach a more reactive metal (Mg block) to iron structures. Mg corrodes instead of iron.</div>
+      <div class="prop-eg">Used in pipelines, ship hulls, underground tanks. Also called sacrificial protection.</div>
+    </div>
+    <div class="prop-card" style="--pc:#E17055">
+      <div class="prop-icon">🫙</div>
+      <div class="prop-title">Anodising</div>
+      <div class="prop-body">Electrochemically thicken the Al₂O₃ layer on aluminium — makes the protective layer even stronger.</div>
+      <div class="prop-eg">Used on aluminium cookware, aircraft parts, smartphone frames.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S7 · ALLOYS
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s7">
+  <div class="sec-num">Section 7</div>
+  <div class="sec-title">Alloys</div>
+  <div class="sec-hook">Pure metals are often too soft, too reactive, or too expensive — alloys solve all these problems.</div>
+  <div class="divbar"></div>
+
+  <div class="prose">An <span class="kt">alloy</span> is a homogeneous mixture of two or more metals (or a metal and a non-metal). Alloys have better properties than the pure metals — harder, stronger, lower melting point, more corrosion-resistant, or changed colour.</div>
+
+  <div class="alloy-grid">
+    <div class="alloy-card">
+      <div class="alloy-name">Brass</div>
+      <div class="alloy-comp">Cu (70%) + Zn (30%)</div>
+      <div class="alloy-use">Harder than pure copper. Used in: musical instruments, taps, locks, hinges. Does not spark.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">Bronze</div>
+      <div class="alloy-comp">Cu + Sn (tin)</div>
+      <div class="alloy-use">Very hard and corrosion-resistant. Used in: statues, coins, bells, ship propellers, medals.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">Stainless Steel</div>
+      <div class="alloy-comp">Fe + Cr (10–18%) + Ni</div>
+      <div class="alloy-use">Doesn't rust. Used in: kitchen utensils, surgical instruments, automobiles, cutlery.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">Solder</div>
+      <div class="alloy-comp">Pb + Sn (50:50)</div>
+      <div class="alloy-use">Very low melting point. Used in: soldering electronic circuits, joining metal pieces.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">Duralumin</div>
+      <div class="alloy-comp">Al + Cu + Mg + Mn</div>
+      <div class="alloy-use">Lightweight and strong. Used in: aircraft bodies, spacecraft, bicycle frames.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">Amalgam</div>
+      <div class="alloy-comp">Hg + another metal</div>
+      <div class="alloy-use">Mercury alloy. Used in: dental fillings (Hg + Ag + Sn), mirror backing.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">German Silver</div>
+      <div class="alloy-comp">Cu + Zn + Ni</div>
+      <div class="alloy-use">Silver-coloured, but contains no silver! Used in: jewellery, utensils, electrical contacts.</div>
+    </div>
+    <div class="alloy-card">
+      <div class="alloy-name">Rose Gold</div>
+      <div class="alloy-comp">Au + Cu</div>
+      <div class="alloy-use">Pink/rose colour. Harder than pure gold. Used in: jewellery, watches.</div>
+    </div>
+  </div>
+
+  <div class="callout board"><div class="ci">📋</div><div class="cb"><div class="ct">Why Are Pure Metals Alloyed?</div><div class="cx">
+    Pure gold (24 carat) is too soft for jewellery — it bends easily. Mixed with Cu/Ag → harder alloy (22 carat = 22 parts Au + 2 parts other metal per 24 parts).<br>
+    Pure iron is too reactive and brittle → mixed with carbon to make steel (stronger) or with Cr/Ni to make stainless steel (corrosion-resistant).<br>
+    Pure sodium dissolves explosively in water → not useful as a material by itself.
+  </div></div></div>
+
+  <div class="cc">
+    <div class="cc-title">🧠 Concept Check — Alloys &amp; Corrosion</div>
+    <div class="cc-q">Q1: An iron nail is dipped in copper sulphate solution. Write the observation and equation.</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Observation: The iron nail turns brown/copper-coloured. The blue CuSO₄ solution gradually turns pale green (FeSO₄ forms).<br>Equation: Fe + CuSO₄ → FeSO₄ + Cu. Iron (more reactive) displaces copper from its salt solution. This is a displacement reaction.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q2: Why is galvanisation better than painting for protecting iron?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">Painting forms a barrier that protects only as long as the paint is intact. If the paint is scratched, iron is directly exposed to air/moisture and rusts. Galvanisation uses zinc (more reactive than iron). Even if the zinc coating is scratched, zinc corrodes preferentially (sacrificial anode), protecting the iron beneath. Galvanisation provides electrochemical protection, not just a physical barrier.</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q3: German Silver contains no silver. What is its composition and why is it used?</div>
+    <button class="cc-reveal" onclick="revCC(this)">Show Answer</button>
+    <div class="cc-ans">German Silver = Cu + Zn + Ni. It has a silver-like appearance despite containing no silver. It is cheaper than silver, harder, and corrosion-resistant. Used in jewellery, cutlery, and utensils as a silver substitute. It is an example of how alloys can mimic the appearance of expensive metals at lower cost.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S8 · CHEAT SHEET
+══════════════════════════════════════════ -->
+<section class="sec reveal" id="s8">
+  <div class="sec-num">Section 8</div>
+  <div class="sec-title">⭐ Cheat Sheet</div>
+  <div class="sec-hook">Everything you need for board exam day — scan this the night before.</div>
+  <div class="divbar"></div>
+
+  <div class="cheat" id="cheatSheet">
+    <div class="cs-title">Metals &amp; Non-metals — Board Cheat Sheet</div>
+    <div class="cs-sub">Key facts, reactions, and distinctions for Class 10 CBSE</div>
+    <div class="cs-grid">
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Physical Properties</div>
+        <div class="cs-item"><strong>Malleable:</strong> Metals. Non-metals = brittle.</div>
+        <div class="cs-item"><strong>Ductile:</strong> Metals. Gold = most ductile.</div>
+        <div class="cs-item"><strong>Lustre:</strong> Metals. Exception: Iodine (non-metal).</div>
+        <div class="cs-item"><strong>Conductors:</strong> Metals. Exception: Graphite (non-metal).</div>
+        <div class="cs-item"><strong>Liquid metal:</strong> Mercury (Hg).</div>
+        <div class="cs-item"><strong>Liquid non-metal:</strong> Bromine (Br₂).</div>
+        <div class="cs-item"><strong>Hardest substance:</strong> Diamond (non-metal, carbon).</div>
+        <div class="cs-item"><strong>Best electrical conductor:</strong> Silver → Copper → Gold.</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Reactivity Series (Top → Bottom)</div>
+        <div class="cs-item"><strong>K, Na, Ca</strong> → react with cold water, catch fire</div>
+        <div class="cs-item"><strong>Mg</strong> → reacts with hot water / steam</div>
+        <div class="cs-item"><strong>Al, Zn, Fe</strong> → react with steam + dilute acids</div>
+        <div class="cs-item"><strong>Pb</strong> → reacts slowly with dilute acids</div>
+        <div class="cs-item"><strong>[H₂] reference point</strong></div>
+        <div class="cs-item"><strong>Cu, Ag, Au, Pt</strong> → do NOT react with dilute acids</div>
+        <div class="cs-item"><strong>Au, Pt</strong> → found FREE in nature</div>
+        <div class="cs-item"><strong>Na, K</strong> → stored in kerosene. P → stored in water.</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Key Reactions</div>
+        <div class="cs-item"><strong>Mg + O₂:</strong><span class="cs-eq">2Mg + O₂ → 2MgO (brilliant white)</span></div>
+        <div class="cs-item"><strong>Cu + O₂:</strong><span class="cs-eq">2Cu + O₂ → 2CuO (black)</span></div>
+        <div class="cs-item"><strong>Na + H₂O:</strong><span class="cs-eq">2Na + 2H₂O → 2NaOH + H₂↑</span></div>
+        <div class="cs-item"><strong>Fe + H₂O (steam):</strong><span class="cs-eq">3Fe + 4H₂O → Fe₃O₄ + 4H₂↑</span></div>
+        <div class="cs-item"><strong>Thermite:</strong><span class="cs-eq">Fe₂O₃ + 2Al → Al₂O₃ + 2Fe + heat</span></div>
+        <div class="cs-item"><strong>Displacement:</strong><span class="cs-eq">Fe + CuSO₄ → FeSO₄ + Cu</span></div>
+        <div class="cs-item"><strong>Rusting:</strong><span class="cs-eq">4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O</span></div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Extraction Methods</div>
+        <div class="cs-item"><strong>K, Na, Ca, Mg, Al</strong> → Electrolysis of molten salt</div>
+        <div class="cs-item"><strong>Zn, Fe, Pb, Sn</strong> → Carbon/CO reduction</div>
+        <div class="cs-item"><strong>Hg, Ag, Au</strong> → Occur free or thermal decomposition</div>
+        <div class="cs-item"><strong>Roasting:</strong> Sulphide ore + O₂ → Oxide + SO₂</div>
+        <div class="cs-item"><strong>Calcination:</strong> Carbonate → Oxide + CO₂ (no air)</div>
+        <div class="cs-item"><strong>Blast furnace:</strong> Main reducer = CO (not C directly)</div>
+        <div class="cs-item"><strong>Hall-Héroult:</strong> Al₂O₃ in cryolite → electrolysis → Al</div>
+        <div class="cs-item"><strong>Cryolite:</strong> Lowers Al₂O₃ m.p. from 2000°C to ~950°C</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Alloys (Must Know)</div>
+        <div class="cs-item"><strong>Brass:</strong> Cu + Zn — instruments, taps</div>
+        <div class="cs-item"><strong>Bronze:</strong> Cu + Sn — statues, bells, medals</div>
+        <div class="cs-item"><strong>Stainless steel:</strong> Fe + Cr + Ni — utensils, surgical</div>
+        <div class="cs-item"><strong>Solder:</strong> Pb + Sn — electronic soldering</div>
+        <div class="cs-item"><strong>Duralumin:</strong> Al + Cu + Mg — aircraft bodies</div>
+        <div class="cs-item"><strong>Amalgam:</strong> Hg + metal — dental fillings</div>
+        <div class="cs-item"><strong>German Silver:</strong> Cu + Zn + Ni — no silver in it!</div>
+        <div class="cs-item"><strong>24 carat gold</strong> = pure gold (too soft for jewellery)</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Corrosion &amp; Ionic Compounds</div>
+        <div class="cs-item"><strong>Rusting needs:</strong> O₂ AND H₂O (both required)</div>
+        <div class="cs-item"><strong>Rust:</strong> Fe₂O₃·xH₂O — porous, does NOT protect</div>
+        <div class="cs-item"><strong>Al₂O₃:</strong> Hard, impervious — protects Al</div>
+        <div class="cs-item"><strong>Galvanisation:</strong> Zn coat on Fe — sacrificial anode</div>
+        <div class="cs-item"><strong>Ionic solid:</strong> Does NOT conduct electricity</div>
+        <div class="cs-item"><strong>Ionic molten/solution:</strong> DOES conduct</div>
+        <div class="cs-item"><strong>Ionic bond:</strong> Electron transfer (not sharing)</div>
+        <div class="cs-item"><strong>Common mistakes:</strong> Cu reacts with dilute HCl (❌), Al is unreactive (❌ — just passivated)</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Electrolytic Refining</div>
+        <div class="cs-item"><strong>Anode:</strong> Impure metal (dissolves — oxidation)</div>
+        <div class="cs-item"><strong>Cathode:</strong> Pure metal (grows — reduction)</div>
+        <div class="cs-item"><strong>Electrolyte:</strong> Salt solution of that metal</div>
+        <div class="cs-item"><strong>Anode mud:</strong> Precious impurities (Au, Ag, Pt)</div>
+        <div class="cs-item"><strong>Example:</strong> Cu refining — CuSO₄ electrolyte</div>
+        <div class="cs-item"><strong>Downs cell:</strong> Molten NaCl → Na + Cl₂</div>
+        <div class="cs-item"><strong>Why molten NaCl?</strong> Aqueous → H₂ at cathode, not Na</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">Common Board Mistakes to Avoid</div>
+        <div class="cs-item">❌ Al is unreactive → ✅ Al is reactive but passivated by Al₂O₃</div>
+        <div class="cs-item">❌ Cu reacts with dilute HCl → ✅ Cu is below H, no reaction</div>
+        <div class="cs-item">❌ All minerals are ores → ✅ Only economically extractable minerals are ores</div>
+        <div class="cs-item">❌ Rusting needs only O₂ → ✅ Needs BOTH O₂ AND H₂O</div>
+        <div class="cs-item">❌ Ionic solids conduct electricity → ✅ Only in molten/solution state</div>
+        <div class="cs-item">❌ C reduces Na, K → ✅ Electrolysis needed for reactive metals</div>
+        <div class="cs-item">❌ German Silver has silver → ✅ No silver, it's Cu+Zn+Ni</div>
+      </div>
+
+    </div>
+    <button class="cs-copy" onclick="copyCheat()">📋 Copy Cheat Sheet Text</button>
+  </div>
+</section>
+
+</main>
+</div><!-- end layout -->
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks">
+    <li><a href="vistar10.html">Home</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch3.html">Ch 3</a></li>
+    <li><a href="ch3-mcq.html">MCQ</a></li>
+    <li><a href="ch3-pyq.html">PYQ</a></li>
+  </ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 · © 2026 VISTAR10</div>
+</footer>
+
+<script>
+// Progress bar
+const progBar=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  progBar.style.width=pct+'%';
+},{passive:true});
+
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>28),{passive:true});
+
+// Dark mode
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent=document.body.classList.contains('dark')?'☀️ Light':'🌙 Dark';
+}
+
+// Sidebar + scroll spy
+const sections=['s1','s2','s2a','s2b','s2c','s2d','s3','s4','s5','s5a','s5b','s6','s7','s8'];
+function goTo(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      sections.forEach(s=>{
+        const sb=document.getElementById('sb-'+s);
+        if(sb)sb.classList.toggle('active',s===e.target.id);
+      });
+    }
+  });
+},{threshold:0.15,rootMargin:'-60px 0px -40% 0px'});
+sections.forEach(s=>{const el=document.getElementById(s);if(el)io.observe(el);});
+
+// Reveal on scroll
+const revIO=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(el=>revIO.observe(el));
+
+// Concept check reveal
+function revCC(btn){
+  const ans=btn.nextElementSibling;
+  if(ans&&ans.classList.contains('cc-ans')){
+    const showing=ans.classList.toggle('show');
+    btn.textContent=showing?'Hide Answer':'Show Answer';
+  }
+}
+
+// Copy cheat sheet
+function copyCheat(){
+  const items=document.querySelectorAll('#cheatSheet .cs-item');
+  const text=Array.from(items).map(i=>i.textContent.trim()).join('\n');
+  navigator.clipboard.writeText('=== VISTAR10 Ch3 Cheat Sheet ===\n\n'+text).then(()=>{
+    const btn=document.querySelector('.cs-copy');
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Cheat Sheet Text',2000);
+  });
+}
+</script>
+</body>
+</html>

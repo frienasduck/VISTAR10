@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VISTAR10 — Study Ch 1 · Chemical Reactions & Equations</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#F5F4FF;--violet:#6C5CE7;--vlt:#A29BFE;--mint:#00CEC9;--peach:#FDAE9A;
+  --green:#00B894;--red:#E17055;--orange:#e5a100;--blue:#0984e3;
+  --text:#1A1A2E;--muted:#6B6B8A;--card:rgba(255,255,255,.88);
+  --cb:rgba(108,92,231,.13);--sh:0 6px 32px rgba(108,92,231,.09);--shh:0 14px 48px rgba(108,92,231,.16);
+  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--px:clamp(1rem,4vw,5%);--sidebar:260px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--vlt);border-radius:99px;}
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.13;animation:drift 22s ease-in-out infinite alternate;}
+.b1{width:clamp(200px,40vw,480px);height:clamp(200px,40vw,480px);background:#A29BFE;top:-10%;left:-6%;}
+.b2{width:clamp(140px,26vw,300px);height:clamp(140px,26vw,300px);background:#00CEC9;bottom:8%;right:-4%;animation-delay:-10s;}
+.b3{width:clamp(100px,20vw,240px);height:clamp(100px,20vw,240px);background:#FDAE9A;top:50%;left:3%;animation-delay:-17s;}
+@keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(20px,-28px);}}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:13px var(--px);transition:background .4s;}
+nav.scrolled{background:rgba(245,244,255,.94);backdrop-filter:blur(22px);border-bottom:1px solid rgba(108,92,231,.09);box-shadow:0 4px 24px rgba(108,92,231,.07);}
+.logo{font-family:var(--fh);font-size:clamp(.9rem,1.8vw,1.2rem);font-weight:800;color:var(--violet);display:flex;align-items:center;gap:7px;}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,var(--violet),var(--mint));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;animation:spin 7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.nav-right{display:flex;gap:8px;align-items:center;}
+.nav-btn{background:rgba(108,92,231,.10);color:var(--violet);font-size:.76rem;font-weight:600;padding:6px 14px;border-radius:50px;border:1.5px solid rgba(108,92,231,.18);cursor:pointer;transition:all .22s;white-space:nowrap;}
+.nav-btn:hover{background:var(--violet);color:#fff;}
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--mint));z-index:400;width:0%;transition:width .08s;}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:100vh;position:relative;z-index:1;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}}
+.sidebar{position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:28px 0 32px;border-right:1px solid rgba(108,92,231,.09);background:rgba(245,244,255,.6);backdrop-filter:blur(12px);}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sb-title{font-family:var(--fh);font-size:.62rem;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;padding:0 20px;margin-bottom:14px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 20px;font-size:.76rem;font-weight:500;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:all .22s;line-height:1.3;}
+.sb-item:hover{color:var(--violet);background:rgba(108,92,231,.05);}
+.sb-item.active{color:var(--violet);font-weight:600;border-left-color:var(--violet);background:rgba(108,92,231,.07);}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.5;}
+.sb-item.active .sb-dot{opacity:1;}
+.sb-div{height:1px;background:rgba(108,92,231,.09);margin:8px 20px;}
+.sb-sub{padding-left:32px !important;font-size:.70rem !important;}
+.content{padding:clamp(72px,10vh,100px) clamp(20px,4vw,52px) clamp(48px,7vw,72px);}
+.hero{margin-bottom:clamp(32px,5vw,52px);}
+.bc{display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--muted);margin-bottom:14px;flex-wrap:wrap;}
+.bc a{color:var(--violet);font-weight:500;}.bc a:hover{text-decoration:underline;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(108,92,231,.10);border:1px solid rgba(108,92,231,.20);border-radius:50px;padding:5px 14px;font-size:.66rem;font-weight:700;color:var(--violet);margin-bottom:12px;letter-spacing:.4px;}
+.hero h1{font-family:var(--fh);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
+.hero h1 span{color:var(--violet);}
+.hero-sub{font-size:clamp(.86rem,1.1vw,.96rem);color:var(--muted);max-width:560px;line-height:1.65;font-weight:300;}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.80);border:1px solid var(--cb);border-radius:50px;padding:4px 12px;font-size:.67rem;font-weight:500;color:var(--muted);}
+.pill .d{width:5px;height:5px;border-radius:50%;}
+.sec{margin-bottom:clamp(44px,7vw,68px);scroll-margin-top:78px;}
+.sec-num{font-family:var(--fh);font-size:.62rem;font-weight:700;color:var(--violet);letter-spacing:.8px;text-transform:uppercase;opacity:.6;margin-bottom:5px;}
+.sec-title{font-family:var(--fh);font-size:clamp(1.25rem,2.5vw,1.75rem);font-weight:800;color:var(--text);margin-bottom:5px;line-height:1.2;}
+.sec-hook{font-size:clamp(.88rem,1.1vw,.97rem);color:var(--violet);font-weight:500;margin-bottom:18px;line-height:1.6;font-style:italic;}
+.divbar{width:38px;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--violet),var(--mint));margin-bottom:18px;}
+.prose{font-size:clamp(.86rem,1.04vw,.94rem);color:var(--text);line-height:1.82;margin-bottom:14px;}
+.prose strong{font-weight:600;}
+.kt{background:linear-gradient(135deg,rgba(108,92,231,.12),rgba(162,155,254,.07));border-radius:5px;padding:1px 6px;font-weight:600;color:var(--violet);}
+.card{background:var(--card);border:1.5px solid var(--cb);border-radius:18px;padding:clamp(16px,2.8vw,24px);box-shadow:var(--sh);margin-bottom:14px;}
+.eq{background:rgba(108,92,231,.05);border:1.5px solid rgba(108,92,231,.13);border-radius:12px;padding:clamp(12px,2.2vw,18px);margin:12px 0;font-family:'Courier New',monospace;font-size:clamp(.80rem,1.1vw,.93rem);line-height:1.7;overflow-x:auto;}
+.eq .r{color:#6C5CE7;font-weight:700;}.eq .p{color:#00B894;font-weight:700;}.eq .ar{color:var(--orange);font-weight:700;margin:0 5px;}.eq .st{color:var(--muted);font-size:.80em;}.eq .cd{color:var(--orange);font-size:.76em;vertical-align:super;}
+.eqlbl{font-size:.65rem;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px;}
+.obs{font-size:.73rem;color:var(--muted);margin-top:5px;font-style:italic;}
+.callout{border-radius:12px;padding:clamp(11px,2vw,17px);margin:12px 0;display:flex;gap:11px;align-items:flex-start;}
+.ci{font-size:1.05rem;flex-shrink:0;margin-top:1px;}.cb{flex:1;}
+.ct{font-family:var(--fh);font-size:.72rem;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px;}
+.cx{font-size:clamp(.78rem,.94vw,.86rem);line-height:1.65;}
+.callout.tip{background:rgba(0,184,148,.07);border:1px solid rgba(0,184,148,.20);}.callout.tip .ct{color:var(--green);}
+.callout.warn{background:rgba(229,161,0,.07);border:1px solid rgba(229,161,0,.22);}.callout.warn .ct{color:var(--orange);}
+.callout.err{background:rgba(225,112,85,.07);border:1px solid rgba(225,112,85,.22);}.callout.err .ct{color:var(--red);}
+.callout.board{background:rgba(108,92,231,.07);border:1px solid rgba(108,92,231,.20);}.callout.board .ct{color:var(--violet);}
+.signs{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:11px;margin:14px 0;}
+.sc{background:var(--card);border:1.5px solid var(--cb);border-radius:13px;padding:14px;box-shadow:var(--sh);transition:transform .25s;}
+.sc:hover{transform:translateY(-3px);}
+.sc-icon{font-size:1.5rem;margin-bottom:7px;}
+.sc-title{font-family:var(--fh);font-size:.80rem;font-weight:700;margin-bottom:3px;}
+.sc-desc{font-size:.72rem;color:var(--muted);line-height:1.5;}
+.sc-eg{font-size:.68rem;color:var(--violet);font-weight:500;margin-top:4px;}
+.tbl{width:100%;border-collapse:collapse;font-size:clamp(.74rem,.90vw,.82rem);margin:12px 0;border-radius:11px;overflow:hidden;box-shadow:var(--sh);}
+.tbl th{background:rgba(108,92,231,.10);padding:9px 13px;font-family:var(--fh);font-size:.70rem;font-weight:700;color:var(--violet);text-align:left;letter-spacing:.3px;}
+.tbl td{padding:8px 13px;border-bottom:1px solid rgba(108,92,231,.08);line-height:1.5;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:nth-child(even) td{background:rgba(108,92,231,.03);}
+.steps{display:flex;flex-direction:column;gap:12px;margin:14px 0;}
+.step{display:flex;gap:13px;align-items:flex-start;}
+.sn{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--vlt));color:#fff;font-family:var(--fh);font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;}
+.sb2{flex:1;padding-top:2px;}
+.st2{font-family:var(--fh);font-size:.82rem;font-weight:700;margin-bottom:3px;}
+.sd{font-size:clamp(.76rem,.90vw,.83rem);color:var(--muted);line-height:1.6;}
+.rxn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:13px;margin:14px 0;}
+.rxn{background:var(--card);border:1.5px solid var(--cb);border-radius:15px;padding:17px;box-shadow:var(--sh);border-top:3px solid var(--rc,var(--violet));transition:transform .25s;}
+.rxn:hover{transform:translateY(-3px);}
+.rxn-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.rxn-icon{font-size:1.25rem;}
+.rxn-name{font-family:var(--fh);font-size:.86rem;font-weight:800;}
+.rxn-pat{font-family:'Courier New',monospace;font-size:.76rem;background:rgba(108,92,231,.07);padding:5px 9px;border-radius:7px;color:var(--violet);font-weight:700;margin-bottom:8px;}
+.rxn-desc{font-size:.76rem;color:var(--muted);line-height:1.6;margin-bottom:8px;}
+.rxn-eg2{font-size:.72rem;font-family:'Courier New',monospace;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.15);border-radius:6px;padding:4px 8px;}
+.rxn-trick{font-size:.70rem;font-weight:600;color:var(--orange);margin-top:7px;}
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:14px 0;}
+.flip-card{height:155px;perspective:800px;cursor:pointer;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:13px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;padding:15px;box-shadow:var(--sh);}
+.flip-front{background:var(--card);border:1.5px solid var(--cb);}
+.flip-back{background:linear-gradient(135deg,var(--fc1,var(--violet)),var(--fc2,var(--vlt)));color:#fff;transform:rotateY(180deg);}
+.ff-lbl{font-size:.60rem;font-weight:700;color:var(--violet);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.ff-eq{font-family:'Courier New',monospace;font-size:.78rem;color:var(--text);font-weight:700;line-height:1.5;}
+.fb-type{font-family:var(--fh);font-size:.86rem;font-weight:800;margin-bottom:4px;}
+.fb-key{font-size:.72rem;opacity:.92;line-height:1.5;}
+.oil-rig{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:14px 0;}
+@media(max-width:480px){.oil-rig{grid-template-columns:1fr;}}
+.or{border-radius:13px;padding:18px;text-align:center;}
+.or.ox{background:rgba(229,161,0,.08);border:2px solid rgba(229,161,0,.22);}
+.or.rd{background:rgba(0,184,148,.08);border:2px solid rgba(0,184,148,.22);}
+.or-big{font-family:var(--fh);font-size:1.7rem;font-weight:800;margin-bottom:3px;}
+.or.ox .or-big{color:var(--orange);}
+.or.rd .or-big{color:var(--green);}
+.or-lbl{font-family:var(--fh);font-size:.92rem;font-weight:800;margin-bottom:5px;}
+.or.ox .or-lbl{color:var(--orange);}
+.or.rd .or-lbl{color:var(--green);}
+.or-sub{font-size:.76rem;color:var(--muted);line-height:1.5;}
+.rl{display:flex;flex-direction:column;gap:2px;max-width:330px;margin:14px 0;}
+.rl-item{display:flex;align-items:center;gap:10px;padding:7px 13px;border-radius:8px;font-size:.78rem;font-weight:500;border-left:3px solid var(--rc,#ddd);}
+.rl-m{font-weight:700;min-width:26px;font-family:'Courier New',monospace;}
+.rl-n{flex:1;color:var(--muted);font-size:.72rem;}
+.rl-note2{font-size:.66rem;color:var(--orange);font-weight:600;}
+.energy-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:14px 0;}
+@media(max-width:560px){.energy-row{grid-template-columns:1fr;}}
+.en-card{background:var(--card);border:1.5px solid var(--cb);border-radius:13px;padding:17px;text-align:center;box-shadow:var(--sh);}
+.en-title{font-family:var(--fh);font-size:.88rem;font-weight:800;margin-bottom:8px;}
+.en-list{font-size:.76rem;color:var(--muted);line-height:1.7;text-align:left;margin-top:8px;}
+.cc{background:rgba(108,92,231,.04);border:1.5px solid rgba(108,92,231,.12);border-radius:13px;padding:17px;margin:14px 0;}
+.cc-title{font-family:var(--fh);font-size:.77rem;font-weight:700;color:var(--violet);letter-spacing:.3px;text-transform:uppercase;margin-bottom:11px;}
+.cc-q{font-size:.86rem;color:var(--text);margin-bottom:7px;font-weight:500;}
+.cc-reveal{display:inline-flex;align-items:center;gap:5px;background:rgba(108,92,231,.10);border:1px solid rgba(108,92,231,.17);border-radius:50px;padding:5px 11px;font-size:.72rem;font-weight:600;color:var(--violet);cursor:pointer;transition:all .22s;margin-bottom:10px;}
+.cc-reveal:hover{background:var(--violet);color:#fff;}
+.cc-ans{display:none;background:rgba(0,184,148,.06);border:1px solid rgba(0,184,148,.16);border-radius:8px;padding:9px 12px;font-size:.80rem;color:var(--text);line-height:1.65;margin-bottom:10px;}
+.cc-ans.show{display:block;}
+.cc-sep{height:1px;background:rgba(108,92,231,.10);margin:8px 0;}
+.balancer{background:var(--card);border:1.5px solid var(--cb);border-radius:17px;padding:clamp(16px,3vw,24px);box-shadow:var(--sh);margin:14px 0;}
+.bal-title{font-family:var(--fh);font-size:.88rem;font-weight:800;margin-bottom:4px;}
+.bal-sub{font-size:.76rem;color:var(--muted);margin-bottom:14px;}
+.bal-eq{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-family:'Courier New',monospace;font-size:clamp(.80rem,1.2vw,.93rem);margin-bottom:13px;background:rgba(108,92,231,.04);border:1px solid rgba(108,92,231,.10);border-radius:9px;padding:11px 13px;}
+.bal-inp{width:34px;height:30px;border:2px solid var(--cb);border-radius:6px;background:rgba(108,92,231,.04);font-family:'Courier New',monospace;font-size:.88rem;font-weight:700;text-align:center;color:var(--violet);outline:none;transition:border-color .2s;}
+.bal-inp:focus{border-color:var(--violet);}
+.bal-inp.ok{border-color:var(--green);background:rgba(0,184,148,.08);color:var(--green);}
+.bal-inp.no2{border-color:var(--red);background:rgba(225,112,85,.08);color:var(--red);}
+.bal-fix{font-weight:700;color:var(--text);}
+.bal-arr{color:var(--orange);font-weight:700;}
+.bal-pl{color:var(--muted);}
+.bal-btns{display:flex;gap:7px;flex-wrap:wrap;}
+.b-btn{padding:7px 16px;border-radius:50px;font-size:.76rem;font-weight:600;cursor:pointer;border:none;transition:all .22s;}
+.b-btn.chk{background:var(--violet);color:#fff;}.b-btn.chk:hover{background:#5a4bd1;}
+.b-btn.rst{background:rgba(108,92,231,.10);color:var(--violet);}.b-btn.rst:hover{background:rgba(108,92,231,.18);}
+.b-btn.nxt{background:rgba(0,184,148,.10);color:var(--green);}.b-btn.nxt:hover{background:rgba(0,184,148,.18);}
+.bal-fb{margin-top:9px;font-size:.78rem;font-weight:600;min-height:18px;}
+.bal-fb.ok{color:var(--green);}.bal-fb.no2{color:var(--red);}
+.cheat{background:linear-gradient(135deg,#1A1A2E,#2d2b5e);border-radius:20px;padding:clamp(22px,4vw,38px);color:#fff;margin-top:18px;}
+.cs-title{font-family:var(--fh);font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:800;margin-bottom:5px;}
+.cs-sub{font-size:.78rem;opacity:.58;margin-bottom:24px;}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:18px;}
+.cs-sec{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:13px;padding:17px;}
+.cs-sec-title{font-family:var(--fh);font-size:.75rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:11px;}
+.cs-item{font-size:.76rem;line-height:1.65;opacity:.87;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.cs-item:last-child{border-bottom:none;}
+.cs-item strong{color:#A29BFE;font-weight:600;}
+.cs-eq{font-family:'Courier New',monospace;font-size:.72rem;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;margin-top:2px;display:block;line-height:1.6;}
+.cs-copy{margin-top:18px;display:inline-flex;align-items:center;gap:6px;background:rgba(162,155,254,.16);border:1px solid rgba(162,155,254,.26);border-radius:50px;padding:8px 16px;font-size:.74rem;font-weight:600;color:#A29BFE;cursor:pointer;transition:all .22s;}
+.cs-copy:hover{background:rgba(162,155,254,.26);}
+body.dark{--bg:#0f0e1a;--text:#e8e6ff;--muted:#9896b0;--card:rgba(30,28,55,.88);--cb:rgba(162,155,254,.16);--sh:0 6px 32px rgba(0,0,0,.3);--shh:0 14px 48px rgba(0,0,0,.4);}
+body.dark nav.scrolled{background:rgba(15,14,26,.94);}
+body.dark .sidebar{background:rgba(15,14,26,.6);}
+body.dark .flip-front{background:rgba(30,28,55,.9);}
+body.dark .cheat{background:linear-gradient(135deg,#0a0918,#16143a);}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+h3.sub{font-family:var(--fh);font-size:.96rem;font-weight:700;margin:18px 0 10px;color:var(--text);}
+footer{position:relative;z-index:1;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-top:1px solid rgba(108,92,231,.09);padding:clamp(20px,3.5vw,34px) var(--px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:13px;}
+body.dark footer{background:rgba(15,14,26,.7);}
+.flogo{font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--violet);}
+.ftg{font-size:.68rem;color:var(--muted);margin-top:2px;}
+.flinks{display:flex;gap:16px;list-style:none;}
+.flinks a{font-size:.74rem;color:var(--muted);}.flinks a:hover{color:var(--violet);}
+.fcopy{font-size:.68rem;color:var(--muted);}
+.fcopy span{color:var(--violet);}
+@media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center;}.flinks{justify-content:center;}}
+@media(prefers-reduced-motion:reduce){.blob,.logo-icon{animation:none!important;}.reveal{opacity:1;transform:none;transition:none;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav">
+  <a class="logo" href="vistar10.html"><div class="logo-icon">⭐</div>VISTAR10</a>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="toggleDark()" id="darkBtn">🌙 Dark</button>
+    <a href="ch1.html" class="nav-btn">← Ch 1 Overview</a>
+  </div>
+</nav>
+
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="sb-title">Chapter 1 · Contents</div>
+  <div class="sb-item active" onclick="goTo('s1')" id="sb-s1"><span class="sb-dot"></span>Chemical Reactions</div>
+  <div class="sb-item" onclick="goTo('s2')" id="sb-s2"><span class="sb-dot"></span>Writing Equations</div>
+  <div class="sb-item" onclick="goTo('s3')" id="sb-s3"><span class="sb-dot"></span>Balancing Equations</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s4')" id="sb-s4"><span class="sb-dot"></span>Types of Reactions</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4a')" id="sb-s4a">↳ Combination</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4b')" id="sb-s4b">↳ Decomposition</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4c')" id="sb-s4c">↳ Displacement</div>
+  <div class="sb-item sb-sub" onclick="goTo('s4d')" id="sb-s4d">↳ Double Displacement</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s5')" id="sb-s5"><span class="sb-dot"></span>Exo &amp; Endothermic</div>
+  <div class="sb-item" onclick="goTo('s6')" id="sb-s6"><span class="sb-dot"></span>Oxidation &amp; Reduction</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s7')" id="sb-s7"><span class="sb-dot"></span>Corrosion</div>
+  <div class="sb-item" onclick="goTo('s8')" id="sb-s8"><span class="sb-dot"></span>Rancidity</div>
+  <div class="sb-div"></div>
+  <div class="sb-item" onclick="goTo('s9')" id="sb-s9"><span class="sb-dot"></span>⭐ Cheat Sheet</div>
+</aside>
+
+<main class="content">
+
+<!-- HERO -->
+<div class="hero reveal">
+  <div class="bc"><a href="vistar10.html">Home</a>›<a href="subjects.html">Science</a>›<a href="ch1.html">Chapter 1</a>›<span>Study Notes</span></div>
+  <div class="hero-badge">⭐ Study the Chapter · Full Notes</div>
+  <h1>Chemical Reactions<br><span>&amp; Equations</span></h1>
+  <div class="hero-sub">Everything from NCERT Chapter 1 — explained clearly, with real-life hooks, board tips, and common mistake warnings built in.</div>
+  <div class="pills">
+    <div class="pill"><div class="d" style="background:#6C5CE7"></div>9 Topics</div>
+    <div class="pill"><div class="d" style="background:#00CEC9"></div>Interactive Balancer</div>
+    <div class="pill"><div class="d" style="background:#FDAE9A"></div>Flip Cards</div>
+    <div class="pill"><div class="d" style="background:#00B894"></div>Cheat Sheet</div>
+    <div class="pill"><div class="d" style="background:#e5a100"></div>Dark Mode</div>
+  </div>
+</div>
+
+<!-- ─────────── S1: CHEMICAL REACTIONS ─────────── -->
+<section class="sec reveal" id="s1">
+  <div class="sec-num">Section 01</div>
+  <div class="sec-title">Chemical Reactions</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🔥 Why does food cook? Why does iron rust? Why do we breathe? — all chemical reactions happening around you every second.</div>
+
+  <p class="prose">A <span class="kt">chemical reaction</span> is a process where one or more substances called <strong>reactants</strong> are converted into one or more new substances called <strong>products</strong>, which have entirely different properties. A key requirement: <strong>new substances must be formed</strong>.</p>
+
+  <p class="prose">The key law governing all chemical reactions is the <span class="kt">Law of Conservation of Mass</span> (Antoine Lavoisier, 1774): <em>"Mass can neither be created nor destroyed in a chemical reaction."</em> Total mass of reactants = Total mass of products, always.</p>
+
+  <h3 class="sub">🔍 5 Signs a Chemical Reaction Has Occurred</h3>
+  <div class="signs">
+    <div class="sc"><div class="sc-icon">🎨</div><div class="sc-title">Change in Colour</div><div class="sc-desc">The colour of one or more substances changes.</div><div class="sc-eg">Iron nail in CuSO₄ — solution turns blue to green</div></div>
+    <div class="sc"><div class="sc-icon">💨</div><div class="sc-title">Gas Evolution</div><div class="sc-desc">A gas is produced — seen as bubbles or detected by smell.</div><div class="sc-eg">Zn + H₂SO₄ → H₂ bubbles form</div></div>
+    <div class="sc"><div class="sc-icon">🧊</div><div class="sc-title">Precipitate Formed</div><div class="sc-desc">An insoluble solid settles out from solution.</div><div class="sc-eg">AgNO₃ + NaCl → white AgCl↓</div></div>
+    <div class="sc"><div class="sc-icon">🌡️</div><div class="sc-title">Temperature Change</div><div class="sc-desc">Heat released (exothermic) or absorbed (endothermic).</div><div class="sc-eg">CaO + H₂O → flask becomes very hot</div></div>
+    <div class="sc"><div class="sc-icon">💡</div><div class="sc-title">Change in State</div><div class="sc-desc">A solid, liquid, or gas may form that wasn't there before.</div><div class="sc-eg">Mg (solid) burns → MgO (white powder)</div></div>
+  </div>
+
+  <h3 class="sub">⚖️ Physical Change vs Chemical Change</h3>
+  <table class="tbl">
+    <thead><tr><th>Physical Change</th><th>Chemical Change</th></tr></thead>
+    <tbody>
+      <tr><td>No new substance formed</td><td>New substance(s) always formed</td></tr>
+      <tr><td>Change in physical properties only</td><td>Change in chemical properties/composition</td></tr>
+      <tr><td>Usually reversible</td><td>Usually irreversible</td></tr>
+      <tr><td>No energy change (or very little)</td><td>Energy absorbed or released</td></tr>
+      <tr><td><em>Melting ice, stretching rubber</em></td><td><em>Burning wood, rusting iron, souring milk</em></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn"><span class="ci">⚠️</span><div class="cb"><div class="ct">Common Mistake</div><div class="cx">Dissolving salt in water looks like a chemical change — but no new substance forms, and you can recover the salt by evaporating the water. It is a <strong>physical change</strong>.</div></div></div>
+
+  <div class="cc">
+    <div class="cc-title">✅ Concept Check</div>
+    <div class="cc-q">Q1. Name 3 signs that indicate a chemical reaction when Zn is added to dilute H₂SO₄.</div>
+    <span class="cc-reveal" onclick="rCC(this)">👁 Show Answer</span>
+    <div class="cc-ans">1. Gas evolution (H₂ bubbles — burns with pop sound). 2. Temperature change (test tube becomes warm — exothermic). 3. Zinc gradually dissolves (change in state/appearance).</div>
+    <div class="cc-sep"></div>
+    <div class="cc-q">Q2. Is melting of wax a physical or chemical change? Justify.</div>
+    <span class="cc-reveal" onclick="rCC(this)">👁 Show Answer</span>
+    <div class="cc-ans">Physical change. Wax changes state (solid → liquid) but no new substance forms. On cooling, it solidifies back — reversible. Therefore it is a physical change, not chemical.</div>
+  </div>
+</section>
+
+<!-- ─────────── S2: WRITING EQUATIONS ─────────── -->
+<section class="sec reveal" id="s2">
+  <div class="sec-num">Section 02</div>
+  <div class="sec-title">Writing Chemical Equations</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">💬 Describing a reaction in words takes a whole paragraph. A chemical equation says the same thing in one line.</div>
+
+  <p class="prose">A <span class="kt">chemical equation</span> is a shorthand representation using symbols and formulae. Reactants are written on the left, products on the right, separated by an arrow (→). The arrow means "reacts to give".</p>
+
+  <h3 class="sub">From Word to Symbol — 4 Steps</h3>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Write the Word Equation</div><div class="sd">Magnesium + Oxygen → Magnesium oxide</div></div></div>
+    <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Replace with Chemical Formulae</div><div class="sd">Mg + O₂ → MgO &nbsp;&nbsp;(unbalanced — check atom count)</div></div></div>
+    <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Balance the Equation</div><div class="sd">2Mg + O₂ → 2MgO &nbsp;&nbsp;(left: 2 Mg, 2 O | right: 2 Mg, 2 O ✓)</div></div></div>
+    <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Add State Symbols — most complete form</div><div class="sd">2Mg(s) + O₂(g) → 2MgO(s)</div></div></div>
+  </div>
+
+  <h3 class="sub">What the Symbols Mean</h3>
+  <table class="tbl">
+    <thead><tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>(s)</strong></td><td>Solid</td><td>Fe(s)</td></tr>
+      <tr><td><strong>(l)</strong></td><td>Liquid</td><td>H₂O(l)</td></tr>
+      <tr><td><strong>(g)</strong></td><td>Gas</td><td>CO₂(g)</td></tr>
+      <tr><td><strong>(aq)</strong></td><td>Aqueous solution</td><td>NaCl(aq)</td></tr>
+      <tr><td><strong>↑</strong></td><td>Gas evolved / escaping</td><td>H₂↑</td></tr>
+      <tr><td><strong>↓</strong></td><td>Precipitate formed</td><td>BaSO₄↓</td></tr>
+      <tr><td><strong>→ (above/below)</strong></td><td>Reaction condition</td><td>→(heat) or →(MnO₂)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout board"><span class="ci">📋</span><div class="cb"><div class="ct">What a Balanced Equation Tells You</div><div class="cx">✔ Identities (formulae) of reactants and products &nbsp;|&nbsp; ✔ Physical states of all substances &nbsp;|&nbsp; ✔ Molar ratio in which they react &nbsp;|&nbsp; ✔ Reaction conditions (heat, catalyst, light) &nbsp;|&nbsp; ✘ Does NOT tell you rate of reaction, feasibility, or concentration.</div></div></div>
+</section>
+
+<!-- ─────────── S3: BALANCING ─────────── -->
+<section class="sec reveal" id="s3">
+  <div class="sec-num">Section 03</div>
+  <div class="sec-title">Balancing Chemical Equations</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">⚖️ Atoms can't appear or disappear. Whatever enters a reaction must come out — just rearranged.</div>
+
+  <p class="prose">We balance equations because of the <span class="kt">Law of Conservation of Mass</span>. The number of atoms of every element must be the same on both sides.</p>
+
+  <div class="callout tip"><span class="ci">💡</span><div class="cb"><div class="ct">The Golden Rule</div><div class="cx">You can ONLY change <strong>coefficients</strong> (numbers in front). NEVER change <strong>subscripts</strong> inside formulae — that changes the substance itself. H₂O is water. H₂O₂ is hydrogen peroxide. Very different things.</div></div></div>
+
+  <h3 class="sub">Worked Example — 3Fe + 4H₂O → Fe₃O₄ + 4H₂</h3>
+  <div class="card">
+    <div class="eqlbl">Step 1 — Unbalanced</div>
+    <div class="eq"><span class="r">Fe</span> + <span class="r">H₂O</span> <span class="ar">→</span> <span class="p">Fe₃O₄</span> + <span class="p">H₂</span></div>
+    <div class="eqlbl" style="margin-top:10px">Step 2 — Balance Fe first: put 3Fe on left</div>
+    <div class="eq"><span class="r">3Fe</span> + <span class="r">H₂O</span> <span class="ar">→</span> <span class="p">Fe₃O₄</span> + <span class="p">H₂</span></div>
+    <div class="eqlbl" style="margin-top:10px">Step 3 — Balance O: need 4 O on left → 4H₂O</div>
+    <div class="eq"><span class="r">3Fe</span> + <span class="r">4H₂O</span> <span class="ar">→</span> <span class="p">Fe₃O₄</span> + <span class="p">H₂</span></div>
+    <div class="eqlbl" style="margin-top:10px">Step 4 — Balance H: 4H₂O = 8H, so put 4H₂</div>
+    <div class="eq"><span class="r">3Fe</span> + <span class="r">4H₂O</span> <span class="ar">→</span> <span class="p">Fe₃O₄</span> + <span class="p">4H₂</span></div>
+    <div class="callout tip" style="margin-top:10px;margin-bottom:0"><span class="ci">✅</span><div class="cb"><div class="ct">Verify</div><div class="cx">Left: 3 Fe, 8 H, 4 O &nbsp;|&nbsp; Right: 3 Fe (in Fe₃O₄), 4 O (in Fe₃O₄), 8 H (in 4H₂) &nbsp;|&nbsp; ✅ Balanced!</div></div></div>
+  </div>
+
+  <!-- INTERACTIVE BALANCER -->
+  <div class="balancer reveal">
+    <div class="bal-title">🎮 Practice Balancer</div>
+    <div class="bal-sub">Fill in coefficients. Leave blank or enter 1 for coefficient of 1. Press Check.</div>
+    <div id="balEq" class="bal-eq"></div>
+    <div class="bal-btns">
+      <button class="b-btn chk" onclick="checkBal()">✓ Check</button>
+      <button class="b-btn rst" onclick="resetBal()">↺ Reset</button>
+      <button class="b-btn nxt" onclick="nextBal()">→ Next</button>
+    </div>
+    <div class="bal-fb" id="balFb"></div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-title">✅ Concept Check</div>
+    <div class="cc-q">Q. Why can't we balance an equation by changing the subscripts in a formula?</div>
+    <span class="cc-reveal" onclick="rCC(this)">👁 Show Answer</span>
+    <div class="cc-ans">Subscripts define the substance itself. Changing H₂O to H₂O₂ changes water into hydrogen peroxide — a completely different compound. We can only change the number of molecules (coefficients), not what the molecules are.</div>
+  </div>
+</section>
+
+<!-- ─────────── S4: TYPES OVERVIEW ─────────── -->
+<section class="sec reveal" id="s4">
+  <div class="sec-num">Section 04</div>
+  <div class="sec-title">Types of Chemical Reactions</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🗂️ Thousands of reactions exist — but they all follow just a handful of patterns. Learn the pattern, recognise any reaction.</div>
+  <div class="rxn-grid">
+    <div class="rxn" style="--rc:#6C5CE7"><div class="rxn-top"><div class="rxn-icon">➕</div><div class="rxn-name">Combination</div></div><div class="rxn-pat">A + B → AB</div><div class="rxn-desc">Two substances combine into a single product.</div><div class="rxn-eg2">2Mg + O₂ → 2MgO</div><div class="rxn-trick">🧠 "combine" = join into ONE</div></div>
+    <div class="rxn" style="--rc:#e17055"><div class="rxn-top"><div class="rxn-icon">💥</div><div class="rxn-name">Decomposition</div></div><div class="rxn-pat">AB → A + B</div><div class="rxn-desc">One compound breaks into simpler substances.</div><div class="rxn-eg2">CaCO₃ → CaO + CO₂</div><div class="rxn-trick">🧠 "de-compose" = fall into MANY</div></div>
+    <div class="rxn" style="--rc:#00B894"><div class="rxn-top"><div class="rxn-icon">🔄</div><div class="rxn-name">Displacement</div></div><div class="rxn-pat">A + BC → AC + B</div><div class="rxn-desc">More reactive element kicks out less reactive one.</div><div class="rxn-eg2">Fe + CuSO₄ → FeSO₄ + Cu</div><div class="rxn-trick">🧠 "displace" = take someone's seat</div></div>
+    <div class="rxn" style="--rc:#0984e3"><div class="rxn-top"><div class="rxn-icon">🔀</div><div class="rxn-name">Double Displacement</div></div><div class="rxn-pat">AB + CD → AD + CB</div><div class="rxn-desc">Two ionic compounds swap their ions.</div><div class="rxn-eg2">Na₂SO₄ + BaCl₂ → BaSO₄↓ + 2NaCl</div><div class="rxn-trick">🧠 "double" = both partners swap</div></div>
+    <div class="rxn" style="--rc:#e5a100"><div class="rxn-top"><div class="rxn-icon">🔁</div><div class="rxn-name">Oxidation-Reduction</div></div><div class="rxn-pat">Redox — always simultaneous</div><div class="rxn-desc">One substance gains oxygen (oxidised), another loses (reduced).</div><div class="rxn-eg2">CuO + H₂ → Cu + H₂O</div><div class="rxn-trick">🧠 OIL RIG — always together</div></div>
+  </div>
+</section>
+
+<!-- ─────────── S4a: COMBINATION ─────────── -->
+<section class="sec reveal" id="s4a">
+  <div class="sec-num">Section 04a</div>
+  <div class="sec-title">Combination Reactions</div>
+  <div class="divbar"></div>
+  <p class="prose">Two or more reactants combine to form a <strong>single product</strong>. Many combination reactions are also <strong>exothermic</strong>.</p>
+  <div class="eq"><div class="eqlbl">Mg burning in air</div><span class="r">2Mg</span><span class="st">(s)</span> + <span class="r">O₂</span><span class="st">(g)</span> <span class="ar">→</span> <span class="p">2MgO</span><span class="st">(s)</span><div class="obs">Dazzling white flame; white ash. Exothermic.</div></div>
+  <div class="eq"><div class="eqlbl">Quicklime + Water (Slaking)</div><span class="r">CaO</span><span class="st">(s)</span> + <span class="r">H₂O</span><span class="st">(l)</span> <span class="ar">→</span> <span class="p">Ca(OH)₂</span><span class="st">(aq)</span> + Heat<div class="obs">Flask becomes very hot. Exothermic combination reaction.</div></div>
+  <div class="eq"><div class="eqlbl">Haber Process</div><span class="r">N₂</span><span class="st">(g)</span> + <span class="r">3H₂</span><span class="st">(g)</span> <span class="ar">→<span class="cd">high T, P, Fe</span></span> <span class="p">2NH₃</span><span class="st">(g)</span></div>
+  <div class="callout board"><span class="ci">📋</span><div class="cb"><div class="ct">Board Tip</div><div class="cx">CaO + H₂O is the most asked combination reaction. Questions often say "Name the type AND state whether it is exothermic or endothermic." Answer: Combination + Exothermic.</div></div></div>
+</section>
+
+<!-- ─────────── S4b: DECOMPOSITION ─────────── -->
+<section class="sec reveal" id="s4b">
+  <div class="sec-num">Section 04b</div>
+  <div class="sec-title">Decomposition Reactions</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🔬 Combination and decomposition are opposites. If one is marriage, the other is divorce.</div>
+  <p class="prose">A single compound breaks into two or more simpler substances. Energy (heat, electricity, or light) is usually needed. There are <strong>three types</strong> based on energy source.</p>
+
+  <div class="card">
+    <h3 class="sub" style="margin-top:0;color:var(--orange)">🔥 1. Thermal Decomposition — Heat</h3>
+    <div class="eq"><div class="eqlbl">Limestone decomposition</div><span class="r">CaCO₃</span><span class="st">(s)</span> <span class="ar">→<span class="cd">heat</span></span> <span class="p">CaO</span><span class="st">(s)</span> + <span class="p">CO₂</span><span class="st">(g)</span>↑<div class="obs">Used industrially to make quicklime for cement.</div></div>
+    <div class="eq"><div class="eqlbl">Lead nitrate decomposition</div><span class="r">2Pb(NO₃)₂</span><span class="st">(s)</span> <span class="ar">→<span class="cd">heat</span></span> <span class="p">2PbO</span><span class="st">(s)</span> + <span class="p">4NO₂</span><span class="st">(g)</span>↑ + <span class="p">O₂</span><span class="st">(g)</span>↑<div class="obs">Brown fumes of NO₂; yellow residue of PbO. Classic board observation Q.</div></div>
+    <div class="eq"><div class="eqlbl">Ferrous sulphate decomposition</div><span class="r">2FeSO₄</span><span class="st">(s)</span> <span class="ar">→<span class="cd">heat</span></span> <span class="p">Fe₂O₃</span><span class="st">(s)</span> + <span class="p">SO₂</span><span class="st">(g)</span>↑ + <span class="p">SO₃</span><span class="st">(g)</span>↑<div class="obs">Green crystals → white (loss of water) → brown-black residue. Pungent smell of SO₂.</div></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sub" style="margin-top:0;color:var(--blue)">⚡ 2. Electrolytic Decomposition — Electricity</h3>
+    <div class="eq"><div class="eqlbl">Electrolysis of water</div><span class="r">2H₂O</span><span class="st">(l)</span> <span class="ar">→<span class="cd">electricity</span></span> <span class="p">2H₂</span><span class="st">(g)</span>↑ + <span class="p">O₂</span><span class="st">(g)</span>↑<div class="obs">H₂ at cathode; O₂ at anode. Volume ratio H₂:O₂ = 2:1.</div></div>
+    <div class="callout tip" style="margin-top:8px;margin-bottom:0"><span class="ci">💡</span><div class="cb"><div class="ct">Why 2:1 ratio?</div><div class="cx">The equation produces 2 moles H₂ for every 1 mole O₂. By Avogadro's law, equal moles of gas at same T and P occupy equal volumes — so volume ratio = mole ratio = 2:1.</div></div></div>
+  </div>
+
+  <div class="card">
+    <h3 class="sub" style="margin-top:0;color:var(--violet)">☀️ 3. Photochemical Decomposition — Light</h3>
+    <div class="eq"><div class="eqlbl">Silver chloride in sunlight</div><span class="r">2AgCl</span><span class="st">(s)</span> <span class="ar">→<span class="cd">sunlight</span></span> <span class="p">2Ag</span><span class="st">(s)</span> + <span class="p">Cl₂</span><span class="st">(g)</span>↑<div class="obs">White AgCl → grey/black. Ag metal forms. Used in photography.</div></div>
+    <div class="eq"><div class="eqlbl">Silver bromide in sunlight</div><span class="r">2AgBr</span><span class="st">(s)</span> <span class="ar">→<span class="cd">sunlight</span></span> <span class="p">2Ag</span><span class="st">(s)</span> + <span class="p">Br₂</span><span class="st">(g)</span>↑<div class="obs">Used in black-and-white photographic film.</div></div>
+  </div>
+
+  <h3 class="sub">🃏 Identify the Type — Click to Flip</h3>
+  <p style="font-size:.76rem;color:var(--muted);margin-bottom:11px;">Click each card to reveal the decomposition type.</p>
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">What type?</div><div class="ff-eq">CaCO₃ →(?) CaO + CO₂</div></div><div class="flip-back" style="--fc1:#e5a100;--fc2:#f39c12"><div class="fb-type">🔥 Thermal</div><div class="fb-key">Heat energy. Limestone → quicklime. Cement industry.</div></div></div></div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">What type?</div><div class="ff-eq">2H₂O →(?) 2H₂ + O₂</div></div><div class="flip-back" style="--fc1:#0984e3;--fc2:#74b9ff"><div class="fb-type">⚡ Electrolytic</div><div class="fb-key">Electricity. H₂:O₂ = 2:1 by volume.</div></div></div></div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">What type?</div><div class="ff-eq">2AgCl →(?) 2Ag + Cl₂</div></div><div class="flip-back" style="--fc1:#6C5CE7;--fc2:#a29bfe"><div class="fb-type">☀️ Photochemical</div><div class="fb-key">Sunlight. AgCl white → grey. Photography.</div></div></div></div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">What type?</div><div class="ff-eq">2Pb(NO₃)₂ →(?) 2PbO + 4NO₂ + O₂</div></div><div class="flip-back" style="--fc1:#e17055;--fc2:#fab1a0"><div class="fb-type">🔥 Thermal</div><div class="fb-key">Brown NO₂ + yellow PbO. Very common board Q!</div></div></div></div>
+  </div>
+</section>
+
+<!-- ─────────── S4c: DISPLACEMENT ─────────── -->
+<section class="sec reveal" id="s4c">
+  <div class="sec-num">Section 04c</div>
+  <div class="sec-title">Displacement Reactions</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🪑 A more popular kid walks in and takes a less popular kid's cafeteria seat. That's displacement in chemistry.</div>
+  <p class="prose">A <span class="kt">displacement reaction</span> occurs when a <strong>more reactive</strong> element displaces a <strong>less reactive</strong> element from its salt solution. Pattern: A + BC → AC + B (A is more reactive than B).</p>
+  <div class="eq"><div class="eqlbl">Iron displaces copper</div><span class="r">Fe</span><span class="st">(s)</span> + <span class="r">CuSO₄</span><span class="st">(aq)</span> <span class="ar">→</span> <span class="p">FeSO₄</span><span class="st">(aq)</span> + <span class="p">Cu</span><span class="st">(s)</span><div class="obs">Blue CuSO₄ → light green FeSO₄. Reddish-brown Cu deposits on iron nail.</div></div>
+  <div class="eq"><div class="eqlbl">Zinc displaces hydrogen from acid</div><span class="r">Zn</span><span class="st">(s)</span> + <span class="r">H₂SO₄</span><span class="st">(aq)</span> <span class="ar">→</span> <span class="p">ZnSO₄</span><span class="st">(aq)</span> + <span class="p">H₂</span><span class="st">(g)</span>↑</div>
+
+  <h3 class="sub">📊 Reactivity Series (top = most reactive)</h3>
+  <p style="font-size:.76rem;color:var(--muted);margin-bottom:11px;">A metal can only displace metals below it.</p>
+  <div class="rl">
+    <div class="rl-item" style="--rc:#E17055;background:rgba(225,112,85,.07)"><span class="rl-m">K</span><span class="rl-n">Potassium</span><span class="rl-note2">Most reactive</span></div>
+    <div class="rl-item" style="--rc:#e5a100;background:rgba(229,161,0,.07)"><span class="rl-m">Na</span><span class="rl-n">Sodium</span></div>
+    <div class="rl-item" style="--rc:#e5a100;background:rgba(229,161,0,.07)"><span class="rl-m">Ca</span><span class="rl-n">Calcium</span></div>
+    <div class="rl-item" style="--rc:#e5a100;background:rgba(229,161,0,.07)"><span class="rl-m">Mg</span><span class="rl-n">Magnesium</span></div>
+    <div class="rl-item" style="--rc:#6C5CE7;background:rgba(108,92,231,.07)"><span class="rl-m">Al</span><span class="rl-n">Aluminium</span></div>
+    <div class="rl-item" style="--rc:#6C5CE7;background:rgba(108,92,231,.07)"><span class="rl-m">Zn</span><span class="rl-n">Zinc</span></div>
+    <div class="rl-item" style="--rc:#6C5CE7;background:rgba(108,92,231,.07)"><span class="rl-m">Fe</span><span class="rl-n">Iron</span></div>
+    <div class="rl-item" style="--rc:#00B894;background:rgba(0,184,148,.08)"><span class="rl-m">H</span><span class="rl-n">Hydrogen (reference)</span><span class="rl-note2">Above H = reacts with dilute acid</span></div>
+    <div class="rl-item" style="--rc:#00B894;background:rgba(0,184,148,.06)"><span class="rl-m">Cu</span><span class="rl-n">Copper</span></div>
+    <div class="rl-item" style="--rc:#00B894;background:rgba(0,184,148,.06)"><span class="rl-m">Ag</span><span class="rl-n">Silver</span></div>
+    <div class="rl-item" style="--rc:#00B894;background:rgba(0,184,148,.06)"><span class="rl-m">Au</span><span class="rl-n">Gold</span><span class="rl-note2">Least reactive</span></div>
+  </div>
+  <div class="callout warn"><span class="ci">⚠️</span><div class="cb"><div class="ct">Classic Mistake</div><div class="cx">Students write Cu + FeSO₄ → CuSO₄ + Fe. This is WRONG. Copper is LESS reactive than iron. A less reactive element cannot displace a more reactive one. Always check the reactivity series first.</div></div></div>
+</section>
+
+<!-- ─────────── S4d: DOUBLE DISPLACEMENT ─────────── -->
+<section class="sec reveal" id="s4d">
+  <div class="sec-num">Section 04d</div>
+  <div class="sec-title">Double Displacement Reactions</div>
+  <div class="divbar"></div>
+  <p class="prose">Two ionic compounds in solution <strong>exchange their ions</strong>. Pattern: AB + CD → AD + CB. Usually forms a <strong>precipitate</strong>, <strong>water</strong>, or a <strong>gas</strong>.</p>
+  <div class="eq"><div class="eqlbl">Precipitation — white precipitate</div><span class="r">Na₂SO₄</span><span class="st">(aq)</span> + <span class="r">BaCl₂</span><span class="st">(aq)</span> <span class="ar">→</span> <span class="p">BaSO₄</span><span class="st">(s)</span>↓ + <span class="p">2NaCl</span><span class="st">(aq)</span></div>
+  <div class="eq"><div class="eqlbl">Golden Rain — yellow precipitate</div><span class="r">2KI</span><span class="st">(aq)</span> + <span class="r">Pb(NO₃)₂</span><span class="st">(aq)</span> <span class="ar">→</span> <span class="p">PbI₂</span><span class="st">(s)</span>↓ + <span class="p">2KNO₃</span><span class="st">(aq)</span><div class="obs">Bright yellow lead iodide precipitate — "Golden Rain" demonstration.</div></div>
+  <div class="eq"><div class="eqlbl">Neutralisation — forms water</div><span class="r">NaOH</span><span class="st">(aq)</span> + <span class="r">HCl</span><span class="st">(aq)</span> <span class="ar">→</span> <span class="p">NaCl</span><span class="st">(aq)</span> + <span class="p">H₂O</span><span class="st">(l)</span></div>
+  <table class="tbl" style="margin-top:14px">
+    <thead><tr><th>Feature</th><th>Displacement</th><th>Double Displacement</th></tr></thead>
+    <tbody>
+      <tr><td>Pattern</td><td>A + BC → AC + B</td><td>AB + CD → AD + CB</td></tr>
+      <tr><td>What moves?</td><td>One element replaces another</td><td>Two sets of ions exchange</td></tr>
+      <tr><td>Reactivity series needed?</td><td>Yes</td><td>No</td></tr>
+      <tr><td>Usually forms</td><td>Metal deposit + salt solution</td><td>Precipitate / water / gas</td></tr>
+      <tr><td>Also a redox reaction?</td><td>Yes (always)</td><td>No (usually not)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─────────── S5: EXO & ENDO ─────────── -->
+<section class="sec reveal" id="s5">
+  <div class="sec-num">Section 05</div>
+  <div class="sec-title">Exothermic &amp; Endothermic Reactions</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🌡️ Every chemical reaction either releases energy to its surroundings or absorbs energy from them.</div>
+
+  <div class="energy-row">
+    <div class="en-card">
+      <div class="en-title" style="color:var(--red)">🔥 Exothermic</div>
+      <svg viewBox="0 0 180 70" style="width:100%;height:70px;"><defs><marker id="arR" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#e17055"/></marker></defs><rect x="10" y="8" width="44" height="24" rx="5" fill="rgba(225,112,85,.12)" stroke="#e17055" stroke-width="1.5"/><text x="32" y="24" font-size="8" text-anchor="middle" fill="#e17055" font-family="sans-serif">Reactants</text><path d="M58,20 L92,20" stroke="#e5a100" stroke-width="2" marker-end="url(#arR)"/><rect x="96" y="26" width="44" height="24" rx="5" fill="rgba(0,184,148,.10)" stroke="#00B894" stroke-width="1.5"/><text x="118" y="42" font-size="8" text-anchor="middle" fill="#00B894" font-family="sans-serif">Products</text><path d="M118,26 L118,10 L148,10" stroke="#e17055" stroke-width="1.5" stroke-dasharray="3,2"/><text x="150" y="13" font-size="7" fill="#e17055" font-family="sans-serif">Heat ↑</text></svg>
+      <div class="en-list">Releases heat. Temp rises.<br>• C + O₂ → CO₂ + Heat<br>• CaO + H₂O → Ca(OH)₂ + Heat<br>• Respiration<br>• Any combustion reaction</div>
+    </div>
+    <div class="en-card">
+      <div class="en-title" style="color:var(--blue)">❄️ Endothermic</div>
+      <svg viewBox="0 0 180 70" style="width:100%;height:70px;"><defs><marker id="arB" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#0984e3"/></marker></defs><rect x="10" y="26" width="44" height="24" rx="5" fill="rgba(9,132,227,.10)" stroke="#0984e3" stroke-width="1.5"/><text x="32" y="42" font-size="8" text-anchor="middle" fill="#0984e3" font-family="sans-serif">Reactants</text><path d="M58,38 L92,38" stroke="#0984e3" stroke-width="2" marker-end="url(#arB)"/><rect x="96" y="8" width="44" height="24" rx="5" fill="rgba(108,92,231,.10)" stroke="#6C5CE7" stroke-width="1.5"/><text x="118" y="24" font-size="8" text-anchor="middle" fill="#6C5CE7" font-family="sans-serif">Products</text><path d="M20,24 L20,8 L10,8" stroke="#0984e3" stroke-width="1.5" stroke-dasharray="3,2"/><text x="5" y="8" font-size="7" fill="#0984e3" font-family="sans-serif">Heat in</text></svg>
+      <div class="en-list">Absorbs heat. Temp drops.<br>• CaCO₃ →(Δ) CaO + CO₂<br>• 2H₂O →(elec) 2H₂ + O₂<br>• Photosynthesis<br>• Dissolving NH₄Cl in water</div>
+    </div>
+  </div>
+
+  <div class="callout board"><span class="ci">📋</span><div class="cb"><div class="ct">Board Favourite — Respiration vs Photosynthesis</div><div class="cx"><strong>Respiration</strong> = Exothermic (releases energy from glucose for body functions).<br><strong>Photosynthesis</strong> = Endothermic (absorbs light energy from the sun to make glucose).<br>These are asked together almost every year.</div></div></div>
+
+  <div class="cc">
+    <div class="cc-title">✅ Concept Check</div>
+    <div class="cc-q">Q. Classify: (a) Burning LPG &nbsp;(b) Dissolving NH₄Cl in water &nbsp;(c) Sublimation of dry ice &nbsp;(d) CaO + H₂O</div>
+    <span class="cc-reveal" onclick="rCC(this)">👁 Show Answer</span>
+    <div class="cc-ans">(a) Exothermic — combustion releases heat.<br>(b) Endothermic — flask becomes cold (NH₄Cl absorbs heat).<br>(c) Endothermic — dry ice absorbs heat to sublimate.<br>(d) Exothermic — CaO + H₂O → Ca(OH)₂ + Heat. The mixture gets very hot.</div>
+  </div>
+</section>
+
+<!-- ─────────── S6: OXIDATION & REDUCTION ─────────── -->
+<section class="sec reveal" id="s6">
+  <div class="sec-num">Section 06</div>
+  <div class="sec-title">Oxidation &amp; Reduction</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">⚗️ These two always come in pairs. Like a seesaw — one goes up, the other goes down. You can't have one without the other.</div>
+
+  <div class="oil-rig">
+    <div class="or ox"><div class="or-big">OIL</div><div class="or-lbl">OXIDATION</div><div class="or-sub">Gain of oxygen<br>OR loss of hydrogen</div></div>
+    <div class="or rd"><div class="or-big">RIG</div><div class="or-lbl">REDUCTION</div><div class="or-sub">Loss of oxygen<br>OR gain of hydrogen</div></div>
+  </div>
+
+  <div class="callout tip"><span class="ci">🧠</span><div class="cb"><div class="ct">OIL RIG Mnemonic</div><div class="cx"><strong>O</strong>xidation <strong>I</strong>s <strong>L</strong>oss &nbsp;|&nbsp; <strong>R</strong>eduction <strong>I</strong>s <strong>G</strong>ain. Write this down and never forget it.</div></div></div>
+
+  <h3 class="sub">Worked Example — CuO + H₂ → Cu + H₂O</h3>
+  <div class="eq">
+    <span class="r">CuO</span> + <span class="r">H₂</span> <span class="ar">→</span> <span class="p">Cu</span> + <span class="p">H₂O</span>
+    <div style="margin-top:10px;font-size:.74rem;line-height:1.7;">
+      <span style="color:var(--orange)">CuO loses oxygen → CuO is REDUCED → CuO = Oxidising Agent</span><br>
+      <span style="color:var(--green)">H₂ gains oxygen → H₂ is OXIDISED → H₂ = Reducing Agent</span>
+    </div>
+  </div>
+
+  <table class="tbl">
+    <thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Oxidation</strong></td><td>Gain of O₂ or loss of H₂</td><td>Mg → MgO (gains O)</td></tr>
+      <tr><td><strong>Reduction</strong></td><td>Loss of O₂ or gain of H₂</td><td>CuO → Cu (loses O)</td></tr>
+      <tr><td><strong>Oxidising Agent</strong></td><td>Causes oxidation; itself gets reduced</td><td>CuO in CuO+H₂</td></tr>
+      <tr><td><strong>Reducing Agent</strong></td><td>Causes reduction; itself gets oxidised</td><td>H₂ in CuO+H₂</td></tr>
+      <tr><td><strong>Redox Reaction</strong></td><td>Oxidation + reduction simultaneously</td><td>Fe₂O₃ + 2Al → Al₂O₃ + 2Fe</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">🃏 Identify OA and RA — Flip Cards</h3>
+  <div class="flip-grid">
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">Oxidised? Reduced?</div><div class="ff-eq">Fe₂O₃ + 2Al →<br>Al₂O₃ + 2Fe</div></div><div class="flip-back" style="--fc1:#e5a100;--fc2:#f39c12"><div class="fb-type">Al = Reducing Agent</div><div class="fb-key">Al gains O → oxidised. Fe₂O₃ loses O → reduced. Fe₂O₃ = OA.</div></div></div></div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">Oxidised? Reduced?</div><div class="ff-eq">H₂S + I₂ → 2HI + S</div></div><div class="flip-back" style="--fc1:#6C5CE7;--fc2:#a29bfe"><div class="fb-type">H₂S = Reducing Agent</div><div class="fb-key">H₂S loses H → oxidised. I₂ gains H → reduced. I₂ = OA.</div></div></div></div>
+    <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="ff-lbl">Oxidised? Reduced?</div><div class="ff-eq">2PbO + C → 2Pb + CO₂</div></div><div class="flip-back" style="--fc1:#00B894;--fc2:#55efc4"><div class="fb-type">C = Reducing Agent</div><div class="fb-key">C gains O → oxidised. PbO loses O → reduced. PbO = OA.</div></div></div></div>
+  </div>
+
+  <div class="callout err"><span class="ci">⚠️</span><div class="cb"><div class="ct">Students Always Get This Backwards</div><div class="cx">The <strong>Reducing Agent gets oxidised</strong>. The <strong>Oxidising Agent gets reduced</strong>. The agent does TO others what its name says — and gets the opposite done TO itself. This is the most common error in redox questions.</div></div></div>
+</section>
+
+<!-- ─────────── S7: CORROSION ─────────── -->
+<section class="sec reveal" id="s7">
+  <div class="sec-num">Section 07</div>
+  <div class="sec-title">Corrosion</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🏗️ Corrosion destroys infrastructure worth crores every year. From bridges to ships — it's slow chemistry with massive consequences.</div>
+
+  <p class="prose"><span class="kt">Corrosion</span> is the slow chemical deterioration of metals when they react with atmospheric oxygen, moisture, CO₂, or acids. It is a type of <strong>oxidation reaction</strong>. The most familiar example is rusting of iron.</p>
+
+  <div class="eq"><div class="eqlbl">Rusting of Iron</div><span class="r">4Fe</span><span class="st">(s)</span> + <span class="r">3O₂</span><span class="st">(g)</span> + <span class="r">xH₂O</span><span class="st">(l)</span> <span class="ar">→</span> <span class="p">2Fe₂O₃·xH₂O</span><span class="st">(s)</span><div class="obs">Rust = Hydrated ferric oxide. Brown-red flaky substance.</div></div>
+  <div class="eq" style="border-color:rgba(0,168,168,.18);background:rgba(0,168,168,.04)"><div class="eqlbl">Tarnishing of Silver</div><span class="r">4Ag</span> + <span class="r">2H₂S</span> + <span class="r">O₂</span> <span class="ar">→</span> <span class="p">2Ag₂S</span> + <span class="p">2H₂O</span><div class="obs">Black Ag₂S (silver sulphide) forms on silver articles.</div></div>
+  <div class="eq" style="border-color:rgba(0,184,148,.18);background:rgba(0,184,148,.04)"><div class="eqlbl">Greening of Copper</div><span class="r">Cu</span> + <span class="r">CO₂</span> + <span class="r">O₂</span> + <span class="r">H₂O</span> <span class="ar">→</span> <span class="p">Cu(OH)₂·CuCO₃</span><div class="obs">Green basic copper carbonate on copper statues and coins.</div></div>
+
+  <h3 class="sub">🛡️ Prevention of Corrosion</h3>
+  <div class="signs" style="grid-template-columns:repeat(auto-fill,minmax(155px,1fr))">
+    <div class="sc"><div class="sc-icon">🎨</div><div class="sc-title">Painting</div><div class="sc-desc">Physical barrier between metal and atmospheric O₂/moisture.</div></div>
+    <div class="sc"><div class="sc-icon">⚙️</div><div class="sc-title">Oil / Grease</div><div class="sc-desc">Prevents moisture contact. Used for machine parts.</div></div>
+    <div class="sc"><div class="sc-icon">🔩</div><div class="sc-title">Galvanisation</div><div class="sc-desc">Zinc coating on iron — sacrificial protection.</div></div>
+    <div class="sc"><div class="sc-icon">🧪</div><div class="sc-title">Alloying</div><div class="sc-desc">Stainless steel (Fe+Cr+Ni) is rust-resistant.</div></div>
+    <div class="sc"><div class="sc-icon">⚡</div><div class="sc-title">Electroplating</div><div class="sc-desc">Chromium or tin coating via electrolysis.</div></div>
+  </div>
+  <div class="callout tip"><span class="ci">💡</span><div class="cb"><div class="ct">Why Galvanisation Works Even When Scratched</div><div class="cx">Zinc is more reactive than iron. Even when the zinc coating is scratched, zinc still corrodes preferentially — protecting the iron underneath. This is called <strong>sacrificial protection</strong>.</div></div></div>
+</section>
+
+<!-- ─────────── S8: RANCIDITY ─────────── -->
+<section class="sec reveal" id="s8">
+  <div class="sec-num">Section 08</div>
+  <div class="sec-title">Rancidity</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">🍟 Ever smelled old oil or chips that taste bitter and off? That's rancidity — slow oxidation turning your food bad.</div>
+
+  <p class="prose"><span class="kt">Rancidity</span> is the slow oxidation of fats and oils in food by atmospheric oxygen. The oxidised products (peroxides, aldehydes) develop an unpleasant smell and taste, making food unfit to eat. It is essentially <strong>corrosion of food</strong>.</p>
+
+  <h3 class="sub">🛡️ Prevention of Rancidity</h3>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Antioxidants</div><div class="sd">BHA or Vitamin C are added — they get oxidised first, protecting the food fats.</div></div></div>
+    <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Airtight Containers / Nitrogen Flushing</div><div class="sd">Removing or replacing oxygen with inert N₂ gas prevents oxidation. Chips are packed in N₂ for this reason.</div></div></div>
+    <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Refrigeration</div><div class="sd">Low temperature slows the rate of oxidation, delaying rancidity.</div></div></div>
+    <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Vacuum Packing</div><div class="sd">Removing all air (including O₂) from packaging completely prevents oxidation.</div></div></div>
+  </div>
+
+  <table class="tbl" style="margin-top:16px">
+    <thead><tr><th>Feature</th><th>Corrosion</th><th>Rancidity</th></tr></thead>
+    <tbody>
+      <tr><td>Affects</td><td>Metals (Fe, Cu, Ag)</td><td>Fats and oils in food</td></tr>
+      <tr><td>Type of reaction</td><td>Oxidation</td><td>Oxidation</td></tr>
+      <tr><td>Cause</td><td>O₂, moisture, CO₂</td><td>Atmospheric O₂</td></tr>
+      <tr><td>Result</td><td>Metal deterioration</td><td>Bad smell, bitter taste</td></tr>
+      <tr><td>Prevention</td><td>Paint, galvanise, alloy</td><td>Antioxidants, N₂, refrigerate</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ─────────── S9: CHEAT SHEET ─────────── -->
+<section class="sec reveal" id="s9">
+  <div class="sec-num">Section 09</div>
+  <div class="sec-title">⭐ Board Exam Cheat Sheet</div>
+  <div class="divbar"></div>
+  <div class="sec-hook">📋 Everything you need the night before the exam — in one place.</div>
+
+  <div class="cheat">
+    <div class="cs-title">Chapter 1 — Complete Revision</div>
+    <div class="cs-sub">All definitions · All equations · All observations · All mistake warnings</div>
+    <div class="cs-grid">
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">📚 Key Definitions</div>
+        <div class="cs-item"><strong>Chemical Reaction:</strong> Reactants → new products with different properties.</div>
+        <div class="cs-item"><strong>Combination:</strong> A + B → AB (two substances join into one).</div>
+        <div class="cs-item"><strong>Decomposition:</strong> AB → A + B (one breaks into many; needs energy).</div>
+        <div class="cs-item"><strong>Displacement:</strong> More reactive element replaces less reactive from its salt.</div>
+        <div class="cs-item"><strong>Double Displacement:</strong> Two ionic compounds exchange ions.</div>
+        <div class="cs-item"><strong>Exothermic:</strong> Releases heat to surroundings.</div>
+        <div class="cs-item"><strong>Endothermic:</strong> Absorbs heat from surroundings.</div>
+        <div class="cs-item"><strong>Oxidation:</strong> Gain of O₂ or loss of H₂.</div>
+        <div class="cs-item"><strong>Reduction:</strong> Loss of O₂ or gain of H₂.</div>
+        <div class="cs-item"><strong>Corrosion:</strong> Slow deterioration of metals by atmospheric agents.</div>
+        <div class="cs-item"><strong>Rancidity:</strong> Slow oxidation of fats/oils → bad smell/taste.</div>
+        <div class="cs-item"><strong>Catalyst:</strong> Speeds up reaction; not consumed itself.</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">⚗️ Key Equations</div>
+        <div class="cs-item">Mg burning:<span class="cs-eq">2Mg + O₂ → 2MgO</span></div>
+        <div class="cs-item">Slaking:<span class="cs-eq">CaO + H₂O → Ca(OH)₂ + Heat</span></div>
+        <div class="cs-item">Limestone:<span class="cs-eq">CaCO₃ →(Δ) CaO + CO₂↑</span></div>
+        <div class="cs-item">Lead nitrate:<span class="cs-eq">2Pb(NO₃)₂ →(Δ) 2PbO + 4NO₂↑ + O₂↑</span></div>
+        <div class="cs-item">Electrolysis:<span class="cs-eq">2H₂O →(elec) 2H₂↑ + O₂↑</span></div>
+        <div class="cs-item">AgCl in light:<span class="cs-eq">2AgCl →(light) 2Ag + Cl₂↑</span></div>
+        <div class="cs-item">Displacement:<span class="cs-eq">Fe + CuSO₄ → FeSO₄ + Cu</span></div>
+        <div class="cs-item">Precipitation:<span class="cs-eq">Na₂SO₄ + BaCl₂ → BaSO₄↓ + 2NaCl</span></div>
+        <div class="cs-item">Rusting:<span class="cs-eq">4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O</span></div>
+        <div class="cs-item">Thermite:<span class="cs-eq">Fe₂O₃ + 2Al → Al₂O₃ + 2Fe</span></div>
+        <div class="cs-item">Steam on Fe:<span class="cs-eq">3Fe + 4H₂O → Fe₃O₄ + 4H₂</span></div>
+        <div class="cs-item">Respiration:<span class="cs-eq">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + E</span></div>
+        <div class="cs-item">Photosynthesis:<span class="cs-eq">6CO₂ + 6H₂O →(light) C₆H₁₂O₆ + 6O₂</span></div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">🔍 Key Observations</div>
+        <div class="cs-item"><strong>Mg burns:</strong> Dazzling white flame, white ash (MgO)</div>
+        <div class="cs-item"><strong>Fe in CuSO₄:</strong> Blue → green; reddish Cu on nail</div>
+        <div class="cs-item"><strong>Pb(NO₃)₂ heated:</strong> Brown fumes (NO₂), yellow residue (PbO)</div>
+        <div class="cs-item"><strong>FeSO₄ heated:</strong> Green → white → brown-black; SO₂ smell</div>
+        <div class="cs-item"><strong>AgCl in sunlight:</strong> White → grey (Ag metal forms)</div>
+        <div class="cs-item"><strong>KI + Pb(NO₃)₂:</strong> Bright yellow PbI₂ precipitate</div>
+        <div class="cs-item"><strong>CaO + water:</strong> Very hot (exothermic)</div>
+        <div class="cs-item"><strong>CO₂ + lime water:</strong> Milky (CaCO₃ forms)</div>
+        <div class="cs-item"><strong>H₂ test:</strong> Burns with pop sound</div>
+        <div class="cs-item"><strong>O₂ test:</strong> Relights a glowing splint</div>
+        <div class="cs-item"><strong>CO₂ test:</strong> Turns lime water milky</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">⚠️ Common Mistakes</div>
+        <div class="cs-item">Rust = Fe₂O₃·xH₂O — NEVER write FeO!</div>
+        <div class="cs-item">Catalyst is NOT consumed in the reaction</div>
+        <div class="cs-item">Reducing Agent gets OXIDISED (not reduced)</div>
+        <div class="cs-item">Cu CANNOT displace Fe from FeSO₄</div>
+        <div class="cs-item">Balance by changing coefficients, never subscripts</div>
+        <div class="cs-item">Respiration = exothermic; Photosynthesis = endothermic</div>
+        <div class="cs-item">Dissolving salt = physical change (reversible)</div>
+        <div class="cs-item">NO₂ is brown (gas); PbO is yellow (residue) — two separate observations</div>
+      </div>
+
+      <div class="cs-sec">
+        <div class="cs-sec-title">🎯 Quick-Fire Facts</div>
+        <div class="cs-item"><strong>H₂:O₂ ratio</strong> in electrolysis = 2:1 by volume</div>
+        <div class="cs-item"><strong>Chips flushed with</strong> = Nitrogen (N₂) — inert gas</div>
+        <div class="cs-item"><strong>Black on silver</strong> = Ag₂S (silver sulphide)</div>
+        <div class="cs-item"><strong>Green on copper</strong> = Cu(OH)₂·CuCO₃</div>
+        <div class="cs-item"><strong>Photography uses</strong> = AgBr/AgCl (photochemical decomp)</div>
+        <div class="cs-item"><strong>Thermite = welding</strong> railway tracks</div>
+        <div class="cs-item"><strong>Galvanisation</strong> = zinc coat on iron</div>
+        <div class="cs-item"><strong>OIL RIG</strong> = Oxidation Is Loss; Reduction Is Gain</div>
+        <div class="cs-item"><strong>Mg ribbon cleaned</strong> with sandpaper = removes Mg(OH)₂·MgCO₃ layer</div>
+      </div>
+
+    </div>
+    <button class="cs-copy" onclick="copyCS()">📋 Copy Cheat Sheet</button>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div><div class="flogo">VISTAR10</div><div class="ftg">Built for Class 10. By someone who gets it.</div></div>
+  <ul class="flinks">
+    <li><a href="vistar10.html">Home</a></li><li><a href="subjects.html">Subjects</a></li>
+    <li><a href="ch1.html">Ch 1</a></li><li><a href="ch1-mcq.html">MCQ</a></li>
+    <li><a href="ch1-pyq.html">PYQ</a></li>
+  </ul>
+  <div class="fcopy">Made with <span>♥</span> for Class 10 · © 2026 VISTAR10</div>
+</footer>
+
+<script>
+/* DARK MODE */
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  document.getElementById('darkBtn').textContent=document.body.classList.contains('dark')?'☀️ Light':'🌙 Dark';
+}
+/* PROGRESS */
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('progress').style.width=((d.scrollTop/(d.scrollHeight-d.clientHeight))*100)+'%';
+},{passive:true});
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>28),{passive:true});
+/* SIDEBAR ACTIVE */
+const sids=['s1','s2','s3','s4','s4a','s4b','s4c','s4d','s5','s6','s7','s8','s9'];
+const io2=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){sids.forEach(id=>{const sb=document.getElementById('sb-'+id);if(sb)sb.classList.toggle('active',id===x.target.id);});}});},{rootMargin:'-30% 0px -60% 0px'});
+sids.forEach(id=>{const el=document.getElementById(id);if(el)io2.observe(el);});
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+/* REVEAL */
+const ior=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:0.05});
+document.querySelectorAll('.reveal').forEach(el=>ior.observe(el));
+/* CONCEPT CHECK */
+function rCC(btn){
+  const a=btn.nextElementSibling;
+  a.classList.toggle('show');
+  btn.textContent=a.classList.contains('show')?'🙈 Hide Answer':'👁 Show Answer';
+}
+/* BALANCER */
+const EQNS=[
+  {lbl:'Balance: Fe + H₂O → Fe₃O₄ + H₂',
+   parts:[{c:true,id:'c1',ans:3},{t:'Fe'},{pl:true},{c:true,id:'c2',ans:4},{t:'H₂O'},{ar:true},{c:true,id:'c3',ans:1},{t:'Fe₃O₄'},{pl:true},{c:true,id:'c4',ans:4},{t:'H₂'}]},
+  {lbl:'Balance: Al + O₂ → Al₂O₃',
+   parts:[{c:true,id:'c1',ans:4},{t:'Al'},{pl:true},{c:true,id:'c2',ans:3},{t:'O₂'},{ar:true},{c:true,id:'c3',ans:2},{t:'Al₂O₃'}]},
+  {lbl:'Balance: Mg + HCl → MgCl₂ + H₂',
+   parts:[{c:true,id:'c1',ans:1},{t:'Mg'},{pl:true},{c:true,id:'c2',ans:2},{t:'HCl'},{ar:true},{c:true,id:'c3',ans:1},{t:'MgCl₂'},{pl:true},{c:true,id:'c4',ans:1},{t:'H₂'}]},
+  {lbl:'Balance: 3BaCl₂ + Al₂(SO₄)₃ → AlCl₃ + BaSO₄',
+   parts:[{c:true,id:'c1',ans:3},{t:'BaCl₂'},{pl:true},{c:true,id:'c2',ans:1},{t:'Al₂(SO₄)₃'},{ar:true},{c:true,id:'c3',ans:2},{t:'AlCl₃'},{pl:true},{c:true,id:'c4',ans:3},{t:'BaSO₄'}]},
+  {lbl:'Balance: NH₃ + O₂ → NO + H₂O',
+   parts:[{c:true,id:'c1',ans:4},{t:'NH₃'},{pl:true},{c:true,id:'c2',ans:5},{t:'O₂'},{ar:true},{c:true,id:'c3',ans:4},{t:'NO'},{pl:true},{c:true,id:'c4',ans:6},{t:'H₂O'}]}
+];
+let bi=0;
+function renderBal(){
+  const eq=EQNS[bi];
+  document.getElementById('balFb').textContent='';
+  document.getElementById('balFb').className='bal-fb';
+  let h='';
+  eq.parts.forEach(p=>{
+    if(p.c) h+=`<input class="bal-inp" id="${p.id}" type="number" min="1" max="20" placeholder="?">`;
+    else if(p.t) h+=`<span class="bal-fix">${p.t}</span>`;
+    else if(p.ar) h+=`<span class="bal-arr">→</span>`;
+    else if(p.pl) h+=`<span class="bal-pl">+</span>`;
+  });
+  document.getElementById('balEq').innerHTML=h;
+}
+function checkBal(){
+  const eq=EQNS[bi];
+  const inputs=eq.parts.filter(p=>p.c);
+  let all=true;
+  inputs.forEach(p=>{
+    const inp=document.getElementById(p.id);
+    const v=parseInt(inp.value)||1;
+    const ok=v===p.ans;
+    inp.className='bal-inp '+(ok?'ok':'no2');
+    if(!ok)all=false;
+  });
+  const fb=document.getElementById('balFb');
+  fb.textContent=all?'🎉 Perfect! Fully balanced!':'Not quite — check the highlighted boxes.';
+  fb.className='bal-fb '+(all?'ok':'no2');
+}
+function resetBal(){renderBal();}
+function nextBal(){bi=(bi+1)%EQNS.length;renderBal();}
+renderBal();
+/* COPY */
+function copyCS(){
+  const t=`VISTAR10 — Chapter 1 Cheat Sheet\n\nKEY EQUATIONS:\n2Mg + O₂ → 2MgO\nCaO + H₂O → Ca(OH)₂ + Heat\nCaCO₃ →(heat) CaO + CO₂\n2Pb(NO₃)₂ →(heat) 2PbO + 4NO₂ + O₂\n2H₂O →(elec) 2H₂ + O₂\n2AgCl →(light) 2Ag + Cl₂\nFe + CuSO₄ → FeSO₄ + Cu\n4Fe + 3O₂ + xH₂O → 2Fe₂O₃·xH₂O\nFe₂O₃ + 2Al → Al₂O₃ + 2Fe\n\nOIL RIG: Oxidation Is Loss | Reduction Is Gain\n\nKEY OBSERVATIONS:\n- Mg burns: white flame, white ash\n- Pb(NO₃)₂ heated: brown fumes (NO₂), yellow residue (PbO)\n- FeSO₄ heated: green → white → brown-black\n- Fe + CuSO₄: blue → green, Cu on nail\n- AgCl in sunlight: white → grey\n- Rust = Fe₂O₃·xH₂O (NOT FeO!)`;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.querySelector('.cs-copy');
+    b.textContent='✅ Copied!';
+    setTimeout(()=>b.textContent='📋 Copy Cheat Sheet',2000);
+  });
+}
+</script>
+</body>
+</html>
